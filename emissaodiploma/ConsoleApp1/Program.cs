@@ -1,31 +1,38 @@
 ﻿using System;
- 
-/// Ponto de entrada da aplicação.
-/// 
-/// Responsável por:
-/// - Criar objetos
-/// - Ligar os componentes (injeção de dependências)
-/// - Iniciar o fluxo
-class Program
+
+namespace SimDiplomaMVC
 {
-    static void Main()
+    /// Ponto de entrada da aplicação.
+    ///
+    /// Responsável por:
+    /// - Criar os componentes principais
+    /// - Ligar as dependências
+    /// - Arrancar o protótipo
+    class Program
     {
-        // 1. Criar serviço (infraestrutura)
-        IGeradorDiploma gerador = new Gerador();
+        static void Main()
+        {
+            // Serviço responsável pela geração do diploma
+            IGeradorDiploma gerador = new Gerador();
 
-        // 2. Criar Model (núcleo)
-        Model model = new Model(gerador);
+            // Núcleo da aplicação
+            Model model = new Model(gerador);
 
-        // 3. Criar View e subscrever eventos
-        View view = new View();
-        view.Subscribir(model);
+            // Componente de apresentação
+            View view = new View();
 
-        // 4. Criar Controller
-        Controller controller = new Controller(model);
+            // A View subscreve os eventos do Model
+            view.Subscrever(model);
 
-        // 5. Simular input do utilizador
-        controller.EmitirDiploma("João Silva", "Engenharia Informática");
+            // Componente de coordenação
+            Controller controller = new Controller(model, view);
 
-        Console.ReadLine();
+            // Arranque do protótipo
+            // Para já, como só a emissão de diploma está implementada,
+            // continua a ser feita uma simulação simples.
+            controller.EmitirDiploma("João Silva", "Engenharia Informática");
+
+            Console.ReadLine();
+        }
     }
 }

@@ -1,30 +1,32 @@
 ﻿using System.Text;
 
-/// Interface que define o contrato de geração de diplomas.
-/// 
-/// Permite:
-/// - Trocar a implementação (ex: PDFsharp, outro motor)
-/// - Reduzir acoplamento com o Model
-public interface IGeradorDiploma
+namespace SimDiplomaMVC
 {
-    byte[] Gerar(string nomeAluno, string curso);
-}
-
-/// Implementação concreta do gerador de diplomas.
-/// 
-/// Neste exemplo:
-/// - Simulação simples
-/// 
-/// No projeto real:
-/// - Deve usar PDFsharp
-public class Gerador : IGeradorDiploma
-{
-    public byte[] Gerar(string nomeAluno, string curso)
+    /// Interface que define o contrato de geração de diplomas.
+    ///
+    /// Permite trocar a implementação concreta sem alterar o Model.
+    public interface IGeradorDiploma
     {
-        // Simulação de conteúdo do diploma
-        string conteudo = $"Diploma de {nomeAluno} - {curso}";
+        byte[] Gerar(string nomeAluno, string curso);
+    }
 
-        // Conversão para bytes (simula um PDF)
-        return Encoding.UTF8.GetBytes(conteudo);
+    /// Implementação temporária do gerador de diplomas.
+    ///
+    /// Neste protótipo:
+    /// - não gera ainda um PDF real;
+    /// - apenas devolve bytes simulados.
+    ///
+    /// No projeto final:
+    /// - deverá ser substituído ou completado com PDFsharp.
+    public class Gerador : IGeradorDiploma
+    {
+        public byte[] Gerar(string nomeAluno, string curso)
+        {
+            // Simulação simples do conteúdo do diploma
+            string conteudo = "Diploma de " + nomeAluno + " - " + curso;
+
+            // Conversão para bytes para simular o ficheiro final
+            return Encoding.UTF8.GetBytes(conteudo);
+        }
     }
 }
