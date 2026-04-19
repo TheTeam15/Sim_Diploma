@@ -46,10 +46,10 @@ namespace SimDiplomaMVC
         public event SairEventHandler OnSair;
 
         /// <summary>
-        /// Subscrição aos eventos do Model.
+        /// Subscrição à interface de eventos do Model.
         /// Liga a View ao fluxo de notificações.
         /// </summary>
-        public void Subscrever(Model model)
+        public void Subscrever(IModelEventos model)
         {
             model.OnValidacao += MostrarValidacao;
             model.OnDiplomaEmitido += MostrarDiploma;

@@ -157,6 +157,23 @@ namespace SimDiplomaMVC
         }
     }
 
+    // Interface que expõe apenas os eventos do Model.
+    // A View subscreve isto — nunca a classe concreta.
+    public interface IModelEventos
+    {
+        event EventHandler<ValidacaoEventArgs> OnValidacao;
+        event EventHandler<DiplomaEmitidoEventArgs> OnDiplomaEmitido;
+        event EventHandler<InstituicaoGuardadaEventArgs> OnInstituicaoGuardada;
+        event EventHandler<CursoCriadoEventArgs> OnCursoCriado;
+        event EventHandler<EdicaoCriadaEventArgs> OnEdicaoCriada;
+        event EventHandler<EstadoEdicaoAlteradoEventArgs> OnEstadoEdicaoAlterado;
+        event EventHandler<AlunoRegistadoEventArgs> OnAlunoRegistado;
+        event EventHandler<InscricaoCriadaEventArgs> OnInscricaoCriada;
+        event EventHandler<ClassificacaoLancadaEventArgs> OnClassificacaoLancada;
+        event EventHandler<ConsultaRealizadaEventArgs> OnConsultaRealizada;
+        event EventHandler OnSistemaEncerrado;
+    }
+
     /// <summary>
     /// MODEL (núcleo da aplicação)
     /// Responsável por:
@@ -170,7 +187,7 @@ namespace SimDiplomaMVC
     /// - Não conhece detalhes de PDFsharp
     /// - Mantém apenas a dependência abstraída através de IGeradorDiploma
     /// </summary>
-    public class Model
+    public class Model : IModelEventos
     {
         /// <summary>
         /// Dependência abstraída (injeção via interface).

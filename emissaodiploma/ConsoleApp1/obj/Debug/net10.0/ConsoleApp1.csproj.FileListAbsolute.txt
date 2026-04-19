@@ -12,3 +12,18 @@ C:\Users\wwwjo\Desktop\Universidade aberta\A decorrer\Laboratório de Desenvolvi
 C:\Users\wwwjo\Desktop\Universidade aberta\A decorrer\Laboratório de Desenvolvimento de Software\trabalho em grupo\Curry Grace\ConsoleApp1\ConsoleApp1\obj\Debug\net10.0\ConsoleApp1.pdb
 C:\Users\wwwjo\Desktop\Universidade aberta\A decorrer\Laboratório de Desenvolvimento de Software\trabalho em grupo\Curry Grace\ConsoleApp1\ConsoleApp1\obj\Debug\net10.0\ConsoleApp1.genruntimeconfig.cache
 C:\Users\wwwjo\Desktop\Universidade aberta\A decorrer\Laboratório de Desenvolvimento de Software\trabalho em grupo\Curry Grace\ConsoleApp1\ConsoleApp1\obj\Debug\net10.0\ref\ConsoleApp1.dll
+C:\Users\joseb\source\repos\TheTeam15\Sim_Diploma\emissaodiploma\ConsoleApp1\bin\Debug\net10.0\ConsoleApp1.exe
+C:\Users\joseb\source\repos\TheTeam15\Sim_Diploma\emissaodiploma\ConsoleApp1\bin\Debug\net10.0\ConsoleApp1.deps.json
+C:\Users\joseb\source\repos\TheTeam15\Sim_Diploma\emissaodiploma\ConsoleApp1\bin\Debug\net10.0\ConsoleApp1.runtimeconfig.json
+C:\Users\joseb\source\repos\TheTeam15\Sim_Diploma\emissaodiploma\ConsoleApp1\bin\Debug\net10.0\ConsoleApp1.dll
+C:\Users\joseb\source\repos\TheTeam15\Sim_Diploma\emissaodiploma\ConsoleApp1\bin\Debug\net10.0\ConsoleApp1.pdb
+C:\Users\joseb\source\repos\TheTeam15\Sim_Diploma\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\ConsoleApp1.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\joseb\source\repos\TheTeam15\Sim_Diploma\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\ConsoleApp1.AssemblyInfoInputs.cache
+C:\Users\joseb\source\repos\TheTeam15\Sim_Diploma\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\ConsoleApp1.AssemblyInfo.cs
+C:\Users\joseb\source\repos\TheTeam15\Sim_Diploma\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\ConsoleApp1.csproj.CoreCompileInputs.cache
+C:\Users\joseb\source\repos\TheTeam15\Sim_Diploma\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\ConsoleApp1.sourcelink.json
+C:\Users\joseb\source\repos\TheTeam15\Sim_Diploma\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\ConsoleApp1.dll
+C:\Users\joseb\source\repos\TheTeam15\Sim_Diploma\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\refint\ConsoleApp1.dll
+C:\Users\joseb\source\repos\TheTeam15\Sim_Diploma\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\ConsoleApp1.pdb
+C:\Users\joseb\source\repos\TheTeam15\Sim_Diploma\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\ConsoleApp1.genruntimeconfig.cache
+C:\Users\joseb\source\repos\TheTeam15\Sim_Diploma\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\ref\ConsoleApp1.dll
