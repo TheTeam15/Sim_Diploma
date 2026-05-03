@@ -24,11 +24,22 @@ class Program
         Controller controller = new Controller(model);
 
         // Ligação View → Controller
-        view.OnEmitirDiploma += controller.EmitirDiploma;
+        view.OnCriarAluno             += controller.CriarAluno;
+        view.OnCriarInscricao         += controller.CriarInscricao;
+        view.OnConcluirInscricao      += controller.ConcluirInscricao;
+        view.OnClassificar            += controller.Classificar;
+        view.OnConsultarAluno         += controller.ConsultarAluno;
+        view.OnConsultarInscricao     += controller.ConsultarInscricao;
+        view.OnConsultarClassificacao += controller.ConsultarClassificacao;
+        view.OnEmitirDiploma          += controller.EmitirDiploma;
 
         // Início do fluxo
-        view.PedirEmissao();
+        while (true)
+        {
+            view.Menu();
+        }
 
-        Console.ReadLine();
+        /* view.PedirEmissao();
+        Console.ReadLine(); */
     }
 }
