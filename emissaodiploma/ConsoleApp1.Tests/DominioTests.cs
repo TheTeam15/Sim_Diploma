@@ -21,14 +21,11 @@ namespace ConsoleApp1.Tests
             model.ConcluirInscricao(id, edicao);
 
             // Act
-            // Não usamos Assert.Throws porque o Model apanha a sua própria exceção no código dos DEVs[cite: 4]
             model.LancarClassificacao(id, edicao, 25);
 
             // Assert
-            // Validamos se o Model registou internamente que a operação falhou[cite: 4]
             Assert.False(model.UltimaOperacaoSucesso);
 
-            // Validamos se a mensagem de erro é a correta (sobre a nota ser inválida)
             Assert.Contains("invalida", model.UltimaMensagem);
         }
 
