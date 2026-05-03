@@ -10,36 +10,89 @@ class Program
 {
     static void Main()
     {
-        // Serviço
+        // SISTEMA ORIGINAL
         IGeradorDiploma gerador = new Gerador();
-
-        // Model
         Model model = new Model(gerador);
-
-        // View
         View view = new View();
         view.Subscribir(model);
-
-        // Controller
         Controller controller = new Controller(model);
 
-        // Ligação View → Controller
-        view.OnCriarAluno             += controller.CriarAluno;
-        view.OnCriarInscricao         += controller.CriarInscricao;
-        view.OnConcluirInscricao      += controller.ConcluirInscricao;
-        view.OnClassificar            += controller.Classificar;
-        view.OnConsultarAluno         += controller.ConsultarAluno;
-        view.OnConsultarInscricao     += controller.ConsultarInscricao;
+        view.OnCriarAluno += controller.CriarAluno;
+        view.OnCriarInscricao += controller.CriarInscricao;
+        view.OnConcluirInscricao += controller.ConcluirInscricao;
+        view.OnClassificar += controller.Classificar;
+        view.OnConsultarAluno += controller.ConsultarAluno;
+        view.OnConsultarInscricao += controller.ConsultarInscricao;
         view.OnConsultarClassificacao += controller.ConsultarClassificacao;
-        view.OnEmitirDiploma          += controller.EmitirDiploma;
+        view.OnEmitirDiploma += controller.EmitirDiploma;
 
-        // Início do fluxo
+        // SISTEMA (CURSOS) 
+        CursosModel cursosModel = new CursosModel();
+        CursosView cursosView = new CursosView();
+        CursosController cursosController = new CursosController(cursosModel);
+
+        cursosView.Subscribir(cursosModel);
+
+        cursosView.OnGuardarInstituicao += cursosController.GuardarInstituicao;
+        cursosView.OnCriarCurso += cursosController.CriarCurso;
+        cursosView.OnCriarEdicao += cursosController.CriarEdicao;
+        cursosView.OnAlterarEstadoEdicao += cursosController.AlterarEstadoEdicao;
+
+        // MENU PRINCIPAL 
         while (true)
         {
-            view.Menu();
-        }
+            Console.Clear();
+            Console.WriteLine("=== SISTEMA DE GESTÃO ESCOLAR ===");
+            Console.WriteLine();
+            Console.WriteLine("1 - Sistema de Alunos");
+            Console.WriteLine("2 - Sistema de Cursos");
+            Console.WriteLine("0 - Sair");
+            Console.Write("Escolha uma opção: ");
 
-        /* view.PedirEmissao();
-        Console.ReadLine(); */
+            string? opcao = Console.ReadLine();
+
+            if (opcao == "1")
+            {
+                // Loop para manter no submenu 
+                bool noSubmenu = true;
+                while (noSubmenu)
+                {
+                    view.Menu();
+
+                    Console.WriteLine("\nPressione ESC para voltar ao menu principal ou ENTER para continuar...");
+                    var tecla = Console.ReadKey(true);
+                    if (tecla.Key == ConsoleKey.Escape)
+                    {
+                        noSubmenu = false;
+                    }
+                }
+            }
+            else if (opcao == "2")
+            {
+                // Loop para manter no  submenu cursos
+                bool noSubmenu = true;
+                while (noSubmenu)
+                {
+                    cursosView.MostrarFormulario(cursosController);
+
+                    Console.WriteLine("\nPressione ESC para voltar ao menu principal ou ENTER para continuar...");
+                    var tecla = Console.ReadKey(true);
+                    if (tecla.Key == ConsoleKey.Escape)
+                    {
+                        noSubmenu = false;
+                    }
+                }
+            }
+            else if (opcao == "0")
+            {
+                Console.WriteLine("Programa terminado.");
+                break;
+            }
+            else
+            {
+                Console.WriteLine("Opção inválida. Pressione qualquer tecla para continuar...");
+                Console.ReadKey();
+            }
+        }
     }
 }

@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\wwwjo\\Desktop\\Universidade aberta\\A decorrer\\Laboratório de Desenvolvimento de Software\\trabalho em grupo\\Curry Grace\\emissaodiploma\\ConsoleApp1\\ConsoleApp1.csproj": {}
+    "C:\\Users\\marco.carlota\\Downloads\\Cursostopico4\\GestaoCursosMVC\\sim\\Sim_Diploma\\emissaodiploma\\ConsoleApp1\\ConsoleApp1.csproj": {}
   },
   "projects": {
-    "C:\\Users\\wwwjo\\Desktop\\Universidade aberta\\A decorrer\\Laboratório de Desenvolvimento de Software\\trabalho em grupo\\Curry Grace\\emissaodiploma\\ConsoleApp1\\ConsoleApp1.csproj": {
+    "C:\\Users\\marco.carlota\\Downloads\\Cursostopico4\\GestaoCursosMVC\\sim\\Sim_Diploma\\emissaodiploma\\ConsoleApp1\\ConsoleApp1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\wwwjo\\Desktop\\Universidade aberta\\A decorrer\\Laboratório de Desenvolvimento de Software\\trabalho em grupo\\Curry Grace\\emissaodiploma\\ConsoleApp1\\ConsoleApp1.csproj",
+        "projectUniqueName": "C:\\Users\\marco.carlota\\Downloads\\Cursostopico4\\GestaoCursosMVC\\sim\\Sim_Diploma\\emissaodiploma\\ConsoleApp1\\ConsoleApp1.csproj",
         "projectName": "ConsoleApp1",
-        "projectPath": "C:\\Users\\wwwjo\\Desktop\\Universidade aberta\\A decorrer\\Laboratório de Desenvolvimento de Software\\trabalho em grupo\\Curry Grace\\emissaodiploma\\ConsoleApp1\\ConsoleApp1.csproj",
-        "packagesPath": "C:\\Users\\wwwjo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\wwwjo\\Desktop\\Universidade aberta\\A decorrer\\Laboratório de Desenvolvimento de Software\\trabalho em grupo\\Curry Grace\\emissaodiploma\\ConsoleApp1\\obj\\",
+        "projectPath": "C:\\Users\\marco.carlota\\Downloads\\Cursostopico4\\GestaoCursosMVC\\sim\\Sim_Diploma\\emissaodiploma\\ConsoleApp1\\ConsoleApp1.csproj",
+        "packagesPath": "C:\\Users\\marco.carlota\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\marco.carlota\\Downloads\\Cursostopico4\\GestaoCursosMVC\\sim\\Sim_Diploma\\emissaodiploma\\ConsoleApp1\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\wwwjo\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\marco.carlota\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -26,7 +22,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
