@@ -10,7 +10,7 @@ class Program
 {
     static void Main()
     {
-        // Serviço
+        // Serviço responsável pela geração do diploma
         IGeradorDiploma gerador = new Gerador();
 
         // Model
@@ -18,20 +18,14 @@ class Program
 
         // View
         View view = new View();
-        view.Subscribir(model);
+        view.Subscreber(model);
 
         // Controller
-        Controller controller = new Controller(model);
+        // O Controller liga os eventos da View aos métodos do Model
+        Controller controller = new Controller(model, view);
 
         // Ligação View → Controller
-        view.OnCriarAluno             += controller.CriarAluno;
-        view.OnCriarInscricao         += controller.CriarInscricao;
-        view.OnConcluirInscricao      += controller.ConcluirInscricao;
-        view.OnClassificar            += controller.Classificar;
-        view.OnConsultarAluno         += controller.ConsultarAluno;
-        view.OnConsultarInscricao     += controller.ConsultarInscricao;
-        view.OnConsultarClassificacao += controller.ConsultarClassificacao;
-        view.OnEmitirDiploma          += controller.EmitirDiploma;
+        LigarEventosDaView(view);
 
         // Início do fluxo
         while (true)

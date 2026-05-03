@@ -17,6 +17,25 @@ public class Controller
         _model = model;
     }
 
+    public Controller(Model model, View view)
+    {
+        _model = model;
+
+        LigarEventosDaView(view);
+    }
+
+    private void LigarEventosDaView(View view)
+    {
+        view.OnCriarAluno += CriarAluno;
+        view.OnCriarInscricao += CriarInscricao;
+        view.OnConcluirInscricao += ConcluirInscricao;
+        view.OnClassificar += Classificar;
+        view.OnConsultarAluno += ConsultarAluno;
+        view.OnConsultarInscricao += ConsultarInscricao;
+        view.OnConsultarClassificacao += ConsultarClassificacao;
+        view.OnEmitirDiploma += EmitirDiploma;
+    }
+
     public void CriarAluno(int id, string nome)
         => _model.RegistarAluno(id, nome);
 

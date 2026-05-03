@@ -73,7 +73,7 @@ public class ClassificacaoConsultadaEventArgs : EventArgs
     }
 }
 
-public class ValidacaoEventArgs
+public class ValidacaoEventArgs : EventArgs
 {
     public bool Sucesso { get; }
     public string Mensagem { get; }
@@ -86,7 +86,7 @@ public class ValidacaoEventArgs
 }
 
 /// Classe que transporta o diploma gerado (em bytes).
-public class DiplomaEmitidoEventArgs
+public class DiplomaEmitidoEventArgs : EventArgs
 {
     public byte[] PdfBytes { get; }
 
@@ -94,6 +94,21 @@ public class DiplomaEmitidoEventArgs
     {
         PdfBytes = pdfBytes;
     }
+}
+
+public interface IModelEventos
+{
+    event EventHandler<ResultadoEventArgs>? Resultado;
+
+    event EventHandler<InscricaoAlunoEventArgs>? InscricaoCriada;
+    event EventHandler<ClassificacaoEventArgs>? ClassificacaoCriada;
+
+    event EventHandler<AlunoEventArgs>? AlunoConsultado;
+    event EventHandler<InscricaoAlunoConsultadaEventArgs>? InscricaoConsultada;
+    event EventHandler<ClassificacaoConsultadaEventArgs>? ClassificacaoConsultada;
+
+    event EventHandler<ValidacaoEventArgs>? OnValidacao;
+    event EventHandler<DiplomaEmitidoEventArgs>? OnDiplomaEmitido;
 }
 
 /// CLASSE DE SUPORTE PARA REGRAS DE NEGÓCIO
@@ -233,7 +248,7 @@ public class InscricaoNaoConcluidaException : Exception
 /// - Notificação da View (via eventos)
 /// 
 /// NOTA: Não conhece detalhes de PDFsharp → baixo acoplamento
-public class Model
+public class Model : IModelEventos
 {
     private List<Aluno> alunos = new(); 
 

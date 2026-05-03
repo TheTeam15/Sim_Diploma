@@ -1,13 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "2LIs44GvdQw=",
+  "dgSpecHash": "mUmxcXhMkUs=",
   "success": true,
-  "projectFilePath": "C:\\Users\\wwwjo\\Desktop\\Universidade aberta\\A decorrer\\Laboratório de Desenvolvimento de Software\\trabalho em grupo\\Curry Grace\\emissaodiploma\\ConsoleApp1\\ConsoleApp1.csproj",
+  "projectFilePath": "C:\\Users\\joseb\\OneDrive\\Engenharia Informática\\2.2 - Laboratório de Desenvolvimento de Software\\Sim_Diploma\\emissaodiploma\\ConsoleApp1\\ConsoleApp1.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\wwwjo\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.2\\microsoft.extensions.dependencyinjection.abstractions.8.0.2.nupkg.sha512",
-    "C:\\Users\\wwwjo\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\8.0.3\\microsoft.extensions.logging.abstractions.8.0.3.nupkg.sha512",
-    "C:\\Users\\wwwjo\\.nuget\\packages\\pdfsharp\\6.2.4\\pdfsharp.6.2.4.nupkg.sha512",
-    "C:\\Users\\wwwjo\\.nuget\\packages\\system.security.cryptography.pkcs\\8.0.1\\system.security.cryptography.pkcs.8.0.1.nupkg.sha512"
+    "C:\\Users\\joseb\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.2\\microsoft.extensions.dependencyinjection.abstractions.8.0.2.nupkg.sha512",
+    "C:\\Users\\joseb\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\8.0.3\\microsoft.extensions.logging.abstractions.8.0.3.nupkg.sha512",
+    "C:\\Users\\joseb\\.nuget\\packages\\pdfsharp\\6.2.4\\pdfsharp.6.2.4.nupkg.sha512",
+    "C:\\Users\\joseb\\.nuget\\packages\\system.security.cryptography.pkcs\\8.0.1\\system.security.cryptography.pkcs.8.0.1.nupkg.sha512"
   ],
   "logs": []
 }

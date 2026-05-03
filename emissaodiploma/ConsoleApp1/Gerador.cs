@@ -20,9 +20,22 @@ public class Gerador : IGeradorDiploma
 {
     public byte[] Gerar(string nomeAluno, string curso)
     {
-        
+        if(string.IsNullOrWhiteSpace(nomeAluno))
+            throw new ArgumentException("Nome do aluno inválido.");
+
+        if (string.IsNullOrWhiteSpace(curso))
+            throw new ArgumentException("Curso inválido.");
+
+        nomeAluno = nomeAluno.Trim();
+        curso = curso.Trim();
+
         // CRIAÇÃO DO DOCUMENTO
         PdfDocument documento = new PdfDocument();
+
+        documento.Info.Title = "Diploma";
+        documento.Info.Author = "SimDiplomaMVC";
+        documento.Info.Subject = $"Diploma de {nomeAluno}";
+
         PdfPage pagina = documento.AddPage();
 
         // Definir tamanho A4

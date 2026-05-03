@@ -27,16 +27,22 @@ public class View
 
     /// Subscrição aos eventos do Model
     /// Liga a View ao fluxo de notificações
-    public void Subscribir(Model model)
+    public void Subscrever(IModelEventos model)
     {
-        model.Resultado               += MostrarResultado;
-        model.InscricaoCriada         += MostrarInscricaoCriada;
-        model.ClassificacaoCriada     += MostrarClassificacaoCriada;
-        model.AlunoConsultado         += MostrarAluno;
-        model.InscricaoConsultada     += MostrarInscricaoConsultada;
+        model.Resultado += MostrarResultado;
+        model.InscricaoCriada += MostrarInscricaoCriada;
+        model.ClassificacaoCriada += MostrarClassificacaoCriada;
+        model.AlunoConsultado += MostrarAluno;
+        model.InscricaoConsultada += MostrarInscricaoConsultada;
         model.ClassificacaoConsultada += MostrarClassificacaoConsultada;
         model.OnValidacao += MostrarValidacao;
         model.OnDiplomaEmitido += MostrarDiploma;
+    }
+
+    // Mantém compatibilidade com código já existente que use o nome antigo.
+    public void Subscribir(IModelEventos model)
+    {
+        Subscrever(model);
     }
 
     // ================= MENU =================
@@ -272,8 +278,7 @@ public class View
     /// Aluno consultado — View vai buscar ao estado interno do Model
     private void MostrarAluno(object? sender, AlunoEventArgs e)
     {
-        var model = sender as Model;
-        var a = model?.UltimoAlunoConsultado ?? e.Aluno;
+        var a = e.Aluno;
 
         if (a == null)
         {
@@ -290,8 +295,7 @@ public class View
     /// Inscricao consultada — View vai buscar ao estado interno do Model
     private void MostrarInscricaoConsultada(object? sender, InscricaoAlunoConsultadaEventArgs e)
     {
-        var model = sender as Model;
-        var i = model?.UltimaInscricaoConsultada ?? e.Inscricao;
+        var i = e.Inscricao;
 
         if (i == null)
         {
@@ -309,8 +313,7 @@ public class View
     /// Classificacao consultada — View vai buscar ao estado interno do Model
     private void MostrarClassificacaoConsultada(object? sender, ClassificacaoConsultadaEventArgs e)
     {
-        var model = sender as Model;
-        var c = model?.UltimaClassificacaoConsultada ?? e.Classificacao;
+        var c = e.Classificacao;
 
         if (c == null)
         {

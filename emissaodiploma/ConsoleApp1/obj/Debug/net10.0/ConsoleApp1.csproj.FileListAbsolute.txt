@@ -27,3 +27,12 @@ C:\Users\wwwjo\Desktop\Universidade aberta\A decorrer\Laboratório de Desenvolvi
 C:\Users\wwwjo\Desktop\Universidade aberta\A decorrer\Laboratório de Desenvolvimento de Software\trabalho em grupo\Curry Grace\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\ConsoleApp1.genruntimeconfig.cache
 C:\Users\wwwjo\Desktop\Universidade aberta\A decorrer\Laboratório de Desenvolvimento de Software\trabalho em grupo\Curry Grace\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\ref\ConsoleApp1.dll
 C:\Users\wwwjo\Desktop\Universidade aberta\A decorrer\Laboratório de Desenvolvimento de Software\trabalho em grupo\Curry Grace\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\ConsoleApp1.csproj.AssemblyReference.cache
+C:\Users\joseb\OneDrive\Engenharia Informática\2.2 - Laboratório de Desenvolvimento de Software\Sim_Diploma\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\ConsoleApp1.csproj.AssemblyReference.cache
+C:\Users\joseb\OneDrive\Engenharia Informática\2.2 - Laboratório de Desenvolvimento de Software\Sim_Diploma\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\ConsoleApp1.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\joseb\OneDrive\Engenharia Informática\2.2 - Laboratório de Desenvolvimento de Software\Sim_Diploma\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\ConsoleApp1.AssemblyInfoInputs.cache
+C:\Users\joseb\OneDrive\Engenharia Informática\2.2 - Laboratório de Desenvolvimento de Software\Sim_Diploma\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\ConsoleApp1.AssemblyInfo.cs
+C:\Users\joseb\OneDrive\Engenharia Informática\2.2 - Laboratório de Desenvolvimento de Software\Sim_Diploma\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\ConsoleApp1.csproj.CoreCompileInputs.cache
+C:\Users\joseb\OneDrive\Engenharia Informática\2.2 - Laboratório de Desenvolvimento de Software\Sim_Diploma\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\ConsoleApp1.sourcelink.json
+C:\Users\joseb\OneDrive\Engenharia Informática\2.2 - Laboratório de Desenvolvimento de Software\Sim_Diploma\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\ConsoleApp1.dll
+C:\Users\joseb\OneDrive\Engenharia Informática\2.2 - Laboratório de Desenvolvimento de Software\Sim_Diploma\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\refint\ConsoleApp1.dll
+C:\Users\joseb\OneDrive\Engenharia Informática\2.2 - Laboratório de Desenvolvimento de Software\Sim_Diploma\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\ConsoleApp1.pdb
