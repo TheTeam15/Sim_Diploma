@@ -45,7 +45,7 @@ public class Controller
     public void ConcluirInscricao(int alunoId, string edicao)
         => _model.ConcluirInscricao(alunoId, edicao);
 
-    public void Classificar(int alunoId, string edicao, double nota)
+    public void Classificar(int alunoId, string edicao, Nota nota)
         => _model.LancarClassificacao(alunoId, edicao, nota);
 
     public void ConsultarAluno(int id)
