@@ -272,7 +272,6 @@ public class View
         Console.WriteLine($"\n=== CLASSIFICACAO LANCADA ===");
         Console.WriteLine($"Nota:     {c.Nota}");
         Console.WriteLine($"Aprovado: {c.Aprovado}");
-        Console.WriteLine($"Diploma:  {(c.ElegivelDiploma ? "Elegivel" : "Nao elegivel")}");
     }
 
     /// Aluno consultado — View vai buscar ao estado interno do Model
@@ -324,7 +323,6 @@ public class View
         Console.WriteLine($"\n=== CLASSIFICACAO ===");
         Console.WriteLine($"Nota:     {c.Nota}");
         Console.WriteLine($"Aprovado: {c.Aprovado}");
-        Console.WriteLine($"Diploma:  {(c.ElegivelDiploma ? "Elegivel" : "Nao elegivel")}");
     }
 
     /// Apresenta o resultado da validação

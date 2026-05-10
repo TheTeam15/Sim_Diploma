@@ -156,12 +156,6 @@ public class Classificacao
 
     // Regra: aprovado se nota >= 10
     public bool Aprovado => Nota >= 10;
-
-    // Regra: elegivel se inscricao concluida e aprovado
-    public bool ElegivelDiploma =>
-        Inscricao != null &&
-        !Inscricao.Ativa &&
-        Aprovado;
 }
 
 /// Representa uma inscrição simplificada
@@ -483,7 +477,7 @@ public class Model : IModelEventos
             // Atualizar estado interno — Curry & Grace
             UltimaClassificacaoConsultada = classificacao;
             UltimaOperacaoSucesso = true;
-            UltimaMensagem = $"Classificacao lancada: {nota} | Aprovado: {classificacao.Aprovado} | Elegivel para diploma: {classificacao.ElegivelDiploma}";
+            UltimaMensagem = $"Classificacao lancada: {nota} | Aprovado: {classificacao.Aprovado}";
             Resultado?.Invoke(this, new ResultadoEventArgs(true, UltimaMensagem));
             ClassificacaoCriada?.Invoke(this, new ClassificacaoEventArgs(classificacao));
         }
@@ -550,20 +544,6 @@ public class Model : IModelEventos
         var insc = aluno?.ObterInscricao(edicao);
         UltimaClassificacaoConsultada = insc?.ClassificacaoFinal;
         ClassificacaoConsultada?.Invoke(this, new ClassificacaoConsultadaEventArgs(UltimaClassificacaoConsultada));
-    }
-
-    /// Verifica se um aluno e elegivel para diploma
-    public bool ElegivelParaDiploma(int alunoId, string edicao)
-    {
-        var aluno = alunos.FirstOrDefault(a => a.Id == alunoId);
-        if (aluno == null) return false;
-
-        var inscricao = aluno.ObterInscricao(edicao);
-        if (inscricao == null) return false;
-
-        return !inscricao.Ativa &&
-               inscricao.ClassificacaoFinal != null &&
-               inscricao.ClassificacaoFinal.Aprovado;
     }
 
     public Model(IGeradorDiploma gerador)
