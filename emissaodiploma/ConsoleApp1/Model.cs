@@ -152,10 +152,10 @@ public class InscricaoAluno
 public class Classificacao
 {
     public InscricaoAluno Inscricao { get; set; } = null!;
-    public double Nota { get; set; }
+    public Nota Nota { get; set; } = null!;
 
     // Regra: aprovado se nota >= 10
-    public bool Aprovado => Nota >= 10;
+    public bool Aprovado => Nota.Valor >= 10;
 }
 
 /// Representa uma inscrição simplificada
@@ -169,6 +169,19 @@ public class Inscricao
     public int? ClassificacaoFinal { get; set; }
 
     public string Estado { get; set; } = "";
+}
+
+/// Value Object que representa uma nota académica válida (0-20)
+public class Nota
+{
+    public double Valor { get; }
+
+    public Nota(double valor)
+    {
+        if (valor < 0 || valor > 20)
+            throw new NotaInvalidaException($"Nota '{valor}' invalida. Deve estar entre 0 e 20.");
+        Valor = valor;
+    }
 }
 
 /// EXCEÇÕES ESPECÍFICAS (boas práticas)
@@ -447,7 +460,7 @@ public class Model : IModelEventos
     // ================= CLASSIFICACAO =================
 
     /// Lanca a classificacao final de um aluno numa edicao
-    public void LancarClassificacao(int alunoId, string edicao, double nota)
+    public void LancarClassificacao(int alunoId, string edicao, Nota nota)
     {
         try
         {
@@ -463,9 +476,6 @@ public class Model : IModelEventos
             if (inscricao.ClassificacaoFinal != null)
                 throw new ClassificacaoJaExisteException("Ja existe uma classificacao para esta inscricao.");
 
-            if (nota < 0 || nota > 20)
-                throw new NotaInvalidaException($"Nota '{nota}' invalida. Deve estar entre 0 e 20.");
-
             var classificacao = new Classificacao
             {
                 Inscricao = inscricao,
@@ -477,7 +487,7 @@ public class Model : IModelEventos
             // Atualizar estado interno — Curry & Grace
             UltimaClassificacaoConsultada = classificacao;
             UltimaOperacaoSucesso = true;
-            UltimaMensagem = $"Classificacao lancada: {nota} | Aprovado: {classificacao.Aprovado}";
+            UltimaMensagem = $"Classificacao lancada: {nota.Valor} | Aprovado: {classificacao.Aprovado}";
             Resultado?.Invoke(this, new ResultadoEventArgs(true, UltimaMensagem));
             ClassificacaoCriada?.Invoke(this, new ClassificacaoEventArgs(classificacao));
         }
@@ -500,12 +510,6 @@ public class Model : IModelEventos
             Resultado?.Invoke(this, new ResultadoEventArgs(false, UltimaMensagem));
         }
         catch (ClassificacaoJaExisteException e)
-        {
-            UltimaOperacaoSucesso = false;
-            UltimaMensagem = e.Message;
-            Resultado?.Invoke(this, new ResultadoEventArgs(false, UltimaMensagem));
-        }
-        catch (NotaInvalidaException e)
         {
             UltimaOperacaoSucesso = false;
             UltimaMensagem = e.Message;

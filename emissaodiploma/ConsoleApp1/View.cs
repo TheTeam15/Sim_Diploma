@@ -19,7 +19,7 @@ public class View
     public event Action<int, string>?         OnCriarAluno;
     public event Action<int, string>?         OnCriarInscricao;
     public event Action<int, string>?         OnConcluirInscricao;
-    public event Action<int, string, double>? OnClassificar;
+    public event Action<int, string, Nota>? OnClassificar;
     public event Action<int>?                 OnConsultarAluno;
     public event Action<int, string>?         OnConsultarInscricao;
     public event Action<int, string>?         OnConsultarClassificacao;
@@ -165,13 +165,21 @@ public class View
         }
 
         Console.Write("Nota (0-20): ");
-        if (!double.TryParse(Console.ReadLine(), out double nota))
+        if (!double.TryParse(Console.ReadLine(), out double valor))
         {
             Console.WriteLine("Nota invalida. Introduza um numero entre 0 e 20.");
             return;
         }
 
-        OnClassificar?.Invoke(id, ed, nota);
+        try
+        {
+            Nota nota = new Nota(valor);
+            OnClassificar?.Invoke(id, ed, nota);
+        }
+        catch (NotaInvalidaException e)
+        {
+            Console.WriteLine($"ERRO: {e.Message}");
+        }
     }
 
     void ConsultarAluno()
@@ -270,7 +278,7 @@ public class View
         var c = e.Classificacao; // dados da classificacao RECEM lancada
 
         Console.WriteLine($"\n=== CLASSIFICACAO LANCADA ===");
-        Console.WriteLine($"Nota:     {c.Nota}");
+        Console.WriteLine($"Nota:     {c.Nota.Valor}");
         Console.WriteLine($"Aprovado: {c.Aprovado}");
     }
 
@@ -321,7 +329,7 @@ public class View
         }
 
         Console.WriteLine($"\n=== CLASSIFICACAO ===");
-        Console.WriteLine($"Nota:     {c.Nota}");
+        Console.WriteLine($"Nota:     {c.Nota.Valor}");
         Console.WriteLine($"Aprovado: {c.Aprovado}");
     }
 
