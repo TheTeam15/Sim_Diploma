@@ -393,19 +393,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\joseb\\.nuget\\packages\\": {}
+    "C:\\Users\\marco.carlota\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\joseb\\OneDrive\\Engenharia Informática\\2.2 - Laboratório de Desenvolvimento de Software\\Sim_Diploma\\emissaodiploma\\ConsoleApp1\\ConsoleApp1.csproj",
+      "projectUniqueName": "C:\\Users\\marco.carlota\\source\\repos\\SIM_Diploma\\emissaodiploma\\ConsoleApp1\\ConsoleApp1.csproj",
       "projectName": "ConsoleApp1",
-      "projectPath": "C:\\Users\\joseb\\OneDrive\\Engenharia Informática\\2.2 - Laboratório de Desenvolvimento de Software\\Sim_Diploma\\emissaodiploma\\ConsoleApp1\\ConsoleApp1.csproj",
-      "packagesPath": "C:\\Users\\joseb\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\joseb\\OneDrive\\Engenharia Informática\\2.2 - Laboratório de Desenvolvimento de Software\\Sim_Diploma\\emissaodiploma\\ConsoleApp1\\obj\\",
+      "projectPath": "C:\\Users\\marco.carlota\\source\\repos\\SIM_Diploma\\emissaodiploma\\ConsoleApp1\\ConsoleApp1.csproj",
+      "packagesPath": "C:\\Users\\marco.carlota\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\marco.carlota\\source\\repos\\SIM_Diploma\\emissaodiploma\\ConsoleApp1\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\joseb\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\marco.carlota\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -417,6 +417,7 @@
       },
       "frameworks": {
         "net10.0": {
+          "framework": "net10.0",
           "targetAlias": "net10.0",
           "projectReferences": {}
         }
@@ -435,6 +436,7 @@
     },
     "frameworks": {
       "net10.0": {
+        "framework": "net10.0",
         "targetAlias": "net10.0",
         "dependencies": {
           "PDFsharp": {
@@ -458,7 +460,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.203/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.204/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.CSharp": "(,4.7.32767]",
           "Microsoft.VisualBasic": "(,10.4.32767]",

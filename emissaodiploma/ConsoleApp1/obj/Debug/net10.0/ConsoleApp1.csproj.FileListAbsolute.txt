@@ -36,3 +36,33 @@ C:\Users\joseb\OneDrive\Engenharia Informática\2.2 - Laboratório de Desenvolvi
 C:\Users\joseb\OneDrive\Engenharia Informática\2.2 - Laboratório de Desenvolvimento de Software\Sim_Diploma\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\ConsoleApp1.dll
 C:\Users\joseb\OneDrive\Engenharia Informática\2.2 - Laboratório de Desenvolvimento de Software\Sim_Diploma\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\refint\ConsoleApp1.dll
 C:\Users\joseb\OneDrive\Engenharia Informática\2.2 - Laboratório de Desenvolvimento de Software\Sim_Diploma\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\ConsoleApp1.pdb
+C:\Users\marco.carlota\source\repos\SIM_Diploma\emissaodiploma\ConsoleApp1\bin\Debug\net10.0\ConsoleApp1.exe
+C:\Users\marco.carlota\source\repos\SIM_Diploma\emissaodiploma\ConsoleApp1\bin\Debug\net10.0\ConsoleApp1.deps.json
+C:\Users\marco.carlota\source\repos\SIM_Diploma\emissaodiploma\ConsoleApp1\bin\Debug\net10.0\ConsoleApp1.runtimeconfig.json
+C:\Users\marco.carlota\source\repos\SIM_Diploma\emissaodiploma\ConsoleApp1\bin\Debug\net10.0\ConsoleApp1.dll
+C:\Users\marco.carlota\source\repos\SIM_Diploma\emissaodiploma\ConsoleApp1\bin\Debug\net10.0\ConsoleApp1.pdb
+C:\Users\marco.carlota\source\repos\SIM_Diploma\emissaodiploma\ConsoleApp1\bin\Debug\net10.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\marco.carlota\source\repos\SIM_Diploma\emissaodiploma\ConsoleApp1\bin\Debug\net10.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\marco.carlota\source\repos\SIM_Diploma\emissaodiploma\ConsoleApp1\bin\Debug\net10.0\PdfSharp.BarCodes.dll
+C:\Users\marco.carlota\source\repos\SIM_Diploma\emissaodiploma\ConsoleApp1\bin\Debug\net10.0\PdfSharp.Charting.dll
+C:\Users\marco.carlota\source\repos\SIM_Diploma\emissaodiploma\ConsoleApp1\bin\Debug\net10.0\PdfSharp.Cryptography.dll
+C:\Users\marco.carlota\source\repos\SIM_Diploma\emissaodiploma\ConsoleApp1\bin\Debug\net10.0\PdfSharp.Quality.dll
+C:\Users\marco.carlota\source\repos\SIM_Diploma\emissaodiploma\ConsoleApp1\bin\Debug\net10.0\PdfSharp.Shared.dll
+C:\Users\marco.carlota\source\repos\SIM_Diploma\emissaodiploma\ConsoleApp1\bin\Debug\net10.0\PdfSharp.Snippets.dll
+C:\Users\marco.carlota\source\repos\SIM_Diploma\emissaodiploma\ConsoleApp1\bin\Debug\net10.0\PdfSharp.System.dll
+C:\Users\marco.carlota\source\repos\SIM_Diploma\emissaodiploma\ConsoleApp1\bin\Debug\net10.0\PdfSharp.WPFonts.dll
+C:\Users\marco.carlota\source\repos\SIM_Diploma\emissaodiploma\ConsoleApp1\bin\Debug\net10.0\PdfSharp.dll
+C:\Users\marco.carlota\source\repos\SIM_Diploma\emissaodiploma\ConsoleApp1\bin\Debug\net10.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\marco.carlota\source\repos\SIM_Diploma\emissaodiploma\ConsoleApp1\bin\Debug\net10.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\marco.carlota\source\repos\SIM_Diploma\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\ConsoleApp1.csproj.AssemblyReference.cache
+C:\Users\marco.carlota\source\repos\SIM_Diploma\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\ConsoleApp1.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\marco.carlota\source\repos\SIM_Diploma\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\ConsoleApp1.AssemblyInfoInputs.cache
+C:\Users\marco.carlota\source\repos\SIM_Diploma\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\ConsoleApp1.AssemblyInfo.cs
+C:\Users\marco.carlota\source\repos\SIM_Diploma\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\ConsoleApp1.csproj.CoreCompileInputs.cache
+C:\Users\marco.carlota\source\repos\SIM_Diploma\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\ConsoleApp1.sourcelink.json
+C:\Users\marco.carlota\source\repos\SIM_Diploma\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\ConsoleA.CB28C8CC.Up2Date
+C:\Users\marco.carlota\source\repos\SIM_Diploma\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\ConsoleApp1.dll
+C:\Users\marco.carlota\source\repos\SIM_Diploma\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\refint\ConsoleApp1.dll
+C:\Users\marco.carlota\source\repos\SIM_Diploma\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\ConsoleApp1.pdb
+C:\Users\marco.carlota\source\repos\SIM_Diploma\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\ConsoleApp1.genruntimeconfig.cache
+C:\Users\marco.carlota\source\repos\SIM_Diploma\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\ref\ConsoleApp1.dll

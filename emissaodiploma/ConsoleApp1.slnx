@@ -1,5 +1,4 @@
 <Solution>
   <Folder Name="/Itens de Solução/" />
-  <Project Path="ConsoleApp1.Tests/ConsoleApp1.Tests.csproj" />
   <Project Path="ConsoleApp1/ConsoleApp1.csproj" />
 </Solution>
