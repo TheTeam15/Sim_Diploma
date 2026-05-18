@@ -56,8 +56,8 @@ public class Controller
 
     public void ConsultarClassificacao(int alunoId, string edicao)
         => _model.ConsultarClassificacao(alunoId, edicao);
-
-    /// Método que inicia o processo de emissão
+        
+        /// Método que inicia o processo de emissão
     public void EmitirDiploma(string nomeAluno, string curso)
     {
         _model.EmitirDiploma(nomeAluno, curso);

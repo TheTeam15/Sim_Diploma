@@ -5,6 +5,26 @@ using System.Linq;
 /// Classe que transporta o resultado da validação.
 /// Usada para comunicar informação do Model para a View.
 
+public interface IAluno
+{
+    int Id { get; }
+    string Nome { get; }
+}
+
+public interface IInscricaoAluno
+{
+    int AlunoId { get; }
+    string Edicao { get; }
+    bool Ativa { get; }
+    bool TemClassificacao { get; }
+}
+
+public interface IClassificacao
+{
+    double NotaValor { get; }
+    bool Aprovado { get; }
+}
+
 /// Transporta o resultado de uma operacao (sucesso/erro + mensagem)
 public class ResultadoEventArgs : EventArgs
 {
@@ -21,9 +41,9 @@ public class ResultadoEventArgs : EventArgs
 /// Transporta uma InscricaoAluno criada
 public class InscricaoAlunoEventArgs : EventArgs
 {
-    public InscricaoAluno Inscricao { get; }
+    public IInscricaoAluno Inscricao { get; }
 
-    public InscricaoAlunoEventArgs(InscricaoAluno inscricao)
+    public InscricaoAlunoEventArgs(IInscricaoAluno inscricao)
     {
         Inscricao = inscricao;
     }
@@ -32,9 +52,9 @@ public class InscricaoAlunoEventArgs : EventArgs
 /// Transporta uma Classificacao criada
 public class ClassificacaoEventArgs : EventArgs
 {
-    public Classificacao Classificacao { get; }
+    public IClassificacao Classificacao { get; }
 
-    public ClassificacaoEventArgs(Classificacao classificacao)
+    public ClassificacaoEventArgs(IClassificacao classificacao)
     {
         Classificacao = classificacao;
     }
@@ -43,9 +63,9 @@ public class ClassificacaoEventArgs : EventArgs
 /// Transporta um Aluno consultado (pode ser null se nao encontrado)
 public class AlunoEventArgs : EventArgs
 {
-    public Aluno? Aluno { get; }
+    public IAluno? Aluno { get; }
 
-    public AlunoEventArgs(Aluno? aluno)
+    public AlunoEventArgs(IAluno? aluno)
     {
         Aluno = aluno;
     }
@@ -54,9 +74,9 @@ public class AlunoEventArgs : EventArgs
 /// Transporta uma InscricaoAluno consultada (pode ser null)
 public class InscricaoAlunoConsultadaEventArgs : EventArgs
 {
-    public InscricaoAluno? Inscricao { get; }
+    public IInscricaoAluno? Inscricao { get; }
 
-    public InscricaoAlunoConsultadaEventArgs(InscricaoAluno? inscricao)
+    public InscricaoAlunoConsultadaEventArgs(IInscricaoAluno? inscricao)
     {
         Inscricao = inscricao;
     }
@@ -65,9 +85,9 @@ public class InscricaoAlunoConsultadaEventArgs : EventArgs
 /// Transporta uma Classificacao consultada (pode ser null)
 public class ClassificacaoConsultadaEventArgs : EventArgs
 {
-    public Classificacao? Classificacao { get; }
+    public IClassificacao? Classificacao { get; }
 
-    public ClassificacaoConsultadaEventArgs(Classificacao? classificacao)
+    public ClassificacaoConsultadaEventArgs(IClassificacao? classificacao)
     {
         Classificacao = classificacao;
     }
@@ -115,7 +135,7 @@ public interface IModelEventos
 /// (no futuro deve refletir o modelo UML completo)
 
 /// Representa um aluno do sistema
-public class Aluno
+public class Aluno : IAluno
 {
     public int Id { get; set; }
     public string Nome { get; set; } = string.Empty;
@@ -133,7 +153,7 @@ public class Aluno
 }
 
 /// Representa a inscricao de um aluno numa edicao
-public class InscricaoAluno
+    public class InscricaoAluno : IInscricaoAluno
 {
     public int AlunoId { get; set; }
     public string Edicao { get; set; } = string.Empty;
@@ -149,13 +169,16 @@ public class InscricaoAluno
 }
 
 /// Representa a classificacao final de uma inscricao
-public class Classificacao
+public class Classificacao : IClassificacao
 {
     public InscricaoAluno Inscricao { get; set; } = null!;
     public Nota Nota { get; set; } = null!;
 
     // Regra: aprovado se nota >= 10
     public bool Aprovado => Nota.Valor >= 10;
+
+    // propriedade usada pela interface
+    public double NotaValor => Nota.Valor;
 }
 
 /// Representa uma inscrição simplificada
@@ -293,7 +316,7 @@ public class Model : IModelEventos
 
     /// Notifica resultado de consulta de classificacao
     public event EventHandler<ClassificacaoConsultadaEventArgs>? ClassificacaoConsultada;
-
+    
     // Dependência abstraída (injeção via interface)
     private readonly IGeradorDiploma _gerador;
 
@@ -549,7 +572,7 @@ public class Model : IModelEventos
         UltimaClassificacaoConsultada = insc?.ClassificacaoFinal;
         ClassificacaoConsultada?.Invoke(this, new ClassificacaoConsultadaEventArgs(UltimaClassificacaoConsultada));
     }
-
+    
     public Model(IGeradorDiploma gerador)
     {
         _gerador = gerador;
