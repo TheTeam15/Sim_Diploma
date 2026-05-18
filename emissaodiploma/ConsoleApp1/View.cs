@@ -248,7 +248,7 @@ public class View
         // Envia evento para o Controller
         OnEmitirDiploma?.Invoke(nome, curso);
     }
-
+    
     // ================= OUTPUT (Curry & Grace) =================
     // 1. Model notificou a View (evento)
     // 2. View vai buscar dados ao estado interno do Model (sender)
@@ -278,7 +278,7 @@ public class View
         var c = e.Classificacao; // dados da classificacao RECEM lancada
 
         Console.WriteLine($"\n=== CLASSIFICACAO LANCADA ===");
-        Console.WriteLine($"Nota:     {c.Nota.Valor}");
+        Console.WriteLine($"Nota: {c.NotaValor}");
         Console.WriteLine($"Aprovado: {c.Aprovado}");
     }
 
@@ -296,7 +296,6 @@ public class View
         Console.WriteLine($"\n=== ALUNO ===");
         Console.WriteLine($"ID:         {a.Id}");
         Console.WriteLine($"Nome:       {a.Nome}");
-        Console.WriteLine($"Inscricoes: {a.Inscricoes.Count}");
     }
 
     /// Inscricao consultada — View vai buscar ao estado interno do Model
@@ -329,11 +328,11 @@ public class View
         }
 
         Console.WriteLine($"\n=== CLASSIFICACAO ===");
-        Console.WriteLine($"Nota:     {c.Nota.Valor}");
+        Console.WriteLine($"Nota:     {c.NotaValor}");
         Console.WriteLine($"Aprovado: {c.Aprovado}");
     }
-
-    /// Apresenta o resultado da validação
+    
+/// Apresenta o resultado da validação
     private void MostrarValidacao(object? sender, ValidacaoEventArgs e)
     {
         Console.WriteLine("[VIEW] " + e.Mensagem);
