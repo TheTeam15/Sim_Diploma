@@ -332,43 +332,23 @@ public class Model : IModelEventos
     /// Regista um novo aluno no sistema
     public void RegistarAluno(int id, string nome)
     {
-        try
-        {
-            if (string.IsNullOrWhiteSpace(nome))
-                throw new ArgumentException("Nome invalido.");
+        if (string.IsNullOrWhiteSpace(nome))
+            throw new ArgumentException("Nome invalido.");
 
-            if (id <= 0)
-                throw new ArgumentException("ID invalido.");
+        if (id <= 0)
+            throw new ArgumentException("ID invalido.");
 
-            if (alunos.Any(a => a.Id == id))
-                throw new AlunoJaExisteException($"Ja existe um aluno com o ID {id}.");
+        if (alunos.Any(a => a.Id == id))
+            throw new AlunoJaExisteException($"Ja existe um aluno com o ID {id}.");
 
-            var aluno = new Aluno { Id = id, Nome = nome };
-            alunos.Add(aluno);
+        var aluno = new Aluno { Id = id, Nome = nome };
+        alunos.Add(aluno);
 
-            // Atualizar estado interno — Curry & Grace
-            UltimaOperacaoSucesso = true;
-            UltimaMensagem = $"Aluno '{nome}' registado com sucesso.";
-            Resultado?.Invoke(this, new ResultadoEventArgs(true, UltimaMensagem));
-        }
-        catch (AlunoJaExisteException e)
-        {
-            UltimaOperacaoSucesso = false;
-            UltimaMensagem = e.Message;
-            Resultado?.Invoke(this, new ResultadoEventArgs(false, UltimaMensagem));
-        }
-        catch (ArgumentException e)
-        {
-            UltimaOperacaoSucesso = false;
-            UltimaMensagem = e.Message;
-            Resultado?.Invoke(this, new ResultadoEventArgs(false, UltimaMensagem));
-        }
-        catch (Exception e)
-        {
-            UltimaOperacaoSucesso = false;
-            UltimaMensagem = $"Erro inesperado: {e.Message}";
-            Resultado?.Invoke(this, new ResultadoEventArgs(false, UltimaMensagem));
-        }
+        // Atualizar estado interno — Curry & Grace
+        UltimaOperacaoSucesso = true;
+        UltimaMensagem = $"Aluno '{nome}' registado com sucesso.";
+            
+        Resultado?.Invoke(this, new ResultadoEventArgs(true, UltimaMensagem));
     }
 
     /// Verifica se existe aluno com o id dado
@@ -380,104 +360,52 @@ public class Model : IModelEventos
     /// Inscreve um aluno numa edicao
     public void InscreverAluno(int alunoId, string edicao)
     {
-        try
-        {
-            var aluno = alunos.FirstOrDefault(a => a.Id == alunoId)
-                ?? throw new AlunoNaoEncontradoException($"Aluno com ID {alunoId} nao existe.");
+        var aluno = alunos.FirstOrDefault(a => a.Id == alunoId)
+            ?? throw new AlunoNaoEncontradoException($"Aluno com ID {alunoId} nao existe.");
 
-            if (string.IsNullOrWhiteSpace(edicao))
-                throw new ArgumentException("Edicao invalida.");
+        if (string.IsNullOrWhiteSpace(edicao))
+            throw new ArgumentException("Edicao invalida.");
 
-            if (aluno.TemInscricaoAtiva(edicao))
-                throw new InscricaoAlunoDuplicadaException($"Ja existe uma inscricao ativa na edicao '{edicao}'.");
+        if (aluno.TemInscricaoAtiva(edicao))
+            throw new InscricaoAlunoDuplicadaException($"Ja existe uma inscricao ativa na edicao '{edicao}'.");
 
-            var inscricao = new InscricaoAluno
-            {
-                AlunoId = alunoId,
-                Edicao = edicao,
-                Ativa = true
-            };
+        var inscricao = new InscricaoAluno
+        {
+            AlunoId = alunoId,
+            Edicao = edicao,
+            Ativa = true
+        };
 
-            aluno.Inscricoes.Add(inscricao);
+        aluno.Inscricoes.Add(inscricao);
 
-            // Atualizar estado interno — Curry & Grace
-            UltimaInscricaoConsultada = inscricao;
-            UltimaOperacaoSucesso = true;
-            UltimaMensagem = $"Inscricao na edicao '{edicao}' realizada com sucesso.";
-            Resultado?.Invoke(this, new ResultadoEventArgs(true, UltimaMensagem));
-            InscricaoCriada?.Invoke(this, new InscricaoAlunoEventArgs(inscricao));
-        }
-        catch (AlunoNaoEncontradoException e)
-        {
-            UltimaOperacaoSucesso = false;
-            UltimaMensagem = e.Message;
-            Resultado?.Invoke(this, new ResultadoEventArgs(false, UltimaMensagem));
-        }
-        catch (InscricaoAlunoDuplicadaException e)
-        {
-            UltimaOperacaoSucesso = false;
-            UltimaMensagem = e.Message;
-            Resultado?.Invoke(this, new ResultadoEventArgs(false, UltimaMensagem));
-        }
-        catch (ArgumentException e)
-        {
-            UltimaOperacaoSucesso = false;
-            UltimaMensagem = e.Message;
-            Resultado?.Invoke(this, new ResultadoEventArgs(false, UltimaMensagem));
-        }
-        catch (Exception e)
-        {
-            UltimaOperacaoSucesso = false;
-            UltimaMensagem = $"Erro inesperado: {e.Message}";
-            Resultado?.Invoke(this, new ResultadoEventArgs(false, UltimaMensagem));
-        }
+        // Atualizar estado interno — Curry & Grace
+        UltimaInscricaoConsultada = inscricao;
+        UltimaOperacaoSucesso = true;
+        UltimaMensagem = $"Inscricao na edicao '{edicao}' realizada com sucesso.";
+
+        Resultado?.Invoke(this, new ResultadoEventArgs(true, UltimaMensagem));
+        InscricaoCriada?.Invoke(this, new InscricaoAlunoEventArgs(inscricao));
     }
 
     /// Conclui a inscricao de um aluno numa edicao
     public void ConcluirInscricao(int alunoId, string edicao)
     {
-        try
-        {
-            var aluno = alunos.FirstOrDefault(a => a.Id == alunoId)
-                ?? throw new AlunoNaoEncontradoException($"Aluno com ID {alunoId} nao existe.");
+        var aluno = alunos.FirstOrDefault(a => a.Id == alunoId)
+            ?? throw new AlunoNaoEncontradoException($"Aluno com ID {alunoId} nao existe.");
 
-            var inscricao = aluno.ObterInscricao(edicao)
-                ?? throw new InscricaoAlunoNaoEncontradaException($"Inscricao na edicao '{edicao}' nao encontrada.");
+        var inscricao = aluno.ObterInscricao(edicao)
+            ?? throw new InscricaoAlunoNaoEncontradaException($"Inscricao na edicao '{edicao}' nao encontrada.");
 
-            if (!inscricao.Ativa)
-                throw new InscricaoAlunoJaConcluidaException("A inscricao ja se encontra concluida.");
+        if (!inscricao.Ativa)
+            throw new InscricaoAlunoJaConcluidaException("A inscricao ja se encontra concluida.");
 
-            inscricao.Ativa = false;
+        inscricao.Ativa = false;
 
-            // Atualizar estado interno — Curry & Grace
-            UltimaOperacaoSucesso = true;
-            UltimaMensagem = $"Inscricao na edicao '{edicao}' concluida com sucesso.";
-            Resultado?.Invoke(this, new ResultadoEventArgs(true, UltimaMensagem));
-        }
-        catch (AlunoNaoEncontradoException e)
-        {
-            UltimaOperacaoSucesso = false;
-            UltimaMensagem = e.Message;
-            Resultado?.Invoke(this, new ResultadoEventArgs(false, UltimaMensagem));
-        }
-        catch (InscricaoAlunoNaoEncontradaException e)
-        {
-            UltimaOperacaoSucesso = false;
-            UltimaMensagem = e.Message;
-            Resultado?.Invoke(this, new ResultadoEventArgs(false, UltimaMensagem));
-        }
-        catch (InscricaoAlunoJaConcluidaException e)
-        {
-            UltimaOperacaoSucesso = false;
-            UltimaMensagem = e.Message;
-            Resultado?.Invoke(this, new ResultadoEventArgs(false, UltimaMensagem));
-        }
-        catch (Exception e)
-        {
-            UltimaOperacaoSucesso = false;
-            UltimaMensagem = $"Erro inesperado: {e.Message}";
-            Resultado?.Invoke(this, new ResultadoEventArgs(false, UltimaMensagem));
-        }
+        // Atualizar estado interno — Curry & Grace
+        UltimaOperacaoSucesso = true;
+        UltimaMensagem = $"Inscricao na edicao '{edicao}' concluida com sucesso.";
+
+        Resultado?.Invoke(this, new ResultadoEventArgs(true, UltimaMensagem));
     }
 
     // ================= CLASSIFICACAO =================
@@ -485,65 +413,33 @@ public class Model : IModelEventos
     /// Lanca a classificacao final de um aluno numa edicao
     public void LancarClassificacao(int alunoId, string edicao, Nota nota)
     {
-        try
-        {
-            var aluno = alunos.FirstOrDefault(a => a.Id == alunoId)
-                ?? throw new AlunoNaoEncontradoException($"Aluno com ID {alunoId} nao existe.");
+        var aluno = alunos.FirstOrDefault(a => a.Id == alunoId)
+            ?? throw new AlunoNaoEncontradoException($"Aluno com ID {alunoId} nao existe.");
 
-            var inscricao = aluno.ObterInscricao(edicao)
-                ?? throw new InscricaoAlunoNaoEncontradaException($"Inscricao na edicao '{edicao}' nao encontrada.");
+        var inscricao = aluno.ObterInscricao(edicao)
+            ?? throw new InscricaoAlunoNaoEncontradaException($"Inscricao na edicao '{edicao}' nao encontrada.");
 
-            if (inscricao.Ativa)
-                throw new InscricaoAlunoAindaAtivaException("A inscricao deve estar concluida antes de lancar classificacao.");
+        if (inscricao.Ativa)
+            throw new InscricaoAlunoAindaAtivaException("A inscricao deve estar concluida antes de lancar classificacao.");
 
-            if (inscricao.ClassificacaoFinal != null)
-                throw new ClassificacaoJaExisteException("Ja existe uma classificacao para esta inscricao.");
+        if (inscricao.ClassificacaoFinal != null)
+            throw new ClassificacaoJaExisteException("Ja existe uma classificacao para esta inscricao.");
 
-            var classificacao = new Classificacao
-            {
-                Inscricao = inscricao,
-                Nota = nota
-            };
+        var classificacao = new Classificacao
+        {
+            Inscricao = inscricao,
+            Nota = nota
+        };
 
-            inscricao.ClassificacaoFinal = classificacao;
+        inscricao.ClassificacaoFinal = classificacao;
 
-            // Atualizar estado interno — Curry & Grace
-            UltimaClassificacaoConsultada = classificacao;
-            UltimaOperacaoSucesso = true;
-            UltimaMensagem = $"Classificacao lancada: {nota.Valor} | Aprovado: {classificacao.Aprovado}";
-            Resultado?.Invoke(this, new ResultadoEventArgs(true, UltimaMensagem));
-            ClassificacaoCriada?.Invoke(this, new ClassificacaoEventArgs(classificacao));
-        }
-        catch (AlunoNaoEncontradoException e)
-        {
-            UltimaOperacaoSucesso = false;
-            UltimaMensagem = e.Message;
-            Resultado?.Invoke(this, new ResultadoEventArgs(false, UltimaMensagem));
-        }
-        catch (InscricaoAlunoNaoEncontradaException e)
-        {
-            UltimaOperacaoSucesso = false;
-            UltimaMensagem = e.Message;
-            Resultado?.Invoke(this, new ResultadoEventArgs(false, UltimaMensagem));
-        }
-        catch (InscricaoAlunoAindaAtivaException e)
-        {
-            UltimaOperacaoSucesso = false;
-            UltimaMensagem = e.Message;
-            Resultado?.Invoke(this, new ResultadoEventArgs(false, UltimaMensagem));
-        }
-        catch (ClassificacaoJaExisteException e)
-        {
-            UltimaOperacaoSucesso = false;
-            UltimaMensagem = e.Message;
-            Resultado?.Invoke(this, new ResultadoEventArgs(false, UltimaMensagem));
-        }
-        catch (Exception e)
-        {
-            UltimaOperacaoSucesso = false;
-            UltimaMensagem = $"Erro inesperado: {e.Message}";
-            Resultado?.Invoke(this, new ResultadoEventArgs(false, UltimaMensagem));
-        }
+        // Atualizar estado interno — Curry & Grace
+        UltimaClassificacaoConsultada = classificacao;
+        UltimaOperacaoSucesso = true;
+        UltimaMensagem = $"Classificacao lancada: {nota.Valor} | Aprovado: {classificacao.Aprovado}";
+    
+        Resultado?.Invoke(this, new ResultadoEventArgs(true, UltimaMensagem));
+        ClassificacaoCriada?.Invoke(this, new ClassificacaoEventArgs(classificacao));
     }
 
     // ================= CONSULTAS =================
@@ -603,47 +499,39 @@ public class Model : IModelEventos
     /// 4. Notificação da View
     public void EmitirDiploma(string nomeAluno, string curso)
     {
-        try
+        // Validação básica
+        if (string.IsNullOrWhiteSpace(nomeAluno))
+            throw new ArgumentException("Nome do aluno inválido.");
+
+        if (string.IsNullOrWhiteSpace(curso))
+            throw new ArgumentException("Curso invalido.");
+
+        // Simulação de dados (no futuro virá do sistema real)
+        Inscricao inscricao = new Inscricao
         {
-            // Simulação de dados (no futuro virá do sistema real)
-            Inscricao inscricao = new Inscricao
-            {
-                NomeAluno = nomeAluno,
-                Curso = curso,
-                ClassificacaoFinal = 14,
-                Estado = "Concluida"
-            };
+            NomeAluno = nomeAluno,
+            Curso = curso,
+            ClassificacaoFinal = 14,
+            Estado = "Concluida"
+        };
 
-            // Validação básica
-            if (string.IsNullOrWhiteSpace(nomeAluno))
-                throw new ArgumentException("Erro: Nome do aluno inválido.");
+        // Regras de negócio (RG07)
+        ValidarElegibilidade(inscricao);
 
-            // Regras de negócio (RG07)
-            ValidarElegibilidade(inscricao);
+        UltimaValidacaoSucesso = true;
 
-            UltimaValidacaoSucesso = true;
+        // Notifica sucesso de validação
+        OnValidacao?.Invoke(this,
+            new ValidacaoEventArgs(true, "Validação concluída com sucesso."));
 
-            // Notifica sucesso de validação
-            OnValidacao?.Invoke(this,
-                new ValidacaoEventArgs(true, "Validação concluída com sucesso."));
+        // Geração do diploma (delegada ao serviço)
+        byte[] pdf = _gerador.Gerar(nomeAluno, curso);
 
-            // Geração do diploma (delegada ao serviço)
-            byte[] pdf = _gerador.Gerar(nomeAluno, curso);
+        // Guardar estado interno
+        UltimoDiploma = pdf;
 
-            // Guardar estado interno
-            UltimoDiploma = pdf;
-
-            // Notificar a View com o resultado
-            OnDiplomaEmitido?.Invoke(this,
-                new DiplomaEmitidoEventArgs(pdf));
-        }
-        catch (Exception ex)
-        {
-            UltimaValidacaoSucesso = false;
-
-            // Notificar erro
-            OnValidacao?.Invoke(this,
-                new ValidacaoEventArgs(false, ex.Message));
-        }
+        // Notificar a View com o resultado
+        OnDiplomaEmitido?.Invoke(this,
+           new DiplomaEmitidoEventArgs(pdf));
     }
 }

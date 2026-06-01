@@ -19,7 +19,7 @@ public class View
     public event Action<int, string>?         OnCriarAluno;
     public event Action<int, string>?         OnCriarInscricao;
     public event Action<int, string>?         OnConcluirInscricao;
-    public event Action<int, string, Nota>? OnClassificar;
+    public event Action<int, string, double>? OnClassificar;
     public event Action<int>?                 OnConsultarAluno;
     public event Action<int, string>?         OnConsultarInscricao;
     public event Action<int, string>?         OnConsultarClassificacao;
@@ -171,15 +171,7 @@ public class View
             return;
         }
 
-        try
-        {
-            Nota nota = new Nota(valor);
-            OnClassificar?.Invoke(id, ed, nota);
-        }
-        catch (NotaInvalidaException e)
-        {
-            Console.WriteLine($"ERRO: {e.Message}");
-        }
+        OnClassificar?.Invoke(id, ed, valor);
     }
 
     void ConsultarAluno()
@@ -248,19 +240,24 @@ public class View
         // Envia evento para o Controller
         OnEmitirDiploma?.Invoke(nome, curso);
     }
-    
+
     // ================= OUTPUT (Curry & Grace) =================
     // 1. Model notificou a View (evento)
     // 2. View vai buscar dados ao estado interno do Model (sender)
     // 3. View apresenta ao utilizador
 
     /// Resultado generico de operacao
-    private void MostrarResultado(object? sender, ResultadoEventArgs e)
+    public void MostrarResultado(bool sucesso, string mensagem)
     {
-        Console.WriteLine(e.Sucesso ? $"OK: {e.Mensagem}" : $"ERRO: {e.Mensagem}");
+        Console.WriteLine(sucesso ? $"OK: {mensagem}" : $"ERRO: {mensagem}");
     }
 
-   /// Inscricao criada — dados vem do EventArgs (criacao, nao consulta)
+    private void MostrarResultado(object? sender, ResultadoEventArgs e)
+    {
+        MostrarResultado(e.Sucesso, e.Mensagem);
+    }
+
+    /// Inscricao criada — dados vem do EventArgs (criacao, nao consulta)
     private void MostrarInscricaoCriada(object? sender, InscricaoAlunoEventArgs e)
     {
         var i = e.Inscricao; // dados da inscricao RECEM criada

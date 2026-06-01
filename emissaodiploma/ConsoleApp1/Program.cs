@@ -18,14 +18,12 @@ class Program
 
         // View
         View view = new View();
-        view.Subscreber(model);
+
+        view.Subscrever(model);
 
         // Controller
         // O Controller liga os eventos da View aos métodos do Model
         Controller controller = new Controller(model, view);
-
-        // Ligação View → Controller
-        LigarEventosDaView(view);
 
         // Início do fluxo
         while (true)

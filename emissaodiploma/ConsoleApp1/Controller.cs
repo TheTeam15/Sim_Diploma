@@ -11,15 +11,12 @@
 public class Controller
 {
     private readonly Model _model;
-
-    public Controller(Model model)
-    {
-        _model = model;
-    }
+    private readonly View _view;
 
     public Controller(Model model, View view)
     {
         _model = model;
+        _view = view;
 
         LigarEventosDaView(view);
     }
@@ -36,30 +33,106 @@ public class Controller
         view.OnEmitirDiploma += EmitirDiploma;
     }
 
+    private void TratarErro(Exception e)
+    {
+        _view.MostrarResultado(false, e.Message);
+    }
+
     public void CriarAluno(int id, string nome)
-        => _model.RegistarAluno(id, nome);
+    {
+        try
+        {
+            _model.RegistarAluno(id, nome);
+        }
+        catch (Exception e)
+        {
+            TratarErro(e);
+        }
+    }
 
     public void CriarInscricao(int alunoId, string edicao)
-        => _model.InscreverAluno(alunoId, edicao);
+    {
+        try
+        {
+            _model.InscreverAluno(alunoId, edicao);
+        }
+        catch (Exception e)
+        {
+            TratarErro(e);
+        }
+    }
 
     public void ConcluirInscricao(int alunoId, string edicao)
-        => _model.ConcluirInscricao(alunoId, edicao);
+    {
+        try
+        {
+            _model.ConcluirInscricao(alunoId, edicao);
+        }
+        catch (Exception e)
+        {
+            TratarErro(e);
+        }
+    }
 
     public void Classificar(int alunoId, string edicao, Nota nota)
-        => _model.LancarClassificacao(alunoId, edicao, nota);
+    {
+        try
+        {
+            Nota nota = new Nota(valorNota);
+            _model.LancarClassificacao(alunoId, edicao, nota);
+        }
+        catch (Exception e)
+        {
+            TratarErro(e);
+        }
+    }
 
     public void ConsultarAluno(int id)
-        => _model.ConsultarAluno(id);
+    {
+        try
+        {
+            _model.ConsultarAluno(id);
+        }
+        catch (Exception e)
+        {
+            TratarErro(e);
+        }
+    }
 
     public void ConsultarInscricao(int alunoId, string edicao)
-        => _model.ConsultarInscricao(alunoId, edicao);
+    {
+        try
+        {
+            _model.ConsultarInscricao(alunoId, edicao);
+        }
+        catch (Exception e)
+        {
+            TratarErro(e);
+        }
+    }
 
     public void ConsultarClassificacao(int alunoId, string edicao)
-        => _model.ConsultarClassificacao(alunoId, edicao);
-        
-        /// Método que inicia o processo de emissão
+    {
+        try
+        {
+            _model.ConsultarClassificacao(alunoId, edicao);
+        }
+        catch (Exception e)
+        {
+            TratarErro(e);
+        }
+    }
+
+    /// Método que inicia o processo de emissão
     public void EmitirDiploma(string nomeAluno, string curso)
     {
-        _model.EmitirDiploma(nomeAluno, curso);
+        try
+        {
+            _model.EmitirDiploma(nomeAluno, curso);
+        }
+        catch (Exception e)
+        {
+            TratarErro(e);
+        }
     }
 }

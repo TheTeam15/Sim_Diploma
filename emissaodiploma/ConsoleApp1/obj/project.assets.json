@@ -398,11 +398,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\joseb\\OneDrive\\Engenharia Informática\\2.2 - Laboratório de Desenvolvimento de Software\\Sim_Diploma\\emissaodiploma\\ConsoleApp1\\ConsoleApp1.csproj",
+      "projectUniqueName": "C:\\Users\\joseb\\source\\repos\\TheTeam15\\Sim_Diploma\\emissaodiploma\\ConsoleApp1\\ConsoleApp1.csproj",
       "projectName": "ConsoleApp1",
-      "projectPath": "C:\\Users\\joseb\\OneDrive\\Engenharia Informática\\2.2 - Laboratório de Desenvolvimento de Software\\Sim_Diploma\\emissaodiploma\\ConsoleApp1\\ConsoleApp1.csproj",
+      "projectPath": "C:\\Users\\joseb\\source\\repos\\TheTeam15\\Sim_Diploma\\emissaodiploma\\ConsoleApp1\\ConsoleApp1.csproj",
       "packagesPath": "C:\\Users\\joseb\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\joseb\\OneDrive\\Engenharia Informática\\2.2 - Laboratório de Desenvolvimento de Software\\Sim_Diploma\\emissaodiploma\\ConsoleApp1\\obj\\",
+      "outputPath": "C:\\Users\\joseb\\source\\repos\\TheTeam15\\Sim_Diploma\\emissaodiploma\\ConsoleApp1\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\joseb\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -458,7 +458,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.203/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.204/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.CSharp": "(,4.7.32767]",
           "Microsoft.VisualBasic": "(,10.4.32767]",
