@@ -823,6 +823,65 @@ public class Model : IModelEventos
         }
     }
 
+    public void AlterarInstituicao(int idInstituicao, string nomeInstituicao, string cidade, string pais)
+    {
+        try
+        {
+            var instituicao = instituicoes.FirstOrDefault(i => i.IdInstituicao == idInstituicao)
+                ?? throw new InstituicaoNaoEncontradaException("A instituição indicada não existe.");
+
+            if (string.IsNullOrWhiteSpace(nomeInstituicao))
+                throw new ArgumentException("Nome da instituição inválido.");
+
+            if (string.IsNullOrWhiteSpace(cidade))
+                throw new ArgumentException("Cidade inválida.");
+
+            if (string.IsNullOrWhiteSpace(pais))
+                throw new ArgumentException("País inválido.");
+
+            instituicao.NomeInstituicao = nomeInstituicao;
+            instituicao.Cidade = cidade;
+            instituicao.Pais = pais;
+
+            UltimaInstituicaoGuardada = instituicao;
+            UltimaOperacaoSucesso = true;
+            UltimaMensagem = $"Instituição '{nomeInstituicao}' alterada com sucesso.";
+
+            Resultado?.Invoke(this, new ResultadoEventArgs(true, UltimaMensagem));
+            InstituicaoGuardada?.Invoke(this, new InstituicaoEventArgs(instituicao));
+        }
+        catch (Exception e)
+        {
+            UltimaOperacaoSucesso = false;
+            UltimaMensagem = e.Message;
+            Resultado?.Invoke(this, new ResultadoEventArgs(false, UltimaMensagem));
+        }
+    }
+
+    public void ApagarInstituicao(int idInstituicao)
+    {
+        try
+        {
+            var instituicao = instituicoes.FirstOrDefault(i => i.IdInstituicao == idInstituicao)
+                ?? throw new InstituicaoNaoEncontradaException("A instituição indicada não existe.");
+
+            if (cursos.Any(c => c.Instituicao.IdInstituicao == idInstituicao))
+                throw new InvalidOperationException("Não é possível apagar a instituição porque existem cursos associados.");
+
+            instituicoes.Remove(instituicao);
+
+            UltimaOperacaoSucesso = true;
+            UltimaMensagem = "Instituição apagada com sucesso.";
+            Resultado?.Invoke(this, new ResultadoEventArgs(true, UltimaMensagem));
+        }
+        catch (Exception e)
+        {
+            UltimaOperacaoSucesso = false;
+            UltimaMensagem = e.Message;
+            Resultado?.Invoke(this, new ResultadoEventArgs(false, UltimaMensagem));
+        }
+    }
+
     // GESTÃO DE CURSOS
     /// Cria um novo curso associado a uma instituição
     /// e comunica o resultado da operação
@@ -885,6 +944,64 @@ public class Model : IModelEventos
         {
             UltimaOperacaoSucesso = false;
             UltimaMensagem = $"Erro inesperado: {e.Message}";
+            Resultado?.Invoke(this, new ResultadoEventArgs(false, UltimaMensagem));
+        }
+    }
+
+    public void AlterarCurso(int idCurso, string nomeCurso,
+    string grauAcademico, string descricao, string estrutura)
+    {
+        try
+        {
+            var curso = cursos.FirstOrDefault(c => c.IdCurso == idCurso)
+                ?? throw new CursoNaoEncontradoException("O curso indicado não existe.");
+
+            if (string.IsNullOrWhiteSpace(nomeCurso))
+                throw new ArgumentException("Nome do curso inválido.");
+
+            if (string.IsNullOrWhiteSpace(grauAcademico))
+                throw new ArgumentException("Grau académico inválido.");
+
+            curso.NomeCurso = nomeCurso;
+            curso.GrauAcademico = grauAcademico;
+            curso.Descricao = descricao;
+            curso.Estrutura = estrutura;
+
+            UltimoCursoCriado = curso;
+            UltimaOperacaoSucesso = true;
+            UltimaMensagem = $"Curso '{nomeCurso}' alterado com sucesso.";
+
+            Resultado?.Invoke(this, new ResultadoEventArgs(true, UltimaMensagem));
+            CursoCriado?.Invoke(this, new CursoEventArgs(curso));
+        }
+        catch (Exception e)
+        {
+            UltimaOperacaoSucesso = false;
+            UltimaMensagem = e.Message;
+            Resultado?.Invoke(this, new ResultadoEventArgs(false, UltimaMensagem));
+        }
+    }
+
+    public void ApagarCurso(int idCurso)
+    {
+        try
+        {
+            var curso = cursos.FirstOrDefault(c => c.IdCurso == idCurso)
+                ?? throw new CursoNaoEncontradoException("O curso indicado não existe.");
+
+            if (edicoes.Any(e => e.Curso.IdCurso == idCurso))
+                throw new InvalidOperationException("Não é possível apagar o curso porque existem edições associadas.");
+
+            cursos.Remove(curso);
+
+            UltimaOperacaoSucesso = true;
+            UltimaMensagem = "Curso apagado com sucesso.";
+            Resultado?.Invoke(this, new ResultadoEventArgs(true, UltimaMensagem));
+        }
+        catch (Exception e)
+        {
+            UltimaOperacaoSucesso = false;
+            UltimaMensagem = e.Message;
             Resultado?.Invoke(this, new ResultadoEventArgs(false, UltimaMensagem));
         }
     }
@@ -990,6 +1107,68 @@ public class Model : IModelEventos
         {
             UltimaOperacaoSucesso = false;
             UltimaMensagem = $"Erro inesperado: {e.Message}";
+            Resultado?.Invoke(this, new ResultadoEventArgs(false, UltimaMensagem));
+        }
+    }
+
+    public void AlterarEdicao(int idEdicao, string anoLetivo,
+    DateTime dataInicio, DateTime dataFim, string modalidade)
+    {
+        try
+        {
+            var edicao = edicoes.FirstOrDefault(e => e.IdEdicao == idEdicao)
+                ?? throw new EdicaoNaoEncontradaException("A edição indicada não existe.");
+
+
+            if (string.IsNullOrWhiteSpace(anoLetivo))
+                throw new ArgumentException("Ano letivo inválido.");
+
+            if (string.IsNullOrWhiteSpace(modalidade))
+                throw new ArgumentException("Modalidade inválida.");
+
+            if (dataFim <= dataInicio)
+                throw new DataEdicaoInvalidaException("A data de fim deve ser posterior à data de início.");
+
+            edicao.AnoLetivo = anoLetivo;
+            edicao.DataInicio = dataInicio;
+            edicao.DataFim = dataFim;
+            edicao.Modalidade = modalidade;
+
+            UltimaEdicaoAlterada = edicao;
+            UltimaOperacaoSucesso = true;
+            UltimaMensagem = $"Edição '{idEdicao}' alterada com sucesso.";
+
+            Resultado?.Invoke(this, new ResultadoEventArgs(true, UltimaMensagem));
+            EdicaoCriada?.Invoke(this, new EdicaoEventArgs(edicao));
+        }
+        catch (Exception e)
+        {
+            UltimaOperacaoSucesso = false;
+            UltimaMensagem = e.Message;
+            Resultado?.Invoke(this, new ResultadoEventArgs(false, UltimaMensagem));
+        }
+    }
+
+    public void ApagarEdicao(int idEdicao)
+    {
+        try
+        {
+            var edicao = edicoes.FirstOrDefault(e => e.IdEdicao == idEdicao)
+                ?? throw new EdicaoNaoEncontradaException("A edição indicada não existe.");
+
+            if (alunos.Any(a => a.Inscricoes.Any(i => i.Edicao == idEdicao.ToString())))
+                throw new InvalidOperationException("Não é possível apagar a edição porque existem inscrições associadas.");
+
+            edicoes.Remove(edicao);
+
+            UltimaOperacaoSucesso = true;
+            UltimaMensagem = "Edição apagada com sucesso.";
+            Resultado?.Invoke(this, new ResultadoEventArgs(true, UltimaMensagem));
+        }
+        catch (Exception e)
+        {
+            UltimaOperacaoSucesso = false;
+            UltimaMensagem = e.Message;
             Resultado?.Invoke(this, new ResultadoEventArgs(false, UltimaMensagem));
         }
     }
