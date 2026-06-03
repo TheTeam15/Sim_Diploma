@@ -14,7 +14,7 @@ class Program
         IGeradorDiploma gerador = new Gerador();
 
         // Model
-        Model model = new Model(gerador);
+        Model model = new Model();
 
         // View
         View view = new View();

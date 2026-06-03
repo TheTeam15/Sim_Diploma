@@ -25,6 +25,22 @@ public class View
     public event Action<int, string>?         OnConsultarClassificacao;
     public event Action<string, string>? OnEmitirDiploma;
 
+    // EVENTOS DA GESTÃO ACADÉMICA
+    public event Action<int, string, string, string>? OnGuardarInstituicao;
+    public event Action<int, string, string, string>? OnAlterarInstituicao;
+    public event Action<int>? OnApagarInstituicao;
+    public event Action<int, int, string, string, string, string>? OnCriarCurso;
+    public event Action<int, string, string, string, string>? OnAlterarCurso;
+    public event Action<int>? OnApagarCurso;
+    public event Action<int, int, string, DateTime, DateTime, string>? OnCriarEdicao;
+    public event Action<int, string, DateTime, DateTime, string>? OnAlterarEdicao;
+    public event Action<int>? OnApagarEdicao;
+
+    public event Action<int, EstadoEdicao>? OnAlterarEstadoEdicao;
+    public event Action<int>? OnConsultarInstituicao;
+    public event Action<int>? OnConsultarCurso;
+    public event Action<int>? OnConsultarEdicao;
+
     /// Subscrição aos eventos do Model
     /// Liga a View ao fluxo de notificações
     public void Subscrever(IModelEventos model)
@@ -35,8 +51,13 @@ public class View
         model.AlunoConsultado += MostrarAluno;
         model.InscricaoConsultada += MostrarInscricaoConsultada;
         model.ClassificacaoConsultada += MostrarClassificacaoConsultada;
-        model.OnValidacao += MostrarValidacao;
-        model.OnDiplomaEmitido += MostrarDiploma;
+        model.InstituicaoGuardada += MostrarInstituicaoGuardada;
+        model.CursoCriado += MostrarCursoCriado;
+        model.EdicaoCriada += MostrarEdicaoCriada;
+        model.EstadoEdicaoAlterado += MostrarEstadoEdicaoAlterado;
+        model.InstituicaoConsultada += MostrarInstituicaoConsultada;
+        model.CursoConsultado += MostrarCursoConsultado;
+        model.EdicaoConsultada += MostrarEdicaoConsultada;
     }
 
     // Mantém compatibilidade com código já existente que use o nome antigo.
@@ -56,7 +77,9 @@ public class View
         Console.WriteLine("5 - Consultar Aluno");
         Console.WriteLine("6 - Consultar Inscricao");
         Console.WriteLine("7 - Consultar Classificacao");
-        Console.WriteLine("8 - Emitir Diploma");
+        Console.WriteLine("8 - Gestão de Instituições");
+        Console.WriteLine("9 - Gestão de Cursos");
+        Console.WriteLine("10 - Gestão de Edições");
         Console.WriteLine("0 - Sair");
 
         var op = Console.ReadLine();
@@ -70,7 +93,9 @@ public class View
             case "5": ConsultarAluno(); break;
             case "6": ConsultarInscricao(); break;
             case "7": ConsultarClassificacao(); break;
-            case "8": PedirEmissao(); break;
+            case "8": MenuInstituicoes(); break;
+            case "9": MenuCursos(); break;
+            case "10": MenuEdicoes(); break;
             case "0":
                 Console.WriteLine("O sistema foi encerrado.");
                 Environment.Exit(0);
@@ -81,7 +106,7 @@ public class View
         }
     }
 
- // ================= INPUT COM VALIDACAO =================
+    // ================= INPUT COM VALIDACAO =================
 
     void CriarAluno()
     {
@@ -228,17 +253,286 @@ public class View
         OnConsultarClassificacao?.Invoke(id, ed);
     }
 
-    /// Simula input do utilizador
-    public void PedirEmissao()
+    // ================= GESTÃO ACADÉMICA =================
+
+    void GuardarInstituicao()
     {
-        Console.WriteLine("Nome do aluno:");
-        string nome = Console.ReadLine() ?? ""; // evita null
+        Console.Write("Id Instituicao: ");
+        if (!int.TryParse(Console.ReadLine(), out int id))
+        {
+            Console.WriteLine("ID da instituição inválido. Introduza um número inteiro.");
+            return;
+        }
 
-        Console.WriteLine("Curso:");
-        string curso = Console.ReadLine() ?? "";
+        Console.Write("Nome: ");
+        string nome = Console.ReadLine()!;
 
-        // Envia evento para o Controller
-        OnEmitirDiploma?.Invoke(nome, curso);
+        Console.Write("Cidade: ");
+        string cidade = Console.ReadLine()!;
+
+        Console.Write("Pais: ");
+        string pais = Console.ReadLine()!;
+
+        OnGuardarInstituicao?.Invoke(id, nome, cidade, pais);
+    }
+
+    void CriarCurso()
+    {
+        Console.Write("Id Curso: ");
+        if (!int.TryParse(Console.ReadLine(), out int idCurso))
+        {
+            Console.WriteLine("ID de Curso inválido. Introduza um número inteiro.");
+            return;
+        }
+
+        Console.Write("Id Instituicao: ");
+        if (!int.TryParse(Console.ReadLine(), out int idInstituicao))
+        {
+            Console.WriteLine("ID de Instituicao inválido. Introduza um número inteiro.");
+            return;
+        }
+
+        Console.Write("Nome Curso: ");
+        string nome = Console.ReadLine()!;
+
+        Console.Write("Grau Academico: ");
+        string grau = Console.ReadLine()!;
+
+        Console.Write("Descricao: ");
+        string descricao = Console.ReadLine()!;
+
+        Console.Write("Estrutura: ");
+        string estrutura = Console.ReadLine()!;
+
+        OnCriarCurso?.Invoke(idCurso, idInstituicao,
+            nome, grau, descricao, estrutura);
+    }
+
+    void CriarEdicao()
+    {
+        Console.Write("Id Edicao: ");
+
+        if (!int.TryParse(Console.ReadLine(), out int idEdicao))
+        {
+            Console.WriteLine("ID da edição inválido.");
+            return;
+        }
+
+        Console.Write("Id Curso: ");
+        if (!int.TryParse(Console.ReadLine(), out int idCurso))
+        {
+            Console.WriteLine("ID do curso inválido.");
+            return;
+        }
+
+        Console.Write("Ano Letivo: ");
+        string ano = Console.ReadLine()!;
+
+        Console.Write("Data Inicio (yyyy-mm-dd): ");
+        if (!DateTime.TryParse(Console.ReadLine(), out DateTime inicio))
+        {
+            Console.WriteLine("Data de início inválida.");
+            return;
+        }
+
+        Console.Write("Data Fim (yyyy-mm-dd): ");
+        if (!DateTime.TryParse(Console.ReadLine(), out DateTime fim))
+        {
+            Console.WriteLine("Data de fim inválida.");
+            return;
+        }
+        if (fim <= inicio)
+        {
+            Console.WriteLine("A data de fim deve ser posterior à data de início.");
+            return;
+        }
+
+        Console.Write("Modalidade: ");
+        string modalidade = Console.ReadLine()!;
+
+        OnCriarEdicao?.Invoke(idEdicao, idCurso,
+            ano, inicio, fim, modalidade);
+    }
+
+    void AlterarEstadoEdicao()
+    {
+        Console.Write("Id Edicao: ");
+
+        if (!int.TryParse(Console.ReadLine(), out int id))
+        {
+            Console.WriteLine("ID da edição inválido.");
+            return;
+        }
+
+        Console.WriteLine("0 - Planeada");
+        Console.WriteLine("1 - Aberta");
+        Console.WriteLine("2 - Encerrada");
+        Console.WriteLine("3 - Cancelada");
+
+        if (!int.TryParse(Console.ReadLine(), out int estado) || estado < 0 || estado > 3)
+        {
+            Console.WriteLine("Estado inválido.");
+            return;
+        }
+
+        OnAlterarEstadoEdicao?.Invoke(id, (EstadoEdicao)estado);
+    }
+
+    void AlterarInstituicao()
+    {
+        Console.Write("Id Instituicao: ");
+        if (!int.TryParse(Console.ReadLine(), out int id))
+        {
+            Console.WriteLine("ID da instituição inválido.");
+            return;
+        }
+
+        Console.Write("Novo Nome: ");
+        string nome = Console.ReadLine()!;
+
+        Console.Write("Nova Cidade: ");
+        string cidade = Console.ReadLine()!;
+
+        Console.Write("Novo Pais: ");
+        string pais = Console.ReadLine()!;
+
+        OnAlterarInstituicao?.Invoke(id, nome, cidade, pais);
+    }
+
+    void ApagarInstituicao()
+    {
+        Console.Write("Id Instituicao: ");
+        if (!int.TryParse(Console.ReadLine(), out int id))
+        {
+            Console.WriteLine("ID da instituição inválido.");
+            return;
+        }
+
+        OnApagarInstituicao?.Invoke(id);
+    }
+
+    void ConsultarInstituicao()
+    {
+        Console.Write("Id Instituicao: ");
+        if (!int.TryParse(Console.ReadLine(), out int id))
+        {
+            Console.WriteLine("ID da instituição inválido.");
+            return;
+        }
+
+        OnConsultarInstituicao?.Invoke(id);
+    }
+
+    void ConsultarCurso()
+    {
+        Console.Write("Id Curso: ");
+        if (!int.TryParse(Console.ReadLine(), out int id))
+        {
+            Console.WriteLine("ID do curso inválido.");
+            return;
+        }
+
+        OnConsultarCurso?.Invoke(id);
+    }
+
+    void AlterarCurso()
+    {
+        Console.Write("Id Curso: ");
+        if (!int.TryParse(Console.ReadLine(), out int idCurso))
+        {
+            Console.WriteLine("ID do curso inválido.");
+            return;
+        }
+
+        Console.Write("Novo Nome Curso: ");
+        string nome = Console.ReadLine()!;
+
+        Console.Write("Novo Grau Academico: ");
+        string grau = Console.ReadLine()!;
+
+        Console.Write("Nova Descricao: ");
+        string descricao = Console.ReadLine()!;
+
+        Console.Write("Nova Estrutura: ");
+        string estrutura = Console.ReadLine()!;
+
+        OnAlterarCurso?.Invoke(idCurso, nome, grau, descricao, estrutura);
+    }
+
+    void ApagarCurso()
+    {
+        Console.Write("Id Curso: ");
+        if (!int.TryParse(Console.ReadLine(), out int idCurso))
+        {
+            Console.WriteLine("ID do curso inválido.");
+            return;
+        }
+
+        OnApagarCurso?.Invoke(idCurso);
+    }
+
+    void AlterarEdicao()
+    {
+        Console.Write("Id Edicao: ");
+        if (!int.TryParse(Console.ReadLine(), out int idEdicao))
+        {
+            Console.WriteLine("ID da edição inválido.");
+            return;
+        }
+
+
+        Console.Write("Ano Letivo: ");
+        string ano = Console.ReadLine()!;
+
+        Console.Write("Data Inicio (yyyy-mm-dd): ");
+        if (!DateTime.TryParse(Console.ReadLine(), out DateTime inicio))
+        {
+            Console.WriteLine("Data de início inválida.");
+            return;
+        }
+
+        Console.Write("Data Fim (yyyy-mm-dd): ");
+        if (!DateTime.TryParse(Console.ReadLine(), out DateTime fim))
+        {
+            Console.WriteLine("Data de fim inválida.");
+            return;
+        }
+
+        if (fim <= inicio)
+        {
+            Console.WriteLine("A data de fim deve ser posterior à data de início.");
+            return;
+        }
+
+        Console.Write("Modalidade: ");
+        string modalidade = Console.ReadLine()!;
+
+        OnAlterarEdicao?.Invoke(idEdicao, ano, inicio, fim, modalidade);
+    }
+
+    void ApagarEdicao()
+    {
+        Console.Write("Id Edicao: ");
+        if (!int.TryParse(Console.ReadLine(), out int idEdicao))
+        {
+            Console.WriteLine("ID da edição inválido.");
+            return;
+        }
+
+        OnApagarEdicao?.Invoke(idEdicao);
+    }
+
+
+    void ConsultarEdicao()
+    {
+        Console.Write("Id Edicao: ");
+        if (!int.TryParse(Console.ReadLine(), out int id))
+        {
+            Console.WriteLine("ID da edição inválido.");
+            return;
+        }
+
+        OnConsultarEdicao?.Invoke(id);
     }
 
     // ================= OUTPUT (Curry & Grace) =================
@@ -328,6 +622,148 @@ public class View
         Console.WriteLine($"Nota:     {c.NotaValor}");
         Console.WriteLine($"Aprovado: {c.Aprovado}");
     }
+
+    /// Mostra instituição guardada
+    private void MostrarInstituicaoGuardada(object? sender, InstituicaoEventArgs e)
+    {
+        var i = e.Instituicao;
+
+        Console.WriteLine("\n=== INSTITUICAO ===");
+        Console.WriteLine($"ID: {i.IdInstituicao}");
+        Console.WriteLine($"Nome: {i.NomeInstituicao}");
+        Console.WriteLine($"Cidade: {i.Cidade}");
+        Console.WriteLine($"Pais: {i.Pais}");
+    }
+
+    /// Mostra curso criado
+    private void MostrarCursoCriado(object? sender, CursoEventArgs e)
+    {
+        var c = e.Curso;
+
+        Console.WriteLine("\n=== CURSO ===");
+        Console.WriteLine($"ID: {c.IdCurso}");
+        Console.WriteLine($"Nome: {c.NomeCurso}");
+        Console.WriteLine($"Grau: {c.GrauAcademico}");
+    }
+
+    /// Mostra edição criada
+    private void MostrarEdicaoCriada(object? sender, EdicaoEventArgs e)
+    {
+        var ed = e.Edicao;
+
+        Console.WriteLine("\n=== EDICAO ===");
+        Console.WriteLine($"ID: {ed.IdEdicao}");
+        Console.WriteLine($"Ano Letivo: {ed.AnoLetivo}");
+        Console.WriteLine($"Estado: {ed.Estado}");
+    }
+
+    /// Mostra alteração de estado
+    private void MostrarEstadoEdicaoAlterado(object? sender, EdicaoEventArgs e)
+    {
+        var ed = e.Edicao;
+
+        Console.WriteLine("\n=== ESTADO ALTERADO ===");
+        Console.WriteLine($"Edicao: {ed.IdEdicao}");
+        Console.WriteLine($"Novo Estado: {ed.Estado}");
+    }
+
+    private void MostrarInstituicaoConsultada(object? sender, InstituicaoConsultadaEventArgs e)
+    {
+        var i = e.Instituicao;
+
+        if (i == null)
+        {
+            Console.WriteLine("Instituição não encontrada.");
+            return;
+        }
+
+        Console.WriteLine("\n=== INSTITUIÇÃO CONSULTADA ===");
+        Console.WriteLine($"ID: {i.IdInstituicao}");
+        Console.WriteLine($"Nome: {i.NomeInstituicao}");
+        Console.WriteLine($"Cidade: {i.Cidade}");
+        Console.WriteLine($"País: {i.Pais}");
+    }
+
+    private void MostrarCursoConsultado(object? sender, CursoConsultadoEventArgs e)
+    {
+        var c = e.Curso;
+
+        if (c == null)
+        {
+            Console.WriteLine("Curso não encontrado.");
+            return;
+        }
+
+        Console.WriteLine("\n=== CURSO CONSULTADO ===");
+        Console.WriteLine($"ID: {c.IdCurso}");
+        Console.WriteLine($"Nome: {c.NomeCurso}");
+        Console.WriteLine($"Grau: {c.GrauAcademico}");
+        Console.WriteLine($"Instituição: {c.Instituicao.NomeInstituicao}");
+    }
+
+    private void MostrarEdicaoConsultada(object? sender, EdicaoConsultadaEventArgs e)
+    {
+        var ed = e.Edicao;
+
+        if (ed == null)
+        {
+            Console.WriteLine("Edição não encontrada.");
+            return;
+        }
+
+        Console.WriteLine("\n=== EDIÇÃO CONSULTADA ===");
+        Console.WriteLine($"ID: {ed.IdEdicao}");
+        Console.WriteLine($"Instituição: {ed.Curso.Instituicao.NomeInstituicao}");
+        Console.WriteLine($"Curso: {ed.Curso.NomeCurso}");
+        Console.WriteLine($"Ano Letivo: {ed.AnoLetivo}");
+        Console.WriteLine($"Data Início: {ed.DataInicio:yyyy-MM-dd}");
+        Console.WriteLine($"Data Fim: {ed.DataFim:yyyy-MM-dd}");
+        Console.WriteLine($"Modalidade: {ed.Modalidade}");
+        Console.WriteLine($"Estado: {ed.Estado}");
+    }
+
+    void MenuInstituicoes()
+    {
+        Console.WriteLine("\n--- GESTÃO DE INSTITUIÇÕES ---");
+        Console.WriteLine("1 - Guardar Instituição");
+        Console.WriteLine("2 - Alterar Instituição");
+        Console.WriteLine("3 - Consultar Instituição");
+        Console.WriteLine("4 - Apagar Instituição");
+        Console.WriteLine("0 - Voltar");
+
+        var op = Console.ReadLine();
+
+        switch (op)
+        {
+            case "1": GuardarInstituicao(); break;
+            case "2": AlterarInstituicao(); break;
+            case "3": ConsultarInstituicao(); break;
+            case "4": ApagarInstituicao(); break;
+            case "0": return;
+            default: Console.WriteLine("Opção inválida."); break;
+        }
+    }
+
+    void MenuCursos()
+    {
+        Console.WriteLine("\n--- GESTÃO DE CURSOS ---");
+        Console.WriteLine("1 - Criar Curso");
+        Console.WriteLine("2 - Alterar Curso");
+        Console.WriteLine("3 - Consultar Curso");
+        Console.WriteLine("4 - Apagar Curso");
+        Console.WriteLine("0 - Voltar");
+
+        var op = Console.ReadLine();
+
+        switch (op)
+        {
+            case "1": CriarCurso(); break;
+            case "2": AlterarCurso(); break;
+            case "3": ConsultarCurso(); break;
+            case "4": ApagarCurso(); break;
+            case "0": return;
+            default: Console.WriteLine("Opção inválida."); break;
+        }
     
 /// Apresenta o resultado da validação
     private void MostrarValidacao(object? sender, ValidacaoEventArgs e)
@@ -335,12 +771,34 @@ public class View
         Console.WriteLine("[VIEW] " + e.Mensagem);
     }
 
+    void MenuEdicoes()
+    {
+        Console.WriteLine("\n--- GESTÃO DE EDIÇÕES ---");
+        Console.WriteLine("1 - Criar Edição");
+        Console.WriteLine("2 - Alterar Edição");
+        Console.WriteLine("3 - Alterar Estado da Edição");
+        Console.WriteLine("4 - Consultar Edição");
+        Console.WriteLine("5 - Apagar Edição");
+        Console.WriteLine("0 - Voltar");
+
+        var op = Console.ReadLine();
+
+        switch (op)
+        {
+            case "1": CriarEdicao(); break;
+            case "2": AlterarEdicao(); break;
+            case "3": AlterarEstadoEdicao(); break;
+            case "4": ConsultarEdicao(); break;
+            case "5": ApagarEdicao(); break;
+            case "0": return;
+            default: Console.WriteLine("Opção inválida."); break;
+        }
+    }
     /// Apresenta informação sobre o diploma gerado
     private void MostrarDiploma(object? sender, DiplomaEmitidoEventArgs e)
     {
         Console.WriteLine("[VIEW] Diploma gerado com sucesso!");
         Console.WriteLine("[VIEW] Tamanho do PDF: " + e.PdfBytes.Length + " bytes");
-
         // Simula download/armazenamento
         System.IO.File.WriteAllBytes("diploma.pdf", e.PdfBytes);
     }

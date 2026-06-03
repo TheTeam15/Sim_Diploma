@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 C:\Users\joseb\source\repos\TheTeam15\Sim_Diploma\emissaodiploma\ConsoleApp1.Tests\bin\Debug\net10.0\.msCoverageSourceRootsMapping_ConsoleApp1.Tests
 C:\Users\joseb\source\repos\TheTeam15\Sim_Diploma\emissaodiploma\ConsoleApp1.Tests\bin\Debug\net10.0\CoverletSourceRootsMapping_ConsoleApp1.Tests
 C:\Users\joseb\source\repos\TheTeam15\Sim_Diploma\emissaodiploma\ConsoleApp1.Tests\obj\Debug\net10.0\ConsoleApp1.Tests.csproj.AssemblyReference.cache
@@ -6,3 +7,13 @@ C:\Users\joseb\source\repos\TheTeam15\Sim_Diploma\emissaodiploma\ConsoleApp1.Tes
 C:\Users\joseb\source\repos\TheTeam15\Sim_Diploma\emissaodiploma\ConsoleApp1.Tests\obj\Debug\net10.0\ConsoleApp1.Tests.AssemblyInfo.cs
 C:\Users\joseb\source\repos\TheTeam15\Sim_Diploma\emissaodiploma\ConsoleApp1.Tests\obj\Debug\net10.0\ConsoleApp1.Tests.csproj.CoreCompileInputs.cache
 C:\Users\joseb\source\repos\TheTeam15\Sim_Diploma\emissaodiploma\ConsoleApp1.Tests\obj\Debug\net10.0\ConsoleApp1.Tests.sourcelink.json
+=======
+C:\Users\marco.carlota\source\repos\SIM_Diploma\emissaodiploma\ConsoleApp1.Tests\bin\Debug\net10.0\.msCoverageSourceRootsMapping_ConsoleApp1.Tests
+C:\Users\marco.carlota\source\repos\SIM_Diploma\emissaodiploma\ConsoleApp1.Tests\bin\Debug\net10.0\CoverletSourceRootsMapping_ConsoleApp1.Tests
+C:\Users\marco.carlota\source\repos\SIM_Diploma\emissaodiploma\ConsoleApp1.Tests\obj\Debug\net10.0\ConsoleApp1.Tests.csproj.AssemblyReference.cache
+C:\Users\marco.carlota\source\repos\SIM_Diploma\emissaodiploma\ConsoleApp1.Tests\obj\Debug\net10.0\ConsoleApp1.Tests.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\marco.carlota\source\repos\SIM_Diploma\emissaodiploma\ConsoleApp1.Tests\obj\Debug\net10.0\ConsoleApp1.Tests.AssemblyInfoInputs.cache
+C:\Users\marco.carlota\source\repos\SIM_Diploma\emissaodiploma\ConsoleApp1.Tests\obj\Debug\net10.0\ConsoleApp1.Tests.AssemblyInfo.cs
+C:\Users\marco.carlota\source\repos\SIM_Diploma\emissaodiploma\ConsoleApp1.Tests\obj\Debug\net10.0\ConsoleApp1.Tests.csproj.CoreCompileInputs.cache
+C:\Users\marco.carlota\source\repos\SIM_Diploma\emissaodiploma\ConsoleApp1.Tests\obj\Debug\net10.0\ConsoleApp1.Tests.sourcelink.json
+>>>>>>> origin/feature/gestao-cursos-melhoriasmarco
