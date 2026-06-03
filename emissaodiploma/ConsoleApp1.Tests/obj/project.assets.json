@@ -1441,11 +1441,16 @@
     ]
   },
   "packageFolders": {
+<<<<<<< HEAD
     "C:\\Users\\joseb\\.nuget\\packages\\": {}
+=======
+    "C:\\Users\\marco.carlota\\.nuget\\packages\\": {}
+>>>>>>> origin/feature/gestao-cursos-melhoriasmarco
   },
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<< HEAD
       "projectUniqueName": "C:\\Users\\joseb\\source\\repos\\TheTeam15\\Sim_Diploma\\emissaodiploma\\ConsoleApp1.Tests\\ConsoleApp1.Tests.csproj",
       "projectName": "ConsoleApp1.Tests",
       "projectPath": "C:\\Users\\joseb\\source\\repos\\TheTeam15\\Sim_Diploma\\emissaodiploma\\ConsoleApp1.Tests\\ConsoleApp1.Tests.csproj",
@@ -1454,6 +1459,16 @@
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\joseb\\AppData\\Roaming\\NuGet\\NuGet.Config",
+=======
+      "projectUniqueName": "C:\\Users\\marco.carlota\\source\\repos\\SIM_Diploma\\emissaodiploma\\ConsoleApp1.Tests\\ConsoleApp1.Tests.csproj",
+      "projectName": "ConsoleApp1.Tests",
+      "projectPath": "C:\\Users\\marco.carlota\\source\\repos\\SIM_Diploma\\emissaodiploma\\ConsoleApp1.Tests\\ConsoleApp1.Tests.csproj",
+      "packagesPath": "C:\\Users\\marco.carlota\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\marco.carlota\\source\\repos\\SIM_Diploma\\emissaodiploma\\ConsoleApp1.Tests\\obj\\",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "C:\\Users\\marco.carlota\\AppData\\Roaming\\NuGet\\NuGet.Config",
+>>>>>>> origin/feature/gestao-cursos-melhoriasmarco
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -1465,10 +1480,18 @@
       },
       "frameworks": {
         "net10.0": {
+<<<<<<< HEAD
           "targetAlias": "net10.0",
           "projectReferences": {
             "C:\\Users\\joseb\\source\\repos\\TheTeam15\\Sim_Diploma\\emissaodiploma\\ConsoleApp1\\ConsoleApp1.csproj": {
               "projectPath": "C:\\Users\\joseb\\source\\repos\\TheTeam15\\Sim_Diploma\\emissaodiploma\\ConsoleApp1\\ConsoleApp1.csproj"
+=======
+          "framework": "net10.0",
+          "targetAlias": "net10.0",
+          "projectReferences": {
+            "C:\\Users\\marco.carlota\\source\\repos\\SIM_Diploma\\emissaodiploma\\ConsoleApp1\\ConsoleApp1.csproj": {
+              "projectPath": "C:\\Users\\marco.carlota\\source\\repos\\SIM_Diploma\\emissaodiploma\\ConsoleApp1\\ConsoleApp1.csproj"
+>>>>>>> origin/feature/gestao-cursos-melhoriasmarco
             }
           }
         }
@@ -1487,6 +1510,10 @@
     },
     "frameworks": {
       "net10.0": {
+<<<<<<< HEAD
+=======
+        "framework": "net10.0",
+>>>>>>> origin/feature/gestao-cursos-melhoriasmarco
         "targetAlias": "net10.0",
         "dependencies": {
           "Microsoft.NET.Test.Sdk": {
