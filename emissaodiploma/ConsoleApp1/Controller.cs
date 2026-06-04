@@ -1,4 +1,6 @@
-﻿/// CONTROLLER
+﻿using System;
+
+/// CONTROLLER
 /// Responsável por coordenar a interação.
 /// 
 /// Função:

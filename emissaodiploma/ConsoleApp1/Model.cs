@@ -203,6 +203,16 @@ public class ValidacaoEventArgs : EventArgs
     }
 }
 
+public class DiplomaEmitidoEventArgs : EventArgs
+{
+    public byte[] PdfBytes { get; }
+
+    public DiplomaEmitidoEventArgs(byte[] pdfBytes)
+    {
+        PdfBytes = pdfBytes;
+    }
+}
+
 public interface IModelEventos
 {
     event EventHandler<ResultadoEventArgs>? Resultado;

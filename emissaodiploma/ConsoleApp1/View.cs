@@ -82,6 +82,7 @@ public class View
         Console.WriteLine("8 - Gestão de Instituições");
         Console.WriteLine("9 - Gestão de Cursos");
         Console.WriteLine("10 - Gestão de Edições");
+        Console.WriteLine("11 - Emitir Diploma");
         Console.WriteLine("0 - Sair");
 
         var op = Console.ReadLine();
@@ -98,6 +99,7 @@ public class View
             case "8": MenuInstituicoes(); break;
             case "9": MenuCursos(); break;
             case "10": MenuEdicoes(); break;
+            case "11": PedirEmissaoDiploma(); break;
             case "0":
                 Console.WriteLine("O sistema foi encerrado.");
                 Environment.Exit(0);
@@ -804,5 +806,16 @@ public class View
         Console.WriteLine("[VIEW] Tamanho do PDF: " + e.PdfBytes.Length + " bytes");
         // Simula download/armazenamento
         System.IO.File.WriteAllBytes("diploma.pdf", e.PdfBytes);
+    }
+
+    void PedirEmissaoDiploma()
+    {
+        Console.Write("Nome do aluno: ");
+        string nomeAluno = Console.ReadLine() ?? string.Empty;
+
+        Console.Write("Curso: ");
+        string curso = Console.ReadLine() ?? string.Empty;
+
+        OnEmitirDiploma?.Invoke(nomeAluno, curso);
     }
 }

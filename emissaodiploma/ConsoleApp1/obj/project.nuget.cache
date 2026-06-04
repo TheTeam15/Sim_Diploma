@@ -9,15 +9,5 @@
     "C:\\Users\\joseb\\.nuget\\packages\\pdfsharp\\6.2.4\\pdfsharp.6.2.4.nupkg.sha512",
     "C:\\Users\\joseb\\.nuget\\packages\\system.security.cryptography.pkcs\\8.0.1\\system.security.cryptography.pkcs.8.0.1.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "message": "Problema ao ler o arquivo de cache C:\\Users\\joseb\\source\\repos\\TheTeam15\\Sim_Diploma\\emissaodiploma\\ConsoleApp1\\obj\\project.nuget.cache: '<' is an invalid start of a property name. Expected a '\"'. Path: $ | LineNumber: 2 | BytePositionInLine: 0.",
-      "projectPath": "C:\\Users\\joseb\\source\\repos\\TheTeam15\\Sim_Diploma\\emissaodiploma\\ConsoleApp1\\ConsoleApp1.csproj",
-      "warningLevel": 1,
-      "filePath": "C:\\Users\\joseb\\source\\repos\\TheTeam15\\Sim_Diploma\\emissaodiploma\\ConsoleApp1\\ConsoleApp1.csproj",
-      "targetGraphs": []
-    }
-  ]
+  "logs": []
 }
