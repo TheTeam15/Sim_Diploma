@@ -220,6 +220,8 @@ public interface IModelEventos
     event EventHandler<InstituicaoConsultadaEventArgs>? InstituicaoConsultada;
     event EventHandler<CursoConsultadoEventArgs>? CursoConsultado;
     event EventHandler<EdicaoConsultadaEventArgs>? EdicaoConsultada;
+    event EventHandler<ValidacaoEventArgs>? OnValidacao;
+    event EventHandler<DiplomaEmitidoEventArgs>? OnDiplomaEmitido;
 }
 
 /// CLASSE DE SUPORTE PARA REGRAS DE NEGÓCIO
@@ -951,7 +953,8 @@ public class Model : IModelEventos
             };
 
             edicoes.Add(edicao);
-            if (string.IsNullOrWhiteSpace(nomeAluno))
+
+            UltimaEdicaoCriada = edicao;
             UltimaOperacaoSucesso = true;
             UltimaMensagem = $"Edição '{idEdicao}' criada com sucesso.";
 
@@ -1059,28 +1062,21 @@ public class Model : IModelEventos
     }
 
     public void ApagarEdicao(int idEdicao)
+    {
+        var edicao = edicoes.FirstOrDefault(e => e.IdEdicao == idEdicao)
+            ?? throw new EdicaoNaoEncontradaException("A edição indicada não existe.");
 
-        try
-        {
-            var edicao = edicoes.FirstOrDefault(e => e.IdEdicao == idEdicao)
-                ?? throw new EdicaoNaoEncontradaException("A edição indicada não existe.");
+        if (alunos.Any(a => a.Inscricoes.Any(i => i.Edicao == idEdicao.ToString())))
+            throw new InvalidOperationException("Não é possível apagar a edição porque existem inscrições associadas.");
 
-            if (alunos.Any(a => a.Inscricoes.Any(i => i.Edicao == idEdicao.ToString())))
-            OnValidacao?.Invoke(this,
+        edicoes.Remove(edicao);
 
-            edicoes.Remove(edicao);
-            byte[] pdf = _gerador.Gerar(nomeAluno, curso);
-            UltimaOperacaoSucesso = true;
-            UltimoDiploma = pdf;
-            Resultado?.Invoke(this, new ResultadoEventArgs(true, UltimaMensagem));
-        }
-        catch (Exception e)
-        {
-            UltimaOperacaoSucesso = false;
-            UltimaMensagem = e.Message;
-            Resultado?.Invoke(this, new ResultadoEventArgs(false, UltimaMensagem));
-        }
+        UltimaOperacaoSucesso = true;
+        UltimaMensagem = "Edição apagada com sucesso.";
+
+        Resultado?.Invoke(this, new ResultadoEventArgs(true, UltimaMensagem));
     }
+
     public void ConsultarInstituicao(int idInstituicao)
     {
         UltimaInstituicaoConsultada =

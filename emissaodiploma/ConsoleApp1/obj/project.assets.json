@@ -393,27 +393,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\marco.carlota\\.nuget\\packages\\": {}
+    "C:\\Users\\joseb\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-<<<<<<< HEAD
       "projectUniqueName": "C:\\Users\\joseb\\source\\repos\\TheTeam15\\Sim_Diploma\\emissaodiploma\\ConsoleApp1\\ConsoleApp1.csproj",
       "projectName": "ConsoleApp1",
       "projectPath": "C:\\Users\\joseb\\source\\repos\\TheTeam15\\Sim_Diploma\\emissaodiploma\\ConsoleApp1\\ConsoleApp1.csproj",
       "packagesPath": "C:\\Users\\joseb\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\joseb\\source\\repos\\TheTeam15\\Sim_Diploma\\emissaodiploma\\ConsoleApp1\\obj\\",
-=======
-      "projectUniqueName": "C:\\Users\\marco.carlota\\source\\repos\\SIM_Diploma\\emissaodiploma\\ConsoleApp1\\ConsoleApp1.csproj",
-      "projectName": "ConsoleApp1",
-      "projectPath": "C:\\Users\\marco.carlota\\source\\repos\\SIM_Diploma\\emissaodiploma\\ConsoleApp1\\ConsoleApp1.csproj",
-      "packagesPath": "C:\\Users\\marco.carlota\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\marco.carlota\\source\\repos\\SIM_Diploma\\emissaodiploma\\ConsoleApp1\\obj\\",
->>>>>>> origin/feature/gestao-cursos-melhoriasmarco
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\marco.carlota\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\joseb\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -425,7 +417,6 @@
       },
       "frameworks": {
         "net10.0": {
-          "framework": "net10.0",
           "targetAlias": "net10.0",
           "projectReferences": {}
         }
@@ -444,7 +435,6 @@
     },
     "frameworks": {
       "net10.0": {
-        "framework": "net10.0",
         "targetAlias": "net10.0",
         "dependencies": {
           "PDFsharp": {
@@ -745,5 +735,13 @@
         }
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problema ao ler o arquivo de cache C:\\Users\\joseb\\source\\repos\\TheTeam15\\Sim_Diploma\\emissaodiploma\\ConsoleApp1\\obj\\project.nuget.cache: '<' is an invalid start of a property name. Expected a '\"'. Path: $ | LineNumber: 2 | BytePositionInLine: 0."
+    }
+  ]
 }

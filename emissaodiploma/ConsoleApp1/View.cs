@@ -58,6 +58,8 @@ public class View
         model.InstituicaoConsultada += MostrarInstituicaoConsultada;
         model.CursoConsultado += MostrarCursoConsultado;
         model.EdicaoConsultada += MostrarEdicaoConsultada;
+        model.OnValidacao += MostrarValidacao;
+        model.OnDiplomaEmitido += MostrarDiploma;
     }
 
     // Mantém compatibilidade com código já existente que use o nome antigo.
@@ -764,8 +766,9 @@ public class View
             case "0": return;
             default: Console.WriteLine("Opção inválida."); break;
         }
+    }
     
-/// Apresenta o resultado da validação
+    /// Apresenta o resultado da validação
     private void MostrarValidacao(object? sender, ValidacaoEventArgs e)
     {
         Console.WriteLine("[VIEW] " + e.Mensagem);
