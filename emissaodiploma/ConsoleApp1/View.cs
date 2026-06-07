@@ -1,821 +1,747 @@
-﻿using System;
-
-/// VIEW
-/// Responsável apenas pela apresentação.
-/// 
-/// Neste exemplo:
-/// - Apresenta mensagens no console
-/// - Em contexto real pode ser UI gráfica ou web
-/// 
-/// IMPORTANTE:
-/// - Não contém lógica de negócio
-/// - Não chama diretamente o Model
-/// - Apenas reage a eventos
-public class View
 {
-    /// Evento que comunica com o Controller
-    /// (input do utilizador → MVC Curry & Grace)
-
-    public event Action<int, string>?         OnCriarAluno;
-    public event Action<int, string>?         OnCriarInscricao;
-    public event Action<int, string>?         OnConcluirInscricao;
-    public event Action<int, string, double>? OnClassificar;
-    public event Action<int>?                 OnConsultarAluno;
-    public event Action<int, string>?         OnConsultarInscricao;
-    public event Action<int, string>?         OnConsultarClassificacao;
-    public event Action<string, string>? OnEmitirDiploma;
-
-    // EVENTOS DA GESTÃO ACADÉMICA
-    public event Action<int, string, string, string>? OnGuardarInstituicao;
-    public event Action<int, string, string, string>? OnAlterarInstituicao;
-    public event Action<int>? OnApagarInstituicao;
-    public event Action<int, int, string, string, string, string>? OnCriarCurso;
-    public event Action<int, string, string, string, string>? OnAlterarCurso;
-    public event Action<int>? OnApagarCurso;
-    public event Action<int, int, string, DateTime, DateTime, string>? OnCriarEdicao;
-    public event Action<int, string, DateTime, DateTime, string>? OnAlterarEdicao;
-    public event Action<int>? OnApagarEdicao;
-
-    public event Action<int, EstadoEdicao>? OnAlterarEstadoEdicao;
-    public event Action<int>? OnConsultarInstituicao;
-    public event Action<int>? OnConsultarCurso;
-    public event Action<int>? OnConsultarEdicao;
-
-    /// Subscrição aos eventos do Model
-    /// Liga a View ao fluxo de notificações
-    public void Subscrever(IModelEventos model)
-    {
-        model.Resultado += MostrarResultado;
-        model.InscricaoCriada += MostrarInscricaoCriada;
-        model.ClassificacaoCriada += MostrarClassificacaoCriada;
-        model.AlunoConsultado += MostrarAluno;
-        model.InscricaoConsultada += MostrarInscricaoConsultada;
-        model.ClassificacaoConsultada += MostrarClassificacaoConsultada;
-        model.InstituicaoGuardada += MostrarInstituicaoGuardada;
-        model.CursoCriado += MostrarCursoCriado;
-        model.EdicaoCriada += MostrarEdicaoCriada;
-        model.EstadoEdicaoAlterado += MostrarEstadoEdicaoAlterado;
-        model.InstituicaoConsultada += MostrarInstituicaoConsultada;
-        model.CursoConsultado += MostrarCursoConsultado;
-        model.EdicaoConsultada += MostrarEdicaoConsultada;
-        model.OnValidacao += MostrarValidacao;
-        model.OnDiplomaEmitido += MostrarDiploma;
+  "version": 4,
+  "targets": {
+    "net10.0": {
+      "Microsoft.Extensions.DependencyInjection.Abstractions/8.0.2": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "Microsoft.Extensions.Logging.Abstractions/8.0.3": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.2"
+        },
+        "compile": {
+          "lib/net8.0/Microsoft.Extensions.Logging.Abstractions.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/Microsoft.Extensions.Logging.Abstractions.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/Microsoft.Extensions.Logging.Abstractions.targets": {}
+        }
+      },
+      "PDFsharp/6.2.4": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.3",
+          "System.Security.Cryptography.Pkcs": "8.0.1"
+        },
+        "compile": {
+          "lib/net10.0/PdfSharp.BarCodes.dll": {
+            "related": ".pdb;.xml"
+          },
+          "lib/net10.0/PdfSharp.Charting.dll": {
+            "related": ".pdb;.xml"
+          },
+          "lib/net10.0/PdfSharp.Cryptography.dll": {
+            "related": ".pdb;.xml"
+          },
+          "lib/net10.0/PdfSharp.Quality.dll": {
+            "related": ".pdb;.xml"
+          },
+          "lib/net10.0/PdfSharp.Shared.dll": {
+            "related": ".pdb;.xml"
+          },
+          "lib/net10.0/PdfSharp.Snippets.dll": {
+            "related": ".pdb"
+          },
+          "lib/net10.0/PdfSharp.System.dll": {
+            "related": ".pdb;.xml"
+          },
+          "lib/net10.0/PdfSharp.WPFonts.dll": {
+            "related": ".pdb;.xml"
+          },
+          "lib/net10.0/PdfSharp.dll": {
+            "related": ".BarCodes.pdb;.BarCodes.xml;.Charting.pdb;.Charting.xml;.Cryptography.pdb;.Cryptography.xml;.pdb;.Quality.pdb;.Quality.xml;.Shared.pdb;.Shared.xml;.Snippets.pdb;.System.pdb;.System.xml;.WPFonts.pdb;.WPFonts.xml;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/PdfSharp.BarCodes.dll": {
+            "related": ".pdb;.xml"
+          },
+          "lib/net10.0/PdfSharp.Charting.dll": {
+            "related": ".pdb;.xml"
+          },
+          "lib/net10.0/PdfSharp.Cryptography.dll": {
+            "related": ".pdb;.xml"
+          },
+          "lib/net10.0/PdfSharp.Quality.dll": {
+            "related": ".pdb;.xml"
+          },
+          "lib/net10.0/PdfSharp.Shared.dll": {
+            "related": ".pdb;.xml"
+          },
+          "lib/net10.0/PdfSharp.Snippets.dll": {
+            "related": ".pdb"
+          },
+          "lib/net10.0/PdfSharp.System.dll": {
+            "related": ".pdb;.xml"
+          },
+          "lib/net10.0/PdfSharp.WPFonts.dll": {
+            "related": ".pdb;.xml"
+          },
+          "lib/net10.0/PdfSharp.dll": {
+            "related": ".BarCodes.pdb;.BarCodes.xml;.Charting.pdb;.Charting.xml;.Cryptography.pdb;.Cryptography.xml;.pdb;.Quality.pdb;.Quality.xml;.Shared.pdb;.Shared.xml;.Snippets.pdb;.System.pdb;.System.xml;.WPFonts.pdb;.WPFonts.xml;.xml"
+          }
+        }
+      },
+      "System.Security.Cryptography.Pkcs/8.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/System.Security.Cryptography.Pkcs.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/System.Security.Cryptography.Pkcs.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/net8.0/System.Security.Cryptography.Pkcs.dll": {
+            "assetType": "runtime",
+            "rid": "win"
+          }
+        }
+      }
     }
-
-    // Mantém compatibilidade com código já existente que use o nome antigo.
-    public void Subscribir(IModelEventos model)
-    {
-        Subscrever(model);
+  },
+  "libraries": {
+    "Microsoft.Extensions.DependencyInjection.Abstractions/8.0.2": {
+      "sha512": "3iE7UF7MQkCv1cxzCahz+Y/guQbTqieyxyaWKhrRO91itI9cOKO76OHeQDahqG4MmW5umr3CcCvGmK92lWNlbg==",
+      "type": "package",
+      "path": "microsoft.extensions.dependencyinjection.abstractions/8.0.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "PACKAGE.md",
+        "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/net461/Microsoft.Extensions.DependencyInjection.Abstractions.targets",
+        "buildTransitive/net462/_._",
+        "buildTransitive/net6.0/_._",
+        "buildTransitive/netcoreapp2.0/Microsoft.Extensions.DependencyInjection.Abstractions.targets",
+        "lib/net462/Microsoft.Extensions.DependencyInjection.Abstractions.dll",
+        "lib/net462/Microsoft.Extensions.DependencyInjection.Abstractions.xml",
+        "lib/net6.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll",
+        "lib/net6.0/Microsoft.Extensions.DependencyInjection.Abstractions.xml",
+        "lib/net7.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll",
+        "lib/net7.0/Microsoft.Extensions.DependencyInjection.Abstractions.xml",
+        "lib/net8.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll",
+        "lib/net8.0/Microsoft.Extensions.DependencyInjection.Abstractions.xml",
+        "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll",
+        "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.Abstractions.xml",
+        "lib/netstandard2.1/Microsoft.Extensions.DependencyInjection.Abstractions.dll",
+        "lib/netstandard2.1/Microsoft.Extensions.DependencyInjection.Abstractions.xml",
+        "microsoft.extensions.dependencyinjection.abstractions.8.0.2.nupkg.sha512",
+        "microsoft.extensions.dependencyinjection.abstractions.nuspec",
+        "useSharedDesignerContext.txt"
+      ]
+    },
+    "Microsoft.Extensions.Logging.Abstractions/8.0.3": {
+      "sha512": "dL0QGToTxggRLMYY4ZYX5AMwBb+byQBd/5dMiZE07Nv73o6I5Are3C7eQTh7K2+A4ct0PVISSr7TZANbiNb2yQ==",
+      "type": "package",
+      "path": "microsoft.extensions.logging.abstractions/8.0.3",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "PACKAGE.md",
+        "THIRD-PARTY-NOTICES.TXT",
+        "analyzers/dotnet/roslyn3.11/cs/Microsoft.Extensions.Logging.Generators.dll",
+        "analyzers/dotnet/roslyn3.11/cs/cs/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn3.11/cs/de/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn3.11/cs/es/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn3.11/cs/fr/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn3.11/cs/it/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn3.11/cs/ja/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn3.11/cs/ko/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn3.11/cs/pl/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn3.11/cs/pt-BR/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn3.11/cs/ru/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn3.11/cs/tr/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn3.11/cs/zh-Hans/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn3.11/cs/zh-Hant/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/Microsoft.Extensions.Logging.Generators.dll",
+        "analyzers/dotnet/roslyn4.0/cs/cs/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/de/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/es/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/fr/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/it/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/ja/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/ko/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/pl/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/pt-BR/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/ru/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/tr/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/zh-Hans/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/zh-Hant/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/Microsoft.Extensions.Logging.Generators.dll",
+        "analyzers/dotnet/roslyn4.4/cs/cs/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/de/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/es/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/fr/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/it/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/ja/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/ko/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/pl/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/pt-BR/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/ru/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/tr/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/zh-Hans/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/zh-Hant/Microsoft.Extensions.Logging.Generators.resources.dll",
+        "buildTransitive/net461/Microsoft.Extensions.Logging.Abstractions.targets",
+        "buildTransitive/net462/Microsoft.Extensions.Logging.Abstractions.targets",
+        "buildTransitive/net6.0/Microsoft.Extensions.Logging.Abstractions.targets",
+        "buildTransitive/netcoreapp2.0/Microsoft.Extensions.Logging.Abstractions.targets",
+        "buildTransitive/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.targets",
+        "lib/net462/Microsoft.Extensions.Logging.Abstractions.dll",
+        "lib/net462/Microsoft.Extensions.Logging.Abstractions.xml",
+        "lib/net6.0/Microsoft.Extensions.Logging.Abstractions.dll",
+        "lib/net6.0/Microsoft.Extensions.Logging.Abstractions.xml",
+        "lib/net7.0/Microsoft.Extensions.Logging.Abstractions.dll",
+        "lib/net7.0/Microsoft.Extensions.Logging.Abstractions.xml",
+        "lib/net8.0/Microsoft.Extensions.Logging.Abstractions.dll",
+        "lib/net8.0/Microsoft.Extensions.Logging.Abstractions.xml",
+        "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.dll",
+        "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.xml",
+        "microsoft.extensions.logging.abstractions.8.0.3.nupkg.sha512",
+        "microsoft.extensions.logging.abstractions.nuspec",
+        "useSharedDesignerContext.txt"
+      ]
+    },
+    "PDFsharp/6.2.4": {
+      "sha512": "GhTr9F1uOYXHCIEOB5PXIgqn5a8WLsJL2m0eewTA0IvY1j6N4HGXHKKmEyB90/N6vrjmYamf41V9zbmdW2HY3g==",
+      "type": "package",
+      "path": "pdfsharp/6.2.4",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "images/PDFsharp-128x128.png",
+        "lib/net10.0/PdfSharp.BarCodes.dll",
+        "lib/net10.0/PdfSharp.BarCodes.pdb",
+        "lib/net10.0/PdfSharp.BarCodes.xml",
+        "lib/net10.0/PdfSharp.Charting.dll",
+        "lib/net10.0/PdfSharp.Charting.pdb",
+        "lib/net10.0/PdfSharp.Charting.xml",
+        "lib/net10.0/PdfSharp.Cryptography.dll",
+        "lib/net10.0/PdfSharp.Cryptography.pdb",
+        "lib/net10.0/PdfSharp.Cryptography.xml",
+        "lib/net10.0/PdfSharp.Quality.dll",
+        "lib/net10.0/PdfSharp.Quality.pdb",
+        "lib/net10.0/PdfSharp.Quality.xml",
+        "lib/net10.0/PdfSharp.Shared.dll",
+        "lib/net10.0/PdfSharp.Shared.pdb",
+        "lib/net10.0/PdfSharp.Shared.xml",
+        "lib/net10.0/PdfSharp.Snippets.dll",
+        "lib/net10.0/PdfSharp.Snippets.pdb",
+        "lib/net10.0/PdfSharp.System.dll",
+        "lib/net10.0/PdfSharp.System.pdb",
+        "lib/net10.0/PdfSharp.System.xml",
+        "lib/net10.0/PdfSharp.WPFonts.dll",
+        "lib/net10.0/PdfSharp.WPFonts.pdb",
+        "lib/net10.0/PdfSharp.WPFonts.xml",
+        "lib/net10.0/PdfSharp.dll",
+        "lib/net10.0/PdfSharp.pdb",
+        "lib/net10.0/PdfSharp.xml",
+        "lib/net8.0/PdfSharp.BarCodes.dll",
+        "lib/net8.0/PdfSharp.BarCodes.pdb",
+        "lib/net8.0/PdfSharp.BarCodes.xml",
+        "lib/net8.0/PdfSharp.Charting.dll",
+        "lib/net8.0/PdfSharp.Charting.pdb",
+        "lib/net8.0/PdfSharp.Charting.xml",
+        "lib/net8.0/PdfSharp.Cryptography.dll",
+        "lib/net8.0/PdfSharp.Cryptography.pdb",
+        "lib/net8.0/PdfSharp.Cryptography.xml",
+        "lib/net8.0/PdfSharp.Quality.dll",
+        "lib/net8.0/PdfSharp.Quality.pdb",
+        "lib/net8.0/PdfSharp.Quality.xml",
+        "lib/net8.0/PdfSharp.Shared.dll",
+        "lib/net8.0/PdfSharp.Shared.pdb",
+        "lib/net8.0/PdfSharp.Shared.xml",
+        "lib/net8.0/PdfSharp.Snippets.dll",
+        "lib/net8.0/PdfSharp.Snippets.pdb",
+        "lib/net8.0/PdfSharp.System.dll",
+        "lib/net8.0/PdfSharp.System.pdb",
+        "lib/net8.0/PdfSharp.System.xml",
+        "lib/net8.0/PdfSharp.WPFonts.dll",
+        "lib/net8.0/PdfSharp.WPFonts.pdb",
+        "lib/net8.0/PdfSharp.WPFonts.xml",
+        "lib/net8.0/PdfSharp.dll",
+        "lib/net8.0/PdfSharp.pdb",
+        "lib/net8.0/PdfSharp.xml",
+        "lib/net9.0/PdfSharp.BarCodes.dll",
+        "lib/net9.0/PdfSharp.BarCodes.pdb",
+        "lib/net9.0/PdfSharp.BarCodes.xml",
+        "lib/net9.0/PdfSharp.Charting.dll",
+        "lib/net9.0/PdfSharp.Charting.pdb",
+        "lib/net9.0/PdfSharp.Charting.xml",
+        "lib/net9.0/PdfSharp.Cryptography.dll",
+        "lib/net9.0/PdfSharp.Cryptography.pdb",
+        "lib/net9.0/PdfSharp.Cryptography.xml",
+        "lib/net9.0/PdfSharp.Quality.dll",
+        "lib/net9.0/PdfSharp.Quality.pdb",
+        "lib/net9.0/PdfSharp.Quality.xml",
+        "lib/net9.0/PdfSharp.Shared.dll",
+        "lib/net9.0/PdfSharp.Shared.pdb",
+        "lib/net9.0/PdfSharp.Shared.xml",
+        "lib/net9.0/PdfSharp.Snippets.dll",
+        "lib/net9.0/PdfSharp.Snippets.pdb",
+        "lib/net9.0/PdfSharp.System.dll",
+        "lib/net9.0/PdfSharp.System.pdb",
+        "lib/net9.0/PdfSharp.System.xml",
+        "lib/net9.0/PdfSharp.WPFonts.dll",
+        "lib/net9.0/PdfSharp.WPFonts.pdb",
+        "lib/net9.0/PdfSharp.WPFonts.xml",
+        "lib/net9.0/PdfSharp.dll",
+        "lib/net9.0/PdfSharp.pdb",
+        "lib/net9.0/PdfSharp.xml",
+        "lib/netstandard2.0/PdfSharp.BarCodes.dll",
+        "lib/netstandard2.0/PdfSharp.BarCodes.pdb",
+        "lib/netstandard2.0/PdfSharp.BarCodes.xml",
+        "lib/netstandard2.0/PdfSharp.Charting.dll",
+        "lib/netstandard2.0/PdfSharp.Charting.pdb",
+        "lib/netstandard2.0/PdfSharp.Charting.xml",
+        "lib/netstandard2.0/PdfSharp.Cryptography.dll",
+        "lib/netstandard2.0/PdfSharp.Cryptography.pdb",
+        "lib/netstandard2.0/PdfSharp.Cryptography.xml",
+        "lib/netstandard2.0/PdfSharp.Quality.dll",
+        "lib/netstandard2.0/PdfSharp.Quality.pdb",
+        "lib/netstandard2.0/PdfSharp.Quality.xml",
+        "lib/netstandard2.0/PdfSharp.Shared.dll",
+        "lib/netstandard2.0/PdfSharp.Shared.pdb",
+        "lib/netstandard2.0/PdfSharp.Shared.xml",
+        "lib/netstandard2.0/PdfSharp.Snippets.dll",
+        "lib/netstandard2.0/PdfSharp.Snippets.pdb",
+        "lib/netstandard2.0/PdfSharp.System.dll",
+        "lib/netstandard2.0/PdfSharp.System.pdb",
+        "lib/netstandard2.0/PdfSharp.System.xml",
+        "lib/netstandard2.0/PdfSharp.WPFonts.dll",
+        "lib/netstandard2.0/PdfSharp.WPFonts.pdb",
+        "lib/netstandard2.0/PdfSharp.WPFonts.xml",
+        "lib/netstandard2.0/PdfSharp.dll",
+        "lib/netstandard2.0/PdfSharp.pdb",
+        "lib/netstandard2.0/PdfSharp.xml",
+        "pdfsharp.6.2.4.nupkg.sha512",
+        "pdfsharp.nuspec"
+      ]
+    },
+    "System.Security.Cryptography.Pkcs/8.0.1": {
+      "sha512": "CoCRHFym33aUSf/NtWSVSZa99dkd0Hm7OCZUxORBjRB16LNhIEOf8THPqzIYlvKM0nNDAPTRBa1FxEECrgaxxA==",
+      "type": "package",
+      "path": "system.security.cryptography.pkcs/8.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/net461/System.Security.Cryptography.Pkcs.targets",
+        "buildTransitive/net462/_._",
+        "buildTransitive/net6.0/_._",
+        "buildTransitive/netcoreapp2.0/System.Security.Cryptography.Pkcs.targets",
+        "lib/net462/System.Security.Cryptography.Pkcs.dll",
+        "lib/net462/System.Security.Cryptography.Pkcs.xml",
+        "lib/net6.0/System.Security.Cryptography.Pkcs.dll",
+        "lib/net6.0/System.Security.Cryptography.Pkcs.xml",
+        "lib/net7.0/System.Security.Cryptography.Pkcs.dll",
+        "lib/net7.0/System.Security.Cryptography.Pkcs.xml",
+        "lib/net8.0/System.Security.Cryptography.Pkcs.dll",
+        "lib/net8.0/System.Security.Cryptography.Pkcs.xml",
+        "lib/netstandard2.0/System.Security.Cryptography.Pkcs.dll",
+        "lib/netstandard2.0/System.Security.Cryptography.Pkcs.xml",
+        "lib/netstandard2.1/System.Security.Cryptography.Pkcs.dll",
+        "lib/netstandard2.1/System.Security.Cryptography.Pkcs.xml",
+        "runtimes/win/lib/net6.0/System.Security.Cryptography.Pkcs.dll",
+        "runtimes/win/lib/net6.0/System.Security.Cryptography.Pkcs.xml",
+        "runtimes/win/lib/net7.0/System.Security.Cryptography.Pkcs.dll",
+        "runtimes/win/lib/net7.0/System.Security.Cryptography.Pkcs.xml",
+        "runtimes/win/lib/net8.0/System.Security.Cryptography.Pkcs.dll",
+        "runtimes/win/lib/net8.0/System.Security.Cryptography.Pkcs.xml",
+        "system.security.cryptography.pkcs.8.0.1.nupkg.sha512",
+        "system.security.cryptography.pkcs.nuspec",
+        "useSharedDesignerContext.txt"
+      ]
     }
-
-    // ================= MENU =================
-
-    public void Menu()
-    {
-        Console.WriteLine("\n1 - Criar Aluno");
-        Console.WriteLine("2 - Inscrever Aluno");
-        Console.WriteLine("3 - Concluir Inscricao");
-        Console.WriteLine("4 - Classificação");
-        Console.WriteLine("5 - Consultar Aluno");
-        Console.WriteLine("6 - Consultar Inscricao");
-        Console.WriteLine("7 - Consultar Classificacao");
-        Console.WriteLine("8 - Gestão de Instituições");
-        Console.WriteLine("9 - Gestão de Cursos");
-        Console.WriteLine("10 - Gestão de Edições");
-        Console.WriteLine("11 - Emitir Diploma");
-        Console.WriteLine("0 - Sair");
-
-        var op = Console.ReadLine();
-
-        switch (op)
-        {
-            case "1": CriarAluno(); break;
-            case "2": CriarInscricao(); break;
-            case "3": ConcluirInscricao(); break;
-            case "4": Classificar(); break;
-            case "5": ConsultarAluno(); break;
-            case "6": ConsultarInscricao(); break;
-            case "7": ConsultarClassificacao(); break;
-            case "8": MenuInstituicoes(); break;
-            case "9": MenuCursos(); break;
-            case "10": MenuEdicoes(); break;
-            case "11": PedirEmissaoDiploma(); break;
-            case "0":
-                Console.WriteLine("O sistema foi encerrado.");
-                Environment.Exit(0);
-                break;
-            default:
-                Console.WriteLine("Opcao invalida. Tente novamente.");
-                break;
+  },
+  "projectFileDependencyGroups": {
+    "net10.0": [
+      "PDFsharp >= 6.2.4"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\wwwjo\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "C:\\Users\\wwwjo\\Desktop\\emissaodiplomav2\\ConsoleApp1\\ConsoleApp1.csproj",
+      "projectName": "ConsoleApp1",
+      "projectPath": "C:\\Users\\wwwjo\\Desktop\\emissaodiplomav2\\ConsoleApp1\\ConsoleApp1.csproj",
+      "packagesPath": "C:\\Users\\wwwjo\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\wwwjo\\Desktop\\emissaodiplomav2\\ConsoleApp1\\obj\\",
+      "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
+      "configFilePaths": [
+        "C:\\Users\\wwwjo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "net10.0"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net10.0": {
+          "framework": "net10.0",
+          "targetAlias": "net10.0",
+          "projectReferences": {}
         }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "all"
+      },
+      "SdkAnalysisLevel": "10.0.300"
+    },
+    "frameworks": {
+      "net10.0": {
+        "framework": "net10.0",
+        "targetAlias": "net10.0",
+        "dependencies": {
+          "PDFsharp": {
+            "target": "Package",
+            "version": "[6.2.4, )"
+          }
+        },
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.300/PortableRuntimeIdentifierGraph.json",
+        "packagesToPrune": {
+          "Microsoft.CSharp": "(,4.7.32767]",
+          "Microsoft.VisualBasic": "(,10.4.32767]",
+          "Microsoft.Win32.Primitives": "(,4.3.32767]",
+          "Microsoft.Win32.Registry": "(,5.0.32767]",
+          "runtime.any.System.Collections": "(,4.3.32767]",
+          "runtime.any.System.Diagnostics.Tools": "(,4.3.32767]",
+          "runtime.any.System.Diagnostics.Tracing": "(,4.3.32767]",
+          "runtime.any.System.Globalization": "(,4.3.32767]",
+          "runtime.any.System.Globalization.Calendars": "(,4.3.32767]",
+          "runtime.any.System.IO": "(,4.3.32767]",
+          "runtime.any.System.Reflection": "(,4.3.32767]",
+          "runtime.any.System.Reflection.Extensions": "(,4.3.32767]",
+          "runtime.any.System.Reflection.Primitives": "(,4.3.32767]",
+          "runtime.any.System.Resources.ResourceManager": "(,4.3.32767]",
+          "runtime.any.System.Runtime": "(,4.3.32767]",
+          "runtime.any.System.Runtime.Handles": "(,4.3.32767]",
+          "runtime.any.System.Runtime.InteropServices": "(,4.3.32767]",
+          "runtime.any.System.Text.Encoding": "(,4.3.32767]",
+          "runtime.any.System.Text.Encoding.Extensions": "(,4.3.32767]",
+          "runtime.any.System.Threading.Tasks": "(,4.3.32767]",
+          "runtime.any.System.Threading.Timer": "(,4.3.32767]",
+          "runtime.aot.System.Collections": "(,4.3.32767]",
+          "runtime.aot.System.Diagnostics.Tools": "(,4.3.32767]",
+          "runtime.aot.System.Diagnostics.Tracing": "(,4.3.32767]",
+          "runtime.aot.System.Globalization": "(,4.3.32767]",
+          "runtime.aot.System.Globalization.Calendars": "(,4.3.32767]",
+          "runtime.aot.System.IO": "(,4.3.32767]",
+          "runtime.aot.System.Reflection": "(,4.3.32767]",
+          "runtime.aot.System.Reflection.Extensions": "(,4.3.32767]",
+          "runtime.aot.System.Reflection.Primitives": "(,4.3.32767]",
+          "runtime.aot.System.Resources.ResourceManager": "(,4.3.32767]",
+          "runtime.aot.System.Runtime": "(,4.3.32767]",
+          "runtime.aot.System.Runtime.Handles": "(,4.3.32767]",
+          "runtime.aot.System.Runtime.InteropServices": "(,4.3.32767]",
+          "runtime.aot.System.Text.Encoding": "(,4.3.32767]",
+          "runtime.aot.System.Text.Encoding.Extensions": "(,4.3.32767]",
+          "runtime.aot.System.Threading.Tasks": "(,4.3.32767]",
+          "runtime.aot.System.Threading.Timer": "(,4.3.32767]",
+          "runtime.debian.8-x64.runtime.native.System": "(,4.3.32767]",
+          "runtime.debian.8-x64.runtime.native.System.IO.Compression": "(,4.3.32767]",
+          "runtime.debian.8-x64.runtime.native.System.Net.Http": "(,4.3.32767]",
+          "runtime.debian.8-x64.runtime.native.System.Net.Security": "(,4.3.32767]",
+          "runtime.debian.8-x64.runtime.native.System.Security.Cryptography": "(,4.3.32767]",
+          "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl": "(,4.3.32767]",
+          "runtime.debian.9-x64.runtime.native.System": "(,4.3.32767]",
+          "runtime.debian.9-x64.runtime.native.System.IO.Compression": "(,4.3.32767]",
+          "runtime.debian.9-x64.runtime.native.System.Net.Http": "(,4.3.32767]",
+          "runtime.debian.9-x64.runtime.native.System.Net.Security": "(,4.3.32767]",
+          "runtime.fedora.23-x64.runtime.native.System": "(,4.3.32767]",
+          "runtime.fedora.23-x64.runtime.native.System.IO.Compression": "(,4.3.32767]",
+          "runtime.fedora.23-x64.runtime.native.System.Net.Http": "(,4.3.32767]",
+          "runtime.fedora.23-x64.runtime.native.System.Net.Security": "(,4.3.32767]",
+          "runtime.fedora.23-x64.runtime.native.System.Security.Cryptography": "(,4.3.32767]",
+          "runtime.fedora.23-x64.runtime.native.System.Security.Cryptography.OpenSsl": "(,4.3.32767]",
+          "runtime.fedora.24-x64.runtime.native.System": "(,4.3.32767]",
+          "runtime.fedora.24-x64.runtime.native.System.IO.Compression": "(,4.3.32767]",
+          "runtime.fedora.24-x64.runtime.native.System.Net.Http": "(,4.3.32767]",
+          "runtime.fedora.24-x64.runtime.native.System.Net.Security": "(,4.3.32767]",
+          "runtime.fedora.24-x64.runtime.native.System.Security.Cryptography": "(,4.3.32767]",
+          "runtime.fedora.24-x64.runtime.native.System.Security.Cryptography.OpenSsl": "(,4.3.32767]",
+          "runtime.fedora.27-x64.runtime.native.System": "(,4.3.32767]",
+          "runtime.fedora.27-x64.runtime.native.System.IO.Compression": "(,4.3.32767]",
+          "runtime.fedora.27-x64.runtime.native.System.Net.Http": "(,4.3.32767]",
+          "runtime.fedora.27-x64.runtime.native.System.Net.Security": "(,4.3.32767]",
+          "runtime.fedora.28-x64.runtime.native.System": "(,4.3.32767]",
+          "runtime.fedora.28-x64.runtime.native.System.IO.Compression": "(,4.3.32767]",
+          "runtime.fedora.28-x64.runtime.native.System.Net.Http": "(,4.3.32767]",
+          "runtime.fedora.28-x64.runtime.native.System.Net.Security": "(,4.3.32767]",
+          "runtime.opensuse.13.2-x64.runtime.native.System": "(,4.3.32767]",
+          "runtime.opensuse.13.2-x64.runtime.native.System.IO.Compression": "(,4.3.32767]",
+          "runtime.opensuse.13.2-x64.runtime.native.System.Net.Http": "(,4.3.32767]",
+          "runtime.opensuse.13.2-x64.runtime.native.System.Net.Security": "(,4.3.32767]",
+          "runtime.opensuse.13.2-x64.runtime.native.System.Security.Cryptography": "(,4.3.32767]",
+          "runtime.opensuse.13.2-x64.runtime.native.System.Security.Cryptography.OpenSsl": "(,4.3.32767]",
+          "runtime.opensuse.42.1-x64.runtime.native.System": "(,4.3.32767]",
+          "runtime.opensuse.42.1-x64.runtime.native.System.IO.Compression": "(,4.3.32767]",
+          "runtime.opensuse.42.1-x64.runtime.native.System.Net.Http": "(,4.3.32767]",
+          "runtime.opensuse.42.1-x64.runtime.native.System.Net.Security": "(,4.3.32767]",
+          "runtime.opensuse.42.1-x64.runtime.native.System.Security.Cryptography": "(,4.3.32767]",
+          "runtime.opensuse.42.1-x64.runtime.native.System.Security.Cryptography.OpenSsl": "(,4.3.32767]",
+          "runtime.opensuse.42.3-x64.runtime.native.System": "(,4.3.32767]",
+          "runtime.opensuse.42.3-x64.runtime.native.System.IO.Compression": "(,4.3.32767]",
+          "runtime.opensuse.42.3-x64.runtime.native.System.Net.Http": "(,4.3.32767]",
+          "runtime.opensuse.42.3-x64.runtime.native.System.Net.Security": "(,4.3.32767]",
+          "runtime.osx.10.10-x64.runtime.native.System": "(,4.3.32767]",
+          "runtime.osx.10.10-x64.runtime.native.System.IO.Compression": "(,4.3.32767]",
+          "runtime.osx.10.10-x64.runtime.native.System.Net.Http": "(,4.3.32767]",
+          "runtime.osx.10.10-x64.runtime.native.System.Net.Security": "(,4.3.32767]",
+          "runtime.osx.10.10-x64.runtime.native.System.Security.Cryptography": "(,4.3.32767]",
+          "runtime.osx.10.10-x64.runtime.native.System.Security.Cryptography.Apple": "(,4.3.32767]",
+          "runtime.osx.10.10-x64.runtime.native.System.Security.Cryptography.OpenSsl": "(,4.3.32767]",
+          "runtime.rhel.7-x64.runtime.native.System": "(,4.3.32767]",
+          "runtime.rhel.7-x64.runtime.native.System.IO.Compression": "(,4.3.32767]",
+          "runtime.rhel.7-x64.runtime.native.System.Net.Http": "(,4.3.32767]",
+          "runtime.rhel.7-x64.runtime.native.System.Net.Security": "(,4.3.32767]",
+          "runtime.rhel.7-x64.runtime.native.System.Security.Cryptography": "(,4.3.32767]",
+          "runtime.rhel.7-x64.runtime.native.System.Security.Cryptography.OpenSsl": "(,4.3.32767]",
+          "runtime.ubuntu.14.04-x64.runtime.native.System": "(,4.3.32767]",
+          "runtime.ubuntu.14.04-x64.runtime.native.System.IO.Compression": "(,4.3.32767]",
+          "runtime.ubuntu.14.04-x64.runtime.native.System.Net.Http": "(,4.3.32767]",
+          "runtime.ubuntu.14.04-x64.runtime.native.System.Net.Security": "(,4.3.32767]",
+          "runtime.ubuntu.14.04-x64.runtime.native.System.Security.Cryptography": "(,4.3.32767]",
+          "runtime.ubuntu.14.04-x64.runtime.native.System.Security.Cryptography.OpenSsl": "(,4.3.32767]",
+          "runtime.ubuntu.16.04-x64.runtime.native.System": "(,4.3.32767]",
+          "runtime.ubuntu.16.04-x64.runtime.native.System.IO.Compression": "(,4.3.32767]",
+          "runtime.ubuntu.16.04-x64.runtime.native.System.Net.Http": "(,4.3.32767]",
+          "runtime.ubuntu.16.04-x64.runtime.native.System.Net.Security": "(,4.3.32767]",
+          "runtime.ubuntu.16.04-x64.runtime.native.System.Security.Cryptography": "(,4.3.32767]",
+          "runtime.ubuntu.16.04-x64.runtime.native.System.Security.Cryptography.OpenSsl": "(,4.3.32767]",
+          "runtime.ubuntu.16.10-x64.runtime.native.System": "(,4.3.32767]",
+          "runtime.ubuntu.16.10-x64.runtime.native.System.IO.Compression": "(,4.3.32767]",
+          "runtime.ubuntu.16.10-x64.runtime.native.System.Net.Http": "(,4.3.32767]",
+          "runtime.ubuntu.16.10-x64.runtime.native.System.Net.Security": "(,4.3.32767]",
+          "runtime.ubuntu.16.10-x64.runtime.native.System.Security.Cryptography": "(,4.3.32767]",
+          "runtime.ubuntu.16.10-x64.runtime.native.System.Security.Cryptography.OpenSsl": "(,4.3.32767]",
+          "runtime.ubuntu.18.04-x64.runtime.native.System": "(,4.3.32767]",
+          "runtime.ubuntu.18.04-x64.runtime.native.System.IO.Compression": "(,4.3.32767]",
+          "runtime.ubuntu.18.04-x64.runtime.native.System.Net.Http": "(,4.3.32767]",
+          "runtime.ubuntu.18.04-x64.runtime.native.System.Net.Security": "(,4.3.32767]",
+          "runtime.unix.Microsoft.Win32.Primitives": "(,4.3.32767]",
+          "runtime.unix.System.Console": "(,4.3.32767]",
+          "runtime.unix.System.Diagnostics.Debug": "(,4.3.32767]",
+          "runtime.unix.System.IO.FileSystem": "(,4.3.32767]",
+          "runtime.unix.System.Net.Primitives": "(,4.3.32767]",
+          "runtime.unix.System.Net.Sockets": "(,4.3.32767]",
+          "runtime.unix.System.Private.Uri": "(,4.3.32767]",
+          "runtime.unix.System.Runtime.Extensions": "(,4.3.32767]",
+          "runtime.win.Microsoft.Win32.Primitives": "(,4.3.32767]",
+          "runtime.win.System.Console": "(,4.3.32767]",
+          "runtime.win.System.Diagnostics.Debug": "(,4.3.32767]",
+          "runtime.win.System.IO.FileSystem": "(,4.3.32767]",
+          "runtime.win.System.Net.Primitives": "(,4.3.32767]",
+          "runtime.win.System.Net.Sockets": "(,4.3.32767]",
+          "runtime.win.System.Runtime.Extensions": "(,4.3.32767]",
+          "runtime.win10-arm-aot.runtime.native.System.IO.Compression": "(,4.0.32767]",
+          "runtime.win10-arm64.runtime.native.System.IO.Compression": "(,4.3.32767]",
+          "runtime.win10-x64-aot.runtime.native.System.IO.Compression": "(,4.0.32767]",
+          "runtime.win10-x86-aot.runtime.native.System.IO.Compression": "(,4.0.32767]",
+          "runtime.win7-x64.runtime.native.System.IO.Compression": "(,4.3.32767]",
+          "runtime.win7-x86.runtime.native.System.IO.Compression": "(,4.3.32767]",
+          "runtime.win7.System.Private.Uri": "(,4.3.32767]",
+          "runtime.win8-arm.runtime.native.System.IO.Compression": "(,4.3.32767]",
+          "System.AppContext": "(,4.3.32767]",
+          "System.Buffers": "(,5.0.32767]",
+          "System.Collections": "(,4.3.32767]",
+          "System.Collections.Concurrent": "(,4.3.32767]",
+          "System.Collections.Immutable": "(,10.0.32767]",
+          "System.Collections.NonGeneric": "(,4.3.32767]",
+          "System.Collections.Specialized": "(,4.3.32767]",
+          "System.ComponentModel": "(,4.3.32767]",
+          "System.ComponentModel.Annotations": "(,4.3.32767]",
+          "System.ComponentModel.EventBasedAsync": "(,4.3.32767]",
+          "System.ComponentModel.Primitives": "(,4.3.32767]",
+          "System.ComponentModel.TypeConverter": "(,4.3.32767]",
+          "System.Console": "(,4.3.32767]",
+          "System.Data.Common": "(,4.3.32767]",
+          "System.Data.DataSetExtensions": "(,4.4.32767]",
+          "System.Diagnostics.Contracts": "(,4.3.32767]",
+          "System.Diagnostics.Debug": "(,4.3.32767]",
+          "System.Diagnostics.DiagnosticSource": "(,10.0.32767]",
+          "System.Diagnostics.FileVersionInfo": "(,4.3.32767]",
+          "System.Diagnostics.Process": "(,4.3.32767]",
+          "System.Diagnostics.StackTrace": "(,4.3.32767]",
+          "System.Diagnostics.TextWriterTraceListener": "(,4.3.32767]",
+          "System.Diagnostics.Tools": "(,4.3.32767]",
+          "System.Diagnostics.TraceSource": "(,4.3.32767]",
+          "System.Diagnostics.Tracing": "(,4.3.32767]",
+          "System.Drawing.Primitives": "(,4.3.32767]",
+          "System.Dynamic.Runtime": "(,4.3.32767]",
+          "System.Formats.Asn1": "(,10.0.32767]",
+          "System.Formats.Tar": "(,10.0.32767]",
+          "System.Globalization": "(,4.3.32767]",
+          "System.Globalization.Calendars": "(,4.3.32767]",
+          "System.Globalization.Extensions": "(,4.3.32767]",
+          "System.IO": "(,4.3.32767]",
+          "System.IO.Compression": "(,4.3.32767]",
+          "System.IO.Compression.ZipFile": "(,4.3.32767]",
+          "System.IO.FileSystem": "(,4.3.32767]",
+          "System.IO.FileSystem.AccessControl": "(,4.4.32767]",
+          "System.IO.FileSystem.DriveInfo": "(,4.3.32767]",
+          "System.IO.FileSystem.Primitives": "(,4.3.32767]",
+          "System.IO.FileSystem.Watcher": "(,4.3.32767]",
+          "System.IO.IsolatedStorage": "(,4.3.32767]",
+          "System.IO.MemoryMappedFiles": "(,4.3.32767]",
+          "System.IO.Pipelines": "(,10.0.32767]",
+          "System.IO.Pipes": "(,4.3.32767]",
+          "System.IO.Pipes.AccessControl": "(,5.0.32767]",
+          "System.IO.UnmanagedMemoryStream": "(,4.3.32767]",
+          "System.Linq": "(,4.3.32767]",
+          "System.Linq.AsyncEnumerable": "(,10.0.32767]",
+          "System.Linq.Expressions": "(,4.3.32767]",
+          "System.Linq.Parallel": "(,4.3.32767]",
+          "System.Linq.Queryable": "(,4.3.32767]",
+          "System.Memory": "(,5.0.32767]",
+          "System.Net.Http": "(,4.3.32767]",
+          "System.Net.Http.Json": "(,10.0.32767]",
+          "System.Net.NameResolution": "(,4.3.32767]",
+          "System.Net.NetworkInformation": "(,4.3.32767]",
+          "System.Net.Ping": "(,4.3.32767]",
+          "System.Net.Primitives": "(,4.3.32767]",
+          "System.Net.Requests": "(,4.3.32767]",
+          "System.Net.Security": "(,4.3.32767]",
+          "System.Net.ServerSentEvents": "(,10.0.32767]",
+          "System.Net.Sockets": "(,4.3.32767]",
+          "System.Net.WebHeaderCollection": "(,4.3.32767]",
+          "System.Net.WebSockets": "(,4.3.32767]",
+          "System.Net.WebSockets.Client": "(,4.3.32767]",
+          "System.Numerics.Vectors": "(,5.0.32767]",
+          "System.ObjectModel": "(,4.3.32767]",
+          "System.Private.DataContractSerialization": "(,4.3.32767]",
+          "System.Private.Uri": "(,4.3.32767]",
+          "System.Reflection": "(,4.3.32767]",
+          "System.Reflection.DispatchProxy": "(,6.0.32767]",
+          "System.Reflection.Emit": "(,4.7.32767]",
+          "System.Reflection.Emit.ILGeneration": "(,4.7.32767]",
+          "System.Reflection.Emit.Lightweight": "(,4.7.32767]",
+          "System.Reflection.Extensions": "(,4.3.32767]",
+          "System.Reflection.Metadata": "(,10.0.32767]",
+          "System.Reflection.Primitives": "(,4.3.32767]",
+          "System.Reflection.TypeExtensions": "(,4.3.32767]",
+          "System.Resources.Reader": "(,4.3.32767]",
+          "System.Resources.ResourceManager": "(,4.3.32767]",
+          "System.Resources.Writer": "(,4.3.32767]",
+          "System.Runtime": "(,4.3.32767]",
+          "System.Runtime.CompilerServices.Unsafe": "(,7.0.32767]",
+          "System.Runtime.CompilerServices.VisualC": "(,4.3.32767]",
+          "System.Runtime.Extensions": "(,4.3.32767]",
+          "System.Runtime.Handles": "(,4.3.32767]",
+          "System.Runtime.InteropServices": "(,4.3.32767]",
+          "System.Runtime.InteropServices.RuntimeInformation": "(,4.3.32767]",
+          "System.Runtime.Loader": "(,4.3.32767]",
+          "System.Runtime.Numerics": "(,4.3.32767]",
+          "System.Runtime.Serialization.Formatters": "(,4.3.32767]",
+          "System.Runtime.Serialization.Json": "(,4.3.32767]",
+          "System.Runtime.Serialization.Primitives": "(,4.3.32767]",
+          "System.Runtime.Serialization.Xml": "(,4.3.32767]",
+          "System.Security.AccessControl": "(,6.0.32767]",
+          "System.Security.Claims": "(,4.3.32767]",
+          "System.Security.Cryptography.Algorithms": "(,4.3.32767]",
+          "System.Security.Cryptography.Cng": "(,5.0.32767]",
+          "System.Security.Cryptography.Csp": "(,4.3.32767]",
+          "System.Security.Cryptography.Encoding": "(,4.3.32767]",
+          "System.Security.Cryptography.OpenSsl": "(,5.0.32767]",
+          "System.Security.Cryptography.Primitives": "(,4.3.32767]",
+          "System.Security.Cryptography.X509Certificates": "(,4.3.32767]",
+          "System.Security.Principal": "(,4.3.32767]",
+          "System.Security.Principal.Windows": "(,5.0.32767]",
+          "System.Security.SecureString": "(,4.3.32767]",
+          "System.Text.Encoding": "(,4.3.32767]",
+          "System.Text.Encoding.CodePages": "(,10.0.32767]",
+          "System.Text.Encoding.Extensions": "(,4.3.32767]",
+          "System.Text.Encodings.Web": "(,10.0.32767]",
+          "System.Text.Json": "(,10.0.32767]",
+          "System.Text.RegularExpressions": "(,4.3.32767]",
+          "System.Threading": "(,4.3.32767]",
+          "System.Threading.AccessControl": "(,10.0.32767]",
+          "System.Threading.Channels": "(,10.0.32767]",
+          "System.Threading.Overlapped": "(,4.3.32767]",
+          "System.Threading.Tasks": "(,4.3.32767]",
+          "System.Threading.Tasks.Dataflow": "(,10.0.32767]",
+          "System.Threading.Tasks.Extensions": "(,5.0.32767]",
+          "System.Threading.Tasks.Parallel": "(,4.3.32767]",
+          "System.Threading.Thread": "(,4.3.32767]",
+          "System.Threading.ThreadPool": "(,4.3.32767]",
+          "System.Threading.Timer": "(,4.3.32767]",
+          "System.ValueTuple": "(,4.5.32767]",
+          "System.Xml.ReaderWriter": "(,4.3.32767]",
+          "System.Xml.XDocument": "(,4.3.32767]",
+          "System.Xml.XmlDocument": "(,4.3.32767]",
+          "System.Xml.XmlSerializer": "(,4.3.32767]",
+          "System.Xml.XPath": "(,4.3.32767]",
+          "System.Xml.XPath.XDocument": "(,5.0.32767]"
+        }
+      }
     }
-
-    // ================= INPUT COM VALIDACAO =================
-
-    void CriarAluno()
-    {
-        Console.Write("Id: ");
-        if (!int.TryParse(Console.ReadLine(), out int id))
-        {
-            Console.WriteLine("ID invalido. Introduza um numero inteiro.");
-            return;
-        }
-
-        Console.Write("Nome: ");
-        string nome = Console.ReadLine()!;
-
-        if (string.IsNullOrWhiteSpace(nome))
-        {
-            Console.WriteLine("Nome nao pode ser vazio.");
-            return;
-        }
-
-        OnCriarAluno?.Invoke(id, nome);
-    }
-
-    void CriarInscricao()
-    {
-        Console.Write("Aluno Id: ");
-        if (!int.TryParse(Console.ReadLine(), out int id))
-        {
-            Console.WriteLine("ID invalido. Introduza um numero inteiro.");
-            return;
-        }
-
-        Console.Write("Edicao: ");
-        string ed = Console.ReadLine()!;
-
-        if (string.IsNullOrWhiteSpace(ed))
-        {
-            Console.WriteLine("Edicao nao pode ser vazia.");
-            return;
-        }
-
-        OnCriarInscricao?.Invoke(id, ed);
-    }
-
-    void ConcluirInscricao()
-    {
-        Console.Write("Aluno Id: ");
-        if (!int.TryParse(Console.ReadLine(), out int id))
-        {
-            Console.WriteLine("ID invalido. Introduza um numero inteiro.");
-            return;
-        }
-
-        Console.Write("Edicao: ");
-        string ed = Console.ReadLine()!;
-
-        if (string.IsNullOrWhiteSpace(ed))
-        {
-            Console.WriteLine("Edicao nao pode ser vazia.");
-            return;
-        }
-
-        OnConcluirInscricao?.Invoke(id, ed);
-    }
-
-    void Classificar()
-    {
-        Console.Write("Aluno Id: ");
-        if (!int.TryParse(Console.ReadLine(), out int id))
-        {
-            Console.WriteLine("ID invalido. Introduza um numero inteiro.");
-            return;
-        }
-
-        Console.Write("Edicao: ");
-        string ed = Console.ReadLine()!;
-
-        if (string.IsNullOrWhiteSpace(ed))
-        {
-            Console.WriteLine("Edicao nao pode ser vazia.");
-            return;
-        }
-
-        Console.Write("Nota (0-20): ");
-        if (!double.TryParse(Console.ReadLine(), out double valor))
-        {
-            Console.WriteLine("Nota invalida. Introduza um numero entre 0 e 20.");
-            return;
-        }
-
-        OnClassificar?.Invoke(id, ed, valor);
-    }
-
-    void ConsultarAluno()
-    {
-        Console.Write("Id: ");
-        if (!int.TryParse(Console.ReadLine(), out int id))
-        {
-            Console.WriteLine("ID invalido. Introduza um numero inteiro.");
-            return;
-        }
-
-        OnConsultarAluno?.Invoke(id);
-    }
-
-    void ConsultarInscricao()
-    {
-        Console.Write("Aluno Id: ");
-        if (!int.TryParse(Console.ReadLine(), out int id))
-        {
-            Console.WriteLine("ID invalido. Introduza um numero inteiro.");
-            return;
-        }
-
-        Console.Write("Edicao: ");
-        string ed = Console.ReadLine()!;
-
-        if (string.IsNullOrWhiteSpace(ed))
-        {
-            Console.WriteLine("Edicao nao pode ser vazia.");
-            return;
-        }
-
-        OnConsultarInscricao?.Invoke(id, ed);
-    }
-
-    void ConsultarClassificacao()
-    {
-        Console.Write("Aluno Id: ");
-        if (!int.TryParse(Console.ReadLine(), out int id))
-        {
-            Console.WriteLine("ID invalido. Introduza um numero inteiro.");
-            return;
-        }
-
-        Console.Write("Edicao: ");
-        string ed = Console.ReadLine()!;
-
-        if (string.IsNullOrWhiteSpace(ed))
-        {
-            Console.WriteLine("Edicao nao pode ser vazia.");
-            return;
-        }
-
-        OnConsultarClassificacao?.Invoke(id, ed);
-    }
-
-    // ================= GESTÃO ACADÉMICA =================
-
-    void GuardarInstituicao()
-    {
-        Console.Write("Id Instituicao: ");
-        if (!int.TryParse(Console.ReadLine(), out int id))
-        {
-            Console.WriteLine("ID da instituição inválido. Introduza um número inteiro.");
-            return;
-        }
-
-        Console.Write("Nome: ");
-        string nome = Console.ReadLine()!;
-
-        Console.Write("Cidade: ");
-        string cidade = Console.ReadLine()!;
-
-        Console.Write("Pais: ");
-        string pais = Console.ReadLine()!;
-
-        OnGuardarInstituicao?.Invoke(id, nome, cidade, pais);
-    }
-
-    void CriarCurso()
-    {
-        Console.Write("Id Curso: ");
-        if (!int.TryParse(Console.ReadLine(), out int idCurso))
-        {
-            Console.WriteLine("ID de Curso inválido. Introduza um número inteiro.");
-            return;
-        }
-
-        Console.Write("Id Instituicao: ");
-        if (!int.TryParse(Console.ReadLine(), out int idInstituicao))
-        {
-            Console.WriteLine("ID de Instituicao inválido. Introduza um número inteiro.");
-            return;
-        }
-
-        Console.Write("Nome Curso: ");
-        string nome = Console.ReadLine()!;
-
-        Console.Write("Grau Academico: ");
-        string grau = Console.ReadLine()!;
-
-        Console.Write("Descricao: ");
-        string descricao = Console.ReadLine()!;
-
-        Console.Write("Estrutura: ");
-        string estrutura = Console.ReadLine()!;
-
-        OnCriarCurso?.Invoke(idCurso, idInstituicao,
-            nome, grau, descricao, estrutura);
-    }
-
-    void CriarEdicao()
-    {
-        Console.Write("Id Edicao: ");
-
-        if (!int.TryParse(Console.ReadLine(), out int idEdicao))
-        {
-            Console.WriteLine("ID da edição inválido.");
-            return;
-        }
-
-        Console.Write("Id Curso: ");
-        if (!int.TryParse(Console.ReadLine(), out int idCurso))
-        {
-            Console.WriteLine("ID do curso inválido.");
-            return;
-        }
-
-        Console.Write("Ano Letivo: ");
-        string ano = Console.ReadLine()!;
-
-        Console.Write("Data Inicio (yyyy-mm-dd): ");
-        if (!DateTime.TryParse(Console.ReadLine(), out DateTime inicio))
-        {
-            Console.WriteLine("Data de início inválida.");
-            return;
-        }
-
-        Console.Write("Data Fim (yyyy-mm-dd): ");
-        if (!DateTime.TryParse(Console.ReadLine(), out DateTime fim))
-        {
-            Console.WriteLine("Data de fim inválida.");
-            return;
-        }
-        if (fim <= inicio)
-        {
-            Console.WriteLine("A data de fim deve ser posterior à data de início.");
-            return;
-        }
-
-        Console.Write("Modalidade: ");
-        string modalidade = Console.ReadLine()!;
-
-        OnCriarEdicao?.Invoke(idEdicao, idCurso,
-            ano, inicio, fim, modalidade);
-    }
-
-    void AlterarEstadoEdicao()
-    {
-        Console.Write("Id Edicao: ");
-
-        if (!int.TryParse(Console.ReadLine(), out int id))
-        {
-            Console.WriteLine("ID da edição inválido.");
-            return;
-        }
-
-        Console.WriteLine("0 - Planeada");
-        Console.WriteLine("1 - Aberta");
-        Console.WriteLine("2 - Encerrada");
-        Console.WriteLine("3 - Cancelada");
-
-        if (!int.TryParse(Console.ReadLine(), out int estado) || estado < 0 || estado > 3)
-        {
-            Console.WriteLine("Estado inválido.");
-            return;
-        }
-
-        OnAlterarEstadoEdicao?.Invoke(id, (EstadoEdicao)estado);
-    }
-
-    void AlterarInstituicao()
-    {
-        Console.Write("Id Instituicao: ");
-        if (!int.TryParse(Console.ReadLine(), out int id))
-        {
-            Console.WriteLine("ID da instituição inválido.");
-            return;
-        }
-
-        Console.Write("Novo Nome: ");
-        string nome = Console.ReadLine()!;
-
-        Console.Write("Nova Cidade: ");
-        string cidade = Console.ReadLine()!;
-
-        Console.Write("Novo Pais: ");
-        string pais = Console.ReadLine()!;
-
-        OnAlterarInstituicao?.Invoke(id, nome, cidade, pais);
-    }
-
-    void ApagarInstituicao()
-    {
-        Console.Write("Id Instituicao: ");
-        if (!int.TryParse(Console.ReadLine(), out int id))
-        {
-            Console.WriteLine("ID da instituição inválido.");
-            return;
-        }
-
-        OnApagarInstituicao?.Invoke(id);
-    }
-
-    void ConsultarInstituicao()
-    {
-        Console.Write("Id Instituicao: ");
-        if (!int.TryParse(Console.ReadLine(), out int id))
-        {
-            Console.WriteLine("ID da instituição inválido.");
-            return;
-        }
-
-        OnConsultarInstituicao?.Invoke(id);
-    }
-
-    void ConsultarCurso()
-    {
-        Console.Write("Id Curso: ");
-        if (!int.TryParse(Console.ReadLine(), out int id))
-        {
-            Console.WriteLine("ID do curso inválido.");
-            return;
-        }
-
-        OnConsultarCurso?.Invoke(id);
-    }
-
-    void AlterarCurso()
-    {
-        Console.Write("Id Curso: ");
-        if (!int.TryParse(Console.ReadLine(), out int idCurso))
-        {
-            Console.WriteLine("ID do curso inválido.");
-            return;
-        }
-
-        Console.Write("Novo Nome Curso: ");
-        string nome = Console.ReadLine()!;
-
-        Console.Write("Novo Grau Academico: ");
-        string grau = Console.ReadLine()!;
-
-        Console.Write("Nova Descricao: ");
-        string descricao = Console.ReadLine()!;
-
-        Console.Write("Nova Estrutura: ");
-        string estrutura = Console.ReadLine()!;
-
-        OnAlterarCurso?.Invoke(idCurso, nome, grau, descricao, estrutura);
-    }
-
-    void ApagarCurso()
-    {
-        Console.Write("Id Curso: ");
-        if (!int.TryParse(Console.ReadLine(), out int idCurso))
-        {
-            Console.WriteLine("ID do curso inválido.");
-            return;
-        }
-
-        OnApagarCurso?.Invoke(idCurso);
-    }
-
-    void AlterarEdicao()
-    {
-        Console.Write("Id Edicao: ");
-        if (!int.TryParse(Console.ReadLine(), out int idEdicao))
-        {
-            Console.WriteLine("ID da edição inválido.");
-            return;
-        }
-
-
-        Console.Write("Ano Letivo: ");
-        string ano = Console.ReadLine()!;
-
-        Console.Write("Data Inicio (yyyy-mm-dd): ");
-        if (!DateTime.TryParse(Console.ReadLine(), out DateTime inicio))
-        {
-            Console.WriteLine("Data de início inválida.");
-            return;
-        }
-
-        Console.Write("Data Fim (yyyy-mm-dd): ");
-        if (!DateTime.TryParse(Console.ReadLine(), out DateTime fim))
-        {
-            Console.WriteLine("Data de fim inválida.");
-            return;
-        }
-
-        if (fim <= inicio)
-        {
-            Console.WriteLine("A data de fim deve ser posterior à data de início.");
-            return;
-        }
-
-        Console.Write("Modalidade: ");
-        string modalidade = Console.ReadLine()!;
-
-        OnAlterarEdicao?.Invoke(idEdicao, ano, inicio, fim, modalidade);
-    }
-
-    void ApagarEdicao()
-    {
-        Console.Write("Id Edicao: ");
-        if (!int.TryParse(Console.ReadLine(), out int idEdicao))
-        {
-            Console.WriteLine("ID da edição inválido.");
-            return;
-        }
-
-        OnApagarEdicao?.Invoke(idEdicao);
-    }
-
-
-    void ConsultarEdicao()
-    {
-        Console.Write("Id Edicao: ");
-        if (!int.TryParse(Console.ReadLine(), out int id))
-        {
-            Console.WriteLine("ID da edição inválido.");
-            return;
-        }
-
-        OnConsultarEdicao?.Invoke(id);
-    }
-
-    // ================= OUTPUT (Curry & Grace) =================
-    // 1. Model notificou a View (evento)
-    // 2. View vai buscar dados ao estado interno do Model (sender)
-    // 3. View apresenta ao utilizador
-
-    /// Resultado generico de operacao
-    public void MostrarResultado(bool sucesso, string mensagem)
-    {
-        Console.WriteLine(sucesso ? $"OK: {mensagem}" : $"ERRO: {mensagem}");
-    }
-
-    private void MostrarResultado(object? sender, ResultadoEventArgs e)
-    {
-        MostrarResultado(e.Sucesso, e.Mensagem);
-    }
-
-    /// Inscricao criada — dados vem do EventArgs (criacao, nao consulta)
-    private void MostrarInscricaoCriada(object? sender, InscricaoAlunoEventArgs e)
-    {
-        var i = e.Inscricao; // dados da inscricao RECEM criada
-
-        Console.WriteLine($"\n=== INSCRICAO CRIADA ===");
-        Console.WriteLine($"Aluno:             {i.AlunoId}");
-        Console.WriteLine($"Edicao:            {i.Edicao}");
-        Console.WriteLine($"Ativa:             {i.Ativa}");
-        Console.WriteLine($"Tem classificacao: {i.TemClassificacao}");
-    }
-
-    /// Classificacao lancada — dados vem do EventArgs (criacao, nao consulta)
-    private void MostrarClassificacaoCriada(object? sender, ClassificacaoEventArgs e)
-    {
-        var c = e.Classificacao; // dados da classificacao RECEM lancada
-
-        Console.WriteLine($"\n=== CLASSIFICACAO LANCADA ===");
-        Console.WriteLine($"Nota: {c.NotaValor}");
-        Console.WriteLine($"Aprovado: {c.Aprovado}");
-    }
-
-    /// Aluno consultado — View vai buscar ao estado interno do Model
-    private void MostrarAluno(object? sender, AlunoEventArgs e)
-    {
-        var a = e.Aluno;
-
-        if (a == null)
-        {
-            Console.WriteLine("Aluno nao encontrado.");
-            return;
-        }
-
-        Console.WriteLine($"\n=== ALUNO ===");
-        Console.WriteLine($"ID:         {a.Id}");
-        Console.WriteLine($"Nome:       {a.Nome}");
-    }
-
-    /// Inscricao consultada — View vai buscar ao estado interno do Model
-    private void MostrarInscricaoConsultada(object? sender, InscricaoAlunoConsultadaEventArgs e)
-    {
-        var i = e.Inscricao;
-
-        if (i == null)
-        {
-            Console.WriteLine("Inscricao nao encontrada.");
-            return;
-        }
-
-        Console.WriteLine($"\n=== INSCRICAO ===");
-        Console.WriteLine($"Aluno:             {i.AlunoId}");
-        Console.WriteLine($"Edicao:            {i.Edicao}");
-        Console.WriteLine($"Ativa:             {i.Ativa}");
-        Console.WriteLine($"Tem classificacao: {i.TemClassificacao}");
-    }
-
-    /// Classificacao consultada — View vai buscar ao estado interno do Model
-    private void MostrarClassificacaoConsultada(object? sender, ClassificacaoConsultadaEventArgs e)
-    {
-        var c = e.Classificacao;
-
-        if (c == null)
-        {
-            Console.WriteLine("Classificacao nao encontrada.");
-            return;
-        }
-
-        Console.WriteLine($"\n=== CLASSIFICACAO ===");
-        Console.WriteLine($"Nota:     {c.NotaValor}");
-        Console.WriteLine($"Aprovado: {c.Aprovado}");
-    }
-
-    /// Mostra instituição guardada
-    private void MostrarInstituicaoGuardada(object? sender, InstituicaoEventArgs e)
-    {
-        var i = e.Instituicao;
-
-        Console.WriteLine("\n=== INSTITUICAO ===");
-        Console.WriteLine($"ID: {i.IdInstituicao}");
-        Console.WriteLine($"Nome: {i.NomeInstituicao}");
-        Console.WriteLine($"Cidade: {i.Cidade}");
-        Console.WriteLine($"Pais: {i.Pais}");
-    }
-
-    /// Mostra curso criado
-    private void MostrarCursoCriado(object? sender, CursoEventArgs e)
-    {
-        var c = e.Curso;
-
-        Console.WriteLine("\n=== CURSO ===");
-        Console.WriteLine($"ID: {c.IdCurso}");
-        Console.WriteLine($"Nome: {c.NomeCurso}");
-        Console.WriteLine($"Grau: {c.GrauAcademico}");
-    }
-
-    /// Mostra edição criada
-    private void MostrarEdicaoCriada(object? sender, EdicaoEventArgs e)
-    {
-        var ed = e.Edicao;
-
-        Console.WriteLine("\n=== EDICAO ===");
-        Console.WriteLine($"ID: {ed.IdEdicao}");
-        Console.WriteLine($"Ano Letivo: {ed.AnoLetivo}");
-        Console.WriteLine($"Estado: {ed.Estado}");
-    }
-
-    /// Mostra alteração de estado
-    private void MostrarEstadoEdicaoAlterado(object? sender, EdicaoEventArgs e)
-    {
-        var ed = e.Edicao;
-
-        Console.WriteLine("\n=== ESTADO ALTERADO ===");
-        Console.WriteLine($"Edicao: {ed.IdEdicao}");
-        Console.WriteLine($"Novo Estado: {ed.Estado}");
-    }
-
-    private void MostrarInstituicaoConsultada(object? sender, InstituicaoConsultadaEventArgs e)
-    {
-        var i = e.Instituicao;
-
-        if (i == null)
-        {
-            Console.WriteLine("Instituição não encontrada.");
-            return;
-        }
-
-        Console.WriteLine("\n=== INSTITUIÇÃO CONSULTADA ===");
-        Console.WriteLine($"ID: {i.IdInstituicao}");
-        Console.WriteLine($"Nome: {i.NomeInstituicao}");
-        Console.WriteLine($"Cidade: {i.Cidade}");
-        Console.WriteLine($"País: {i.Pais}");
-    }
-
-    private void MostrarCursoConsultado(object? sender, CursoConsultadoEventArgs e)
-    {
-        var c = e.Curso;
-
-        if (c == null)
-        {
-            Console.WriteLine("Curso não encontrado.");
-            return;
-        }
-
-        Console.WriteLine("\n=== CURSO CONSULTADO ===");
-        Console.WriteLine($"ID: {c.IdCurso}");
-        Console.WriteLine($"Nome: {c.NomeCurso}");
-        Console.WriteLine($"Grau: {c.GrauAcademico}");
-        Console.WriteLine($"Instituição: {c.Instituicao.NomeInstituicao}");
-    }
-
-    private void MostrarEdicaoConsultada(object? sender, EdicaoConsultadaEventArgs e)
-    {
-        var ed = e.Edicao;
-
-        if (ed == null)
-        {
-            Console.WriteLine("Edição não encontrada.");
-            return;
-        }
-
-        Console.WriteLine("\n=== EDIÇÃO CONSULTADA ===");
-        Console.WriteLine($"ID: {ed.IdEdicao}");
-        Console.WriteLine($"Instituição: {ed.Curso.Instituicao.NomeInstituicao}");
-        Console.WriteLine($"Curso: {ed.Curso.NomeCurso}");
-        Console.WriteLine($"Ano Letivo: {ed.AnoLetivo}");
-        Console.WriteLine($"Data Início: {ed.DataInicio:yyyy-MM-dd}");
-        Console.WriteLine($"Data Fim: {ed.DataFim:yyyy-MM-dd}");
-        Console.WriteLine($"Modalidade: {ed.Modalidade}");
-        Console.WriteLine($"Estado: {ed.Estado}");
-    }
-
-    void MenuInstituicoes()
-    {
-        Console.WriteLine("\n--- GESTÃO DE INSTITUIÇÕES ---");
-        Console.WriteLine("1 - Guardar Instituição");
-        Console.WriteLine("2 - Alterar Instituição");
-        Console.WriteLine("3 - Consultar Instituição");
-        Console.WriteLine("4 - Apagar Instituição");
-        Console.WriteLine("0 - Voltar");
-
-        var op = Console.ReadLine();
-
-        switch (op)
-        {
-            case "1": GuardarInstituicao(); break;
-            case "2": AlterarInstituicao(); break;
-            case "3": ConsultarInstituicao(); break;
-            case "4": ApagarInstituicao(); break;
-            case "0": return;
-            default: Console.WriteLine("Opção inválida."); break;
-        }
-    }
-
-    void MenuCursos()
-    {
-        Console.WriteLine("\n--- GESTÃO DE CURSOS ---");
-        Console.WriteLine("1 - Criar Curso");
-        Console.WriteLine("2 - Alterar Curso");
-        Console.WriteLine("3 - Consultar Curso");
-        Console.WriteLine("4 - Apagar Curso");
-        Console.WriteLine("0 - Voltar");
-
-        var op = Console.ReadLine();
-
-        switch (op)
-        {
-            case "1": CriarCurso(); break;
-            case "2": AlterarCurso(); break;
-            case "3": ConsultarCurso(); break;
-            case "4": ApagarCurso(); break;
-            case "0": return;
-            default: Console.WriteLine("Opção inválida."); break;
-        }
-    }
-    
-    /// Apresenta o resultado da validação
-    private void MostrarValidacao(object? sender, ValidacaoEventArgs e)
-    {
-        Console.WriteLine("[VIEW] " + e.Mensagem);
-    }
-
-    void MenuEdicoes()
-    {
-        Console.WriteLine("\n--- GESTÃO DE EDIÇÕES ---");
-        Console.WriteLine("1 - Criar Edição");
-        Console.WriteLine("2 - Alterar Edição");
-        Console.WriteLine("3 - Alterar Estado da Edição");
-        Console.WriteLine("4 - Consultar Edição");
-        Console.WriteLine("5 - Apagar Edição");
-        Console.WriteLine("0 - Voltar");
-
-        var op = Console.ReadLine();
-
-        switch (op)
-        {
-            case "1": CriarEdicao(); break;
-            case "2": AlterarEdicao(); break;
-            case "3": AlterarEstadoEdicao(); break;
-            case "4": ConsultarEdicao(); break;
-            case "5": ApagarEdicao(); break;
-            case "0": return;
-            default: Console.WriteLine("Opção inválida."); break;
-        }
-    }
-    /// Apresenta informação sobre o diploma gerado
-    private void MostrarDiploma(object? sender, DiplomaEmitidoEventArgs e)
-    {
-        Console.WriteLine("[VIEW] Diploma gerado com sucesso!");
-        Console.WriteLine("[VIEW] Tamanho do PDF: " + e.PdfBytes.Length + " bytes");
-        // Simula download/armazenamento
-        System.IO.File.WriteAllBytes("diploma.pdf", e.PdfBytes);
-    }
-
-    void PedirEmissaoDiploma()
-    {
-        Console.Write("Nome do aluno: ");
-        string nomeAluno = Console.ReadLine() ?? string.Empty;
-
-        Console.Write("Curso: ");
-        string curso = Console.ReadLine() ?? string.Empty;
-
-        OnEmitirDiploma?.Invoke(nomeAluno, curso);
-    }
+  }
 }

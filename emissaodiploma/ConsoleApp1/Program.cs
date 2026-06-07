@@ -1,37 +1,17 @@
-﻿using System;
-
-/// Ponto de entrada da aplicação.
-/// 
-/// Responsável por:
-/// - Criar objetos
-/// - Ligar componentes
-/// - Iniciar fluxo
-class Program
-{
-    static void Main()
-    {
-        // Serviço responsável pela geração do diploma
-        IGeradorDiploma gerador = new Gerador();
-
-        // Model
-        Model model = new Model(gerador);
-
-        // View
-        View view = new View();
-
-        view.Subscrever(model);
-
-        // Controller
-        // O Controller liga os eventos da View aos métodos do Model
-        Controller controller = new Controller(model, view);
-
-        // Início do fluxo
-        while (true)
-        {
-            view.Menu();
-        }
-
-        /* view.PedirEmissao();
-        Console.ReadLine(); */
-    }
-}
+is_global = true
+build_property.TargetFramework = net10.0
+build_property.TargetFrameworkIdentifier = .NETCoreApp
+build_property.TargetFrameworkVersion = v10.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = ConsoleApp1
+build_property.ProjectDir = C:\Universidade Aberta\Ano 2\21179 - Laboratório de Desenvolvimento de Software\Repo\emissaodiploma\emissaodiploma\ConsoleApp1\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.EffectiveAnalysisLevelStyle = 10.0
+build_property.EnableCodeStyleSeverity = 
