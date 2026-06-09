@@ -1,37 +1,65 @@
 ﻿using System;
+using PdfSharp.Fonts;
 
-/// Ponto de entrada da aplicação.
+/// <summary>
+/// Ponto de entrada da aplicação SimDiploma.
 /// 
-/// Responsável por:
-/// - Criar objetos
-/// - Ligar componentes
-/// - Iniciar fluxo
+/// Responsabilidades:
+/// - Criar os componentes principais da aplicação;
+/// - Ligar as dependências entre Model, View e Controller;
+/// - Iniciar o fluxo principal da aplicação;
+/// - Tratar erros críticos de arranque ou execução.
+/// </summary>
 class Program
 {
+    /// <summary>
+    /// Método principal da aplicação.
+    /// </summary>
     static void Main()
     {
-        // Serviço responsável pela geração do diploma
+        try
+        {
+            GlobalFontSettings.UseWindowsFontsUnderWindows = true;
+
+            Controller controller = CriarAplicacao();
+
+            controller.Iniciar();
+        }
+        catch (Exception ex)
+        {
+            Console.Clear();
+            Console.WriteLine("ERRO CRÍTICO DA APLICAÇÃO");
+            Console.WriteLine("-------------------------");
+            Console.WriteLine("Ocorreu um erro inesperado que impediu a continuação da aplicação.");
+            Console.WriteLine();
+            Console.WriteLine($"Detalhe técnico: {ex.Message}");
+            Console.WriteLine();
+            Console.WriteLine("Prima qualquer tecla para sair...");
+            Console.ReadKey();
+        }
+    }
+
+    /// <summary>
+    /// Cria e liga os principais componentes da aplicação.
+    /// </summary>
+    /// <returns>Controller principal da aplicação.</returns>
+    private static Controller CriarAplicacao()
+    {
+        // Serviço responsável pela geração textual ou lógica do diploma.
         IGeradorDiploma gerador = new Gerador();
 
-        // Model
+        // Componente responsável pelos dados e regras de negócio.
         Model model = new Model(gerador);
 
-        // View
+        // Componente responsável pela interação com o utilizador.
         View view = new View();
 
+        // A View subscreve os eventos do Model para apresentar mensagens ao utilizador.
         view.Subscrever(model);
 
-        // Controller
-        // O Controller liga os eventos da View aos métodos do Model
+        // O Controller coordena a interação entre a View e o Model.
         Controller controller = new Controller(model, view);
 
-        // Início do fluxo
-        while (true)
-        {
-            view.Menu();
-        }
-
-        /* view.PedirEmissao();
-        Console.ReadLine(); */
+        return controller;
     }
 }

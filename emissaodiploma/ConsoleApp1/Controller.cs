@@ -1,204 +1,219 @@
 ﻿using System;
 
-/// CONTROLLER
-/// Responsável por coordenar a interação.
+/// <summary>
+/// Controller da aplicação SimDiploma.
 /// 
-/// Função:
-/// - Recebe input
-/// - Invoca o Model
+/// Responsabilidades:
+/// - Coordenar a interação entre a View e o Model;
+/// - Receber os eventos disparados pela View;
+/// - Invocar os métodos adequados do Model;
+/// - Tratar erros da aplicação de forma centralizada.
 /// 
-/// IMPORTANTE:
-/// - Não contém lógica de negócio
-/// - Não processa dados
+/// O Controller não deve conter regras de negócio.
+/// As regras de negócio pertencem ao Model.
+/// </summary>
 public class Controller
 {
     private readonly Model _model;
     private readonly View _view;
 
+    /// <summary>
+    /// Cria uma nova instância do Controller.
+    /// </summary>
+    /// <param name="model">Componente responsável pelas regras de negócio.</param>
+    /// <param name="view">Componente responsável pela interação com o utilizador.</param>
     public Controller(Model model, View view)
     {
-        _model = model;
-        _view = view;
+        _model = model ?? throw new ArgumentNullException(nameof(model));
+        _view = view ?? throw new ArgumentNullException(nameof(view));
 
         LigarEventosDaView(view);
     }
 
+    /// <summary>
+    /// Inicia o ciclo principal da aplicação.
+    /// </summary>
+    public void Iniciar()
+    {
+        bool sair = false;
+
+        while (!sair)
+        {
+            ExecutarOperacao(() =>
+            {
+                sair = _view.Menu();
+            });
+        }
+    }
+
+    /// <summary>
+    /// Liga os eventos da View aos respetivos métodos do Controller.
+    /// </summary>
     private void LigarEventosDaView(View view)
     {
         view.OnCriarAluno += CriarAluno;
         view.OnCriarInscricao += CriarInscricao;
         view.OnConcluirInscricao += ConcluirInscricao;
         view.OnClassificar += Classificar;
+
         view.OnConsultarAluno += ConsultarAluno;
         view.OnConsultarInscricao += ConsultarInscricao;
         view.OnConsultarClassificacao += ConsultarClassificacao;
+
         view.OnGuardarInstituicao += GuardarInstituicao;
         view.OnAlterarInstituicao += AlterarInstituicao;
         view.OnApagarInstituicao += ApagarInstituicao;
+        view.OnConsultarInstituicao += ConsultarInstituicao;
+
         view.OnCriarCurso += CriarCurso;
         view.OnAlterarCurso += AlterarCurso;
         view.OnApagarCurso += ApagarCurso;
+        view.OnConsultarCurso += ConsultarCurso;
+
         view.OnCriarEdicao += CriarEdicao;
         view.OnAlterarEstadoEdicao += AlterarEstadoEdicao;
         view.OnAlterarEdicao += AlterarEdicao;
         view.OnApagarEdicao += ApagarEdicao;
-        view.OnConsultarInstituicao += ConsultarInstituicao;
-        view.OnConsultarCurso += ConsultarCurso;
         view.OnConsultarEdicao += ConsultarEdicao;
+
         view.OnEmitirDiploma += EmitirDiploma;
     }
 
+    /// <summary>
+    /// Executa uma operação da aplicação e trata eventuais erros.
+    /// </summary>
+    /// <param name="operacao">Operação a executar.</param>
+    private void ExecutarOperacao(Action operacao)
+    {
+        try
+        {
+            operacao();
+        }
+        catch (Exception e)
+        {
+            TratarErro(e);
+        }
+    }
+
+    /// <summary>
+    /// Apresenta uma mensagem de erro ao utilizador.
+    /// </summary>
+    /// <param name="e">Exceção capturada.</param>
     private void TratarErro(Exception e)
     {
         _view.MostrarResultado(false, e.Message);
     }
 
+    // ============================================================
+    // GESTÃO DE ALUNOS, INSCRIÇÕES E CLASSIFICAÇÕES
+    // ============================================================
+    
     public void CriarAluno(int id, string nome)
     {
-        try
+        ExecutarOperacao(() =>
         {
             _model.RegistarAluno(id, nome);
-        }
-        catch (Exception e)
-        {
-            TratarErro(e);
-        }
+        });
     }
 
     public void CriarInscricao(int alunoId, string edicao)
     {
-        try
+        ExecutarOperacao(() =>
         {
             _model.InscreverAluno(alunoId, edicao);
-        }
-        catch (Exception e)
-        {
-            TratarErro(e);
-        }
+        });
     }
 
     public void ConcluirInscricao(int alunoId, string edicao)
     {
-        try
+        ExecutarOperacao(() =>
         {
             _model.ConcluirInscricao(alunoId, edicao);
-        }
-        catch (Exception e)
-        {
-            TratarErro(e);
-        }
+        });
     }
 
     public void Classificar(int alunoId, string edicao, double valorNota)
     {
-        try
+        ExecutarOperacao(() =>
         {
             Nota nota = new Nota(valorNota);
             _model.LancarClassificacao(alunoId, edicao, nota);
-        }
-        catch (Exception e)
-        {
-            TratarErro(e);
-        }
+        });
     }
 
     public void ConsultarAluno(int id)
     {
-        try
+        ExecutarOperacao(() =>
         {
             _model.ConsultarAluno(id);
-        }
-        catch (Exception e)
-        {
-            TratarErro(e);
-        }
+        });
     }
 
     public void ConsultarInscricao(int alunoId, string edicao)
     {
-        try
+        ExecutarOperacao(() =>
         {
             _model.ConsultarInscricao(alunoId, edicao);
-        }
-        catch (Exception e)
-        {
-            TratarErro(e);
-        }
+        });
     }
 
     public void ConsultarClassificacao(int alunoId, string edicao)
     {
-        try
+        ExecutarOperacao(() =>
         {
             _model.ConsultarClassificacao(alunoId, edicao);
-        }
-        catch (Exception e)
-        {
-            TratarErro(e);
-        }
+        });
     }
 
-    // GESTÃO DE INSTITUIÇÕES 
+    // ============================================================
+    // GESTÃO DE INSTITUIÇÕES
+    // ============================================================
 
+    
     public void GuardarInstituicao(int idInstituicao, string nomeInstituicao, string cidade, string pais)
     {
-        try
+        ExecutarOperacao(() =>
         {
             _model.GuardarInstituicao(idInstituicao, nomeInstituicao, cidade, pais);
-        }
-        catch (Exception e)
-        {
-            TratarErro(e);
-        }
+        });
     }
 
     public void AlterarInstituicao(int idInstituicao, string nomeInstituicao, string cidade, string pais)
     {
-        try
+        ExecutarOperacao(() =>
         {
             _model.AlterarInstituicao(idInstituicao, nomeInstituicao, cidade, pais);
-        }
-        catch (Exception e)
-        {
-            TratarErro(e);
-        }
+        });
     }
 
     public void ApagarInstituicao(int idInstituicao)
     {
-        try
+        ExecutarOperacao(() =>
         {
             _model.ApagarInstituicao(idInstituicao);
-        }
-        catch (Exception e)
-        {
-            TratarErro(e);
-        }
+        });
     }
 
     public void ConsultarInstituicao(int idInstituicao)
     {
-        try
+        ExecutarOperacao(() =>
         {
             _model.ConsultarInstituicao(idInstituicao);
-        }
-        catch (Exception e)
-        {
-            TratarErro(e);
-        }
+        });
     }
 
+    // ============================================================
     // GESTÃO DE CURSOS 
 
     public void CriarCurso(
-    int idCurso,
-    int idInstituicao,
-    string nomeCurso,
-    string grauAcademico,
-    string descricao,
-    string estrutura)
+        int idCurso,
+        int idInstituicao,
+        string nomeCurso,
+        string grauAcademico,
+        string descricao,
+        string estrutura)
     {
-        try
+        ExecutarOperacao(() =>
         {
             _model.CriarCurso(
                 idCurso,
@@ -207,11 +222,7 @@ public class Controller
                 grauAcademico,
                 descricao,
                 estrutura);
-        }
-        catch (Exception e)
-        {
-            TratarErro(e);
-        }
+        });
     }
 
     public void AlterarCurso(
@@ -221,7 +232,7 @@ public class Controller
         string descricao,
         string estrutura)
     {
-        try
+        ExecutarOperacao(() =>
         {
             _model.AlterarCurso(
                 idCurso,
@@ -229,39 +240,28 @@ public class Controller
                 grauAcademico,
                 descricao,
                 estrutura);
-        }
-        catch (Exception e)
-        {
-            TratarErro(e);
-        }
+        });
     }
 
     public void ApagarCurso(int idCurso)
     {
-        try
+        ExecutarOperacao(() =>
         {
             _model.ApagarCurso(idCurso);
-        }
-        catch (Exception e)
-        {
-            TratarErro(e);
-        }
+        });
     }
 
     public void ConsultarCurso(int idCurso)
     {
-        try
+        ExecutarOperacao(() =>
         {
             _model.ConsultarCurso(idCurso);
-        }
-        catch (Exception e)
-        {
-            TratarErro(e);
-        }
+        });
     }
 
-
+    // ============================================================
     // GESTÃO DE EDIÇÕES
+    // ============================================================
 
     public void CriarEdicao(
         int idEdicao,
@@ -271,7 +271,7 @@ public class Controller
         DateTime dataFim,
         string modalidade)
     {
-        try
+        ExecutarOperacao(() =>
         {
             _model.CriarEdicao(
                 idEdicao,
@@ -280,11 +280,7 @@ public class Controller
                 dataInicio,
                 dataFim,
                 modalidade);
-        }
-        catch (Exception e)
-        {
-            TratarErro(e);
-        }
+        });
     }
 
     public void AlterarEdicao(
@@ -294,7 +290,7 @@ public class Controller
         DateTime dataFim,
         string modalidade)
     {
-        try
+        ExecutarOperacao(() =>
         {
             _model.AlterarEdicao(
                 idEdicao,
@@ -302,59 +298,41 @@ public class Controller
                 dataInicio,
                 dataFim,
                 modalidade);
-        }
-        catch (Exception e)
-        {
-            TratarErro(e);
-        }
+        });
     }
 
     public void AlterarEstadoEdicao(int idEdicao, EstadoEdicao novoEstado)
     {
-        try
+        ExecutarOperacao(() =>
         {
             _model.AlterarEstadoEdicao(idEdicao, novoEstado);
-        }
-        catch (Exception e)
-        {
-            TratarErro(e);
-        }
+        });
     }
 
     public void ApagarEdicao(int idEdicao)
     {
-        try
+        ExecutarOperacao(() =>
         {
             _model.ApagarEdicao(idEdicao);
-        }
-        catch (Exception e)
-        {
-            TratarErro(e);
-        }
+        });
     }
 
     public void ConsultarEdicao(int idEdicao)
     {
-        try
+        ExecutarOperacao(() =>
         {
             _model.ConsultarEdicao(idEdicao);
-        }
-        catch (Exception e)
-        {
-            TratarErro(e);
-        }
+        });
     }
 
-    /// Método que inicia o processo de emissão
-    public void EmitirDiploma(string nomeAluno, string curso)
+    // ============================================================
+    // EMISSÃO DE DIPLOMAS
+    // ============================================================
+    public void EmitirDiploma(int alunoId, int idEdicao)
     {
-        try
+        ExecutarOperacao(() =>
         {
-            _model.EmitirDiploma(nomeAluno, curso);
-        }
-        catch (Exception e)
-        {
-            TratarErro(e);
-        }
+            _model.EmitirDiploma(alunoId, idEdicao);
+        });
     }
 }

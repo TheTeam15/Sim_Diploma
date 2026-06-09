@@ -2,15 +2,26 @@
 using System.Collections.Generic;
 using System.Linq;
 
-/// Classe que transporta o resultado da validação.
-/// Usada para comunicar informação do Model para a View.
+// ============================================================
+// INTERFACES DE LEITURA
+// ============================================================
+//
+// Estas interfaces expõem apenas os dados necessários à View,
+// evitando que os restantes componentes dependam diretamente das
+// classes concretas do domínio.
 
+/// <summary>
+/// Representa os dados públicos de um aluno.
+/// </summary>
 public interface IAluno
 {
     int Id { get; }
     string Nome { get; }
 }
 
+/// <summary>
+/// Representa os dados públicos de uma inscrição de aluno.
+/// </summary>
 public interface IInscricaoAluno
 {
     int AlunoId { get; }
@@ -19,14 +30,18 @@ public interface IInscricaoAluno
     bool TemClassificacao { get; }
 }
 
+/// <summary>
+/// Representa os dados públicos de uma classificação.
+/// </summary>
 public interface IClassificacao
 {
     double NotaValor { get; }
     bool Aprovado { get; }
 }
 
-/// Interface que representa uma instituição
-/// Permite desacoplamento entre componentes
+/// <summary>
+/// Representa os dados públicos de uma instituição.
+/// </summary>
 public interface IInstituicao
 {
     int IdInstituicao { get; }
@@ -35,8 +50,9 @@ public interface IInstituicao
     string Pais { get; }
 }
 
-/// Interface que representa um curso
-/// Utilizada para reduzir dependência de classes concretas
+/// <summary>
+/// Representa os dados públicos de um curso académico.
+/// </summary>
 public interface ICurso
 {
     int IdCurso { get; }
@@ -47,8 +63,9 @@ public interface ICurso
     string Estrutura { get; }
 }
 
-/// Interface que representa uma edição de curso
-/// Define apenas os dados necessários à comunicação entre componentes
+/// <summary>
+/// Representa os dados públicos de uma edição de curso.
+/// </summary>
 public interface IEdicao
 {
     int IdEdicao { get; }
@@ -60,7 +77,16 @@ public interface IEdicao
     EstadoEdicao Estado { get; }
 }
 
-/// Transporta o resultado de uma operacao (sucesso/erro + mensagem)
+// ============================================================
+// EVENT ARGS
+// ============================================================
+
+/// <summary>
+/// Transporta o resultado genérico de uma operação.
+/// 
+/// É usado para comunicar mensagens de sucesso ou erro sem expor
+/// detalhes internos do Model.
+/// </summary>
 public class ResultadoEventArgs : EventArgs
 {
     public bool Sucesso { get; }
@@ -73,7 +99,9 @@ public class ResultadoEventArgs : EventArgs
     }
 }
 
-/// Transporta uma InscricaoAluno criada
+/// <summary>
+/// Transporta a inscrição criada pelo Model para a View.
+/// </summary>
 public class InscricaoAlunoEventArgs : EventArgs
 {
     public IInscricaoAluno Inscricao { get; }
@@ -84,7 +112,9 @@ public class InscricaoAlunoEventArgs : EventArgs
     }
 }
 
-/// Transporta uma Classificacao criada
+/// <summary>
+/// Transporta a classificação criada pelo Model para a View.
+/// </summary>
 public class ClassificacaoEventArgs : EventArgs
 {
     public IClassificacao Classificacao { get; }
@@ -95,7 +125,10 @@ public class ClassificacaoEventArgs : EventArgs
     }
 }
 
-/// Transporta um Aluno consultado (pode ser null se nao encontrado)
+/// <summary>
+/// Transporta o resultado da consulta de um aluno.
+/// O valor pode ser nulo quando o aluno não é encontrado.
+/// </summary>
 public class AlunoEventArgs : EventArgs
 {
     public IAluno? Aluno { get; }
@@ -106,7 +139,10 @@ public class AlunoEventArgs : EventArgs
     }
 }
 
-/// Transporta uma InscricaoAluno consultada (pode ser null)
+/// <summary>
+/// Transporta o resultado da consulta de uma inscrição.
+/// O valor pode ser nulo quando a inscrição não é encontrada.
+/// </summary>
 public class InscricaoAlunoConsultadaEventArgs : EventArgs
 {
     public IInscricaoAluno? Inscricao { get; }
@@ -117,7 +153,10 @@ public class InscricaoAlunoConsultadaEventArgs : EventArgs
     }
 }
 
-/// Transporta uma Classificacao consultada (pode ser null)
+/// <summary>
+/// Transporta o resultado da consulta de uma classificação.
+/// O valor pode ser nulo quando a classificação não existe.
+/// </summary>
 public class ClassificacaoConsultadaEventArgs : EventArgs
 {
     public IClassificacao? Classificacao { get; }
@@ -128,7 +167,9 @@ public class ClassificacaoConsultadaEventArgs : EventArgs
     }
 }
 
-/// Transporta uma Instituicao criada/guardada
+/// <summary>
+/// Transporta uma instituição criada, alterada ou guardada.
+/// </summary>
 public class InstituicaoEventArgs : EventArgs
 {
     public IInstituicao Instituicao { get; }
@@ -139,7 +180,9 @@ public class InstituicaoEventArgs : EventArgs
     }
 }
 
-/// Transporta um Curso criado
+/// <summary>
+/// Transporta um curso criado ou alterado.
+/// </summary>
 public class CursoEventArgs : EventArgs
 {
     public ICurso Curso { get; }
@@ -150,7 +193,9 @@ public class CursoEventArgs : EventArgs
     }
 }
 
-/// Transporta uma Edicao criada ou alterada
+/// <summary>
+/// Transporta uma edição criada ou alterada.
+/// </summary>
 public class EdicaoEventArgs : EventArgs
 {
     public IEdicao Edicao { get; }
@@ -161,6 +206,9 @@ public class EdicaoEventArgs : EventArgs
     }
 }
 
+/// <summary>
+/// Transporta o resultado da consulta de uma instituição.
+/// </summary>
 public class InstituicaoConsultadaEventArgs : EventArgs
 {
     public IInstituicao? Instituicao { get; }
@@ -171,6 +219,9 @@ public class InstituicaoConsultadaEventArgs : EventArgs
     }
 }
 
+/// <summary>
+/// Transporta o resultado da consulta de um curso.
+/// </summary>
 public class CursoConsultadoEventArgs : EventArgs
 {
     public ICurso? Curso { get; }
@@ -181,6 +232,9 @@ public class CursoConsultadoEventArgs : EventArgs
     }
 }
 
+/// <summary>
+/// Transporta o resultado da consulta de uma edição.
+/// </summary>
 public class EdicaoConsultadaEventArgs : EventArgs
 {
     public IEdicao? Edicao { get; }
@@ -191,6 +245,9 @@ public class EdicaoConsultadaEventArgs : EventArgs
     }
 }
 
+/// <summary>
+/// Transporta o resultado da validação de elegibilidade para diploma.
+/// </summary>
 public class ValidacaoEventArgs : EventArgs
 {
     public bool Sucesso { get; }
@@ -203,6 +260,9 @@ public class ValidacaoEventArgs : EventArgs
     }
 }
 
+/// <summary>
+/// Transporta o diploma gerado em formato binário.
+/// </summary>
 public class DiplomaEmitidoEventArgs : EventArgs
 {
     public byte[] PdfBytes { get; }
@@ -213,6 +273,16 @@ public class DiplomaEmitidoEventArgs : EventArgs
     }
 }
 
+// ============================================================
+// INTERFACE DE EVENTOS DO MODEL
+// ============================================================
+
+/// <summary>
+/// Define os eventos públicos disponibilizados pelo Model.
+/// 
+/// Permite que a View observe alterações e resultados sem conhecer
+/// a implementação concreta do Model.
+/// </summary>
 public interface IModelEventos
 {
     event EventHandler<ResultadoEventArgs>? Resultado;
@@ -223,21 +293,38 @@ public interface IModelEventos
     event EventHandler<AlunoEventArgs>? AlunoConsultado;
     event EventHandler<InscricaoAlunoConsultadaEventArgs>? InscricaoConsultada;
     event EventHandler<ClassificacaoConsultadaEventArgs>? ClassificacaoConsultada;
+
     event EventHandler<InstituicaoEventArgs>? InstituicaoGuardada;
+    event EventHandler<InstituicaoEventArgs>? InstituicaoAlterada;
+
     event EventHandler<CursoEventArgs>? CursoCriado;
+    event EventHandler<CursoEventArgs>? CursoAlterado;
+
     event EventHandler<EdicaoEventArgs>? EdicaoCriada;
+    event EventHandler<EdicaoEventArgs>? EdicaoAlterada;
     event EventHandler<EdicaoEventArgs>? EstadoEdicaoAlterado;
+
     event EventHandler<InstituicaoConsultadaEventArgs>? InstituicaoConsultada;
     event EventHandler<CursoConsultadoEventArgs>? CursoConsultado;
     event EventHandler<EdicaoConsultadaEventArgs>? EdicaoConsultada;
+
     event EventHandler<ValidacaoEventArgs>? OnValidacao;
     event EventHandler<DiplomaEmitidoEventArgs>? OnDiplomaEmitido;
 }
 
-/// CLASSE DE SUPORTE PARA REGRAS DE NEGÓCIO
-/// (no futuro deve refletir o modelo UML completo)
+// ============================================================
+// CLASSES DE DOMÍNIO
+// ============================================================
+//
+// Estas classes representam as principais entidades da aplicação:
+// aluno, inscrição, classificação, instituição, curso e edição.
+//
+// Aqui ficam concentrados os dados e algumas regras simples
+// diretamente associadas às entidades.
 
-/// Representa um aluno do sistema
+/// <summary>
+/// Representa um aluno do sistema.
+/// </summary>
 public class Aluno : IAluno
 {
     public int Id { get; set; }
@@ -246,16 +333,22 @@ public class Aluno : IAluno
     // Relacao 1:N — um aluno pode ter varias inscricoes
     public List<InscricaoAluno> Inscricoes { get; set; } = new();
 
-    /// Verifica se existe inscricao ativa numa edicao
+    /// <summary>
+    /// Verifica se o aluno já tem uma inscrição ativa numa determinada edição.
+    /// </summary>
     public bool TemInscricaoAtiva(string edicao)
         => Inscricoes.Any(i => i.Edicao == edicao && i.Ativa);
 
-    /// Obtem inscricao por edicao
+    /// <summary>
+    /// Obtém a inscrição do aluno numa determinada edição.
+    /// </summary>
     public InscricaoAluno? ObterInscricao(string edicao)
         => Inscricoes.FirstOrDefault(i => i.Edicao == edicao);
 }
 
-/// Representa a inscricao de um aluno numa edicao
+/// <summary>
+/// Representa a inscrição de um aluno numa edição.
+/// </summary>
 public class InscricaoAluno : IInscricaoAluno
 {
     public int AlunoId { get; set; }
@@ -271,7 +364,9 @@ public class InscricaoAluno : IInscricaoAluno
     public bool TemClassificacao => ClassificacaoFinal != null;
 }
 
-/// Representa a classificacao final de uma inscricao
+/// <summary>
+/// Representa a classificação final associada a uma inscrição.
+/// </summary>
 public class Classificacao : IClassificacao
 {
     public InscricaoAluno Inscricao { get; set; } = null!;
@@ -284,20 +379,10 @@ public class Classificacao : IClassificacao
     public double NotaValor => Nota.Valor;
 }
 
-/// Representa uma inscrição simplificada
-public class Inscricao
-{
-    // Inicialização evita warnings de nullability
-    public string NomeAluno { get; set; } = "";
-    public string Curso { get; set; } = "";
-
-    // Nullable porque pode ainda não existir classificação
-    public int? ClassificacaoFinal { get; set; }
-
-    public string Estado { get; set; } = "";
-}
-
-/// Value Object que representa uma nota académica válida (0-20)
+/// <summary>
+/// Value Object que representa uma nota académica válida.
+/// Garante que a nota fica sempre no intervalo permitido: 0 a 20.
+/// </summary>
 public class Nota
 {
     public double Valor { get; }
@@ -310,8 +395,78 @@ public class Nota
     }
 }
 
-/// EXCEÇÕES ESPECÍFICAS (boas práticas)
-/// Permitem distinguir tipos de erro de negócio
+/// <summary>
+/// Representa os estados possíveis de uma edição de curso.
+/// </summary>
+public enum EstadoEdicao
+{
+    Planeada,
+    Aberta,
+    Encerrada,
+    Cancelada
+}
+
+/// <summary>
+/// Representa uma instituição de ensino.
+/// </summary>
+public class Instituicao : IInstituicao
+{
+    public int IdInstituicao { get; set; }
+    public string NomeInstituicao { get; set; } = string.Empty;
+    public string Cidade { get; set; } = string.Empty;
+    public string Pais { get; set; } = string.Empty;
+}
+
+/// <summary>
+/// Representa um curso académico associado a uma instituição.
+/// </summary>
+public class Curso : ICurso
+{
+    public int IdCurso { get; set; }
+
+    public IInstituicao Instituicao { get; set; } = null!;
+
+    public string NomeCurso { get; set; } = string.Empty;
+    public string GrauAcademico { get; set; } = string.Empty;
+    public string Descricao { get; set; } = string.Empty;
+    public string Estrutura { get; set; } = string.Empty;
+}
+
+/// <summary>
+/// Representa uma edição específica de um curso.
+/// </summary>
+public class Edicao : IEdicao
+{
+    public int IdEdicao { get; set; }
+
+    public ICurso Curso { get; set; } = null!;
+
+    public string AnoLetivo { get; set; } = string.Empty;
+    public DateTime DataInicio { get; set; }
+    public DateTime DataFim { get; set; }
+    public string Modalidade { get; set; } = string.Empty;
+
+    public EstadoEdicao Estado { get; private set; } = EstadoEdicao.Planeada;
+
+    /// <summary>
+    /// Altera o estado atual da edição.
+    /// </summary>
+    public void AlterarEstado(EstadoEdicao novoEstado)
+    {
+        Estado = novoEstado;
+    }
+}
+
+// ============================================================
+// EXCEÇÕES DE NEGÓCIO
+// ============================================================
+//
+// Estas exceções representam erros específicos da lógica da aplicação.
+// Permitem distinguir falhas de validação, entidades inexistentes,
+// duplicações e estados inválidos.
+//
+// O Model lança estas exceções quando deteta erros de negócio.
+// O Controller é responsável por capturá-las e pedir à View que apresente a mensagem.
 
 public class AlunoNaoEncontradoException : Exception
 {
@@ -408,72 +563,24 @@ public class DataEdicaoInvalidaException : Exception
     public DataEdicaoInvalidaException(string msg) : base(msg) { }
 }
 
-/// Representa os estados possíveis de uma edição de curso
-public enum EstadoEdicao
-{
-    Planeada,
-    Aberta,
-    Encerrada,
-    Cancelada
-}
+// ============================================================
+// MODEL
+// ============================================================
 
-/// Representa uma instituição de ensino
-/// Implementa a interface IInstituicao
-public class Instituicao : IInstituicao
-{
-    public int IdInstituicao { get; set; }
-    public string NomeInstituicao { get; set; } = string.Empty;
-    public string Cidade { get; set; } = string.Empty;
-    public string Pais { get; set; } = string.Empty;
-}
-
-/// Representa um curso académico
-/// Implementa a interface ICurso
-public class Curso : ICurso
-{
-    public int IdCurso { get; set; }
-
-    // Associação a uma instituição
-    public IInstituicao Instituicao { get; set; } = null!;
-
-    public string NomeCurso { get; set; } = string.Empty;
-    public string GrauAcademico { get; set; } = string.Empty;
-    public string Descricao { get; set; } = string.Empty;
-    public string Estrutura { get; set; } = string.Empty;
-}
-
-/// Representa uma edição específica de um curso
-/// Implementa a interface IEdicao
-public class Edicao : IEdicao
-{
-    public int IdEdicao { get; set; }
-
-    // Associação ao curso da edição
-    public ICurso Curso { get; set; } = null!;
-
-    public string AnoLetivo { get; set; } = string.Empty;
-    public DateTime DataInicio { get; set; }
-    public DateTime DataFim { get; set; }
-    public string Modalidade { get; set; } = string.Empty;
-
-    // Estado inicial da edição
-    public EstadoEdicao Estado { get; private set; } = EstadoEdicao.Planeada;
-
-    /// Altera o estado atual da edição
-    public void AlterarEstado(EstadoEdicao novoEstado)
-    {
-        Estado = novoEstado;
-    }
-}
-
-/// MODEL (núcleo da aplicação)
-/// Responsável por:
-/// - Regras de negócio
-/// - Validação de dados
-/// - Coordenação da emissão do diploma
-/// - Notificação da View (via eventos)
+/// <summary>
+/// Model da aplicação SimDiploma.
 /// 
-/// NOTA: Não conhece detalhes de PDFsharp → baixo acoplamento
+/// Responsabilidades:
+/// - Guardar o estado interno da aplicação;
+/// - Aplicar as regras de negócio;
+/// - Validar dados recebidos do Controller;
+/// - Coordenar a emissão de diplomas;
+/// - Notificar a View através de eventos.
+/// 
+/// O Model não lê dados do utilizador e não escreve diretamente no console.
+/// Também não conhece os detalhes concretos da geração do diploma, dependendo
+/// apenas da interface IGeradorDiploma.
+/// </summary>
 public class Model : IModelEventos
 {
     private List<Aluno> alunos = new();
@@ -481,71 +588,85 @@ public class Model : IModelEventos
     private readonly List<Instituicao> instituicoes = new();
     private readonly List<Curso> cursos = new();
     private readonly List<Edicao> edicoes = new();
+
+    private readonly IGeradorDiploma _gerador;
+
     public Instituicao? UltimaInstituicaoConsultada { get; private set; }
     public Curso? UltimoCursoConsultado { get; private set; }
     public Edicao? UltimaEdicaoConsultada { get; private set; }
 
     public Instituicao? UltimaInstituicaoGuardada { get; private set; }
+    public Instituicao? UltimaInstituicaoAlterada { get; private set; }
+
     public Curso? UltimoCursoCriado { get; private set; }
+    public Curso? UltimoCursoAlterado { get; private set; }
+
     public Edicao? UltimaEdicaoCriada { get; private set; }
     public Edicao? UltimaEdicaoAlterada { get; private set; }
 
-    /// Ultimo aluno consultado — estado interno do Model
     public Aluno? UltimoAlunoConsultado { get; private set; }
-
-    /// Ultima inscricao consultada — estado interno do Model
     public InscricaoAluno? UltimaInscricaoConsultada { get; private set; }
-
-    /// Ultima classificacao consultada — estado interno do Model
     public Classificacao? UltimaClassificacaoConsultada { get; private set; }
 
-    /// Resultado da ultima operacao
     public bool UltimaOperacaoSucesso { get; private set; }
-
-    /// Mensagem da ultima operacao
     public string UltimaMensagem { get; private set; } = string.Empty;
 
-    // ================= EVENTOS (EventHandler) =================
-
-    /// Notifica resultado generico de operacao (sucesso ou erro)
-    public event EventHandler<ResultadoEventArgs>? Resultado;
-
-    /// Notifica que uma inscricao foi criada
-    public event EventHandler<InscricaoAlunoEventArgs>? InscricaoCriada;
-
-    /// Notifica que uma classificacao foi lancada
-    public event EventHandler<ClassificacaoEventArgs>? ClassificacaoCriada;
-
-    /// Notifica resultado de consulta de aluno
-    public event EventHandler<AlunoEventArgs>? AlunoConsultado;
-
-    /// Notifica resultado de consulta de inscricao
-    public event EventHandler<InscricaoAlunoConsultadaEventArgs>? InscricaoConsultada;
-
-    /// Notifica resultado de consulta de classificacao
-    public event EventHandler<ClassificacaoConsultadaEventArgs>? ClassificacaoConsultada;
-    
-    // Dependência abstraída (injeção via interface)
-    private readonly IGeradorDiploma _gerador;
-
-    // Eventos que notificam a View
-    // Nullable porque podem não ter subscritores
-    public event EventHandler<ValidacaoEventArgs>? OnValidacao;
-    public event EventHandler<DiplomaEmitidoEventArgs>? OnDiplomaEmitido;
-
-    // Estado interno do Model (importante no MVC Curry & Grace)
     public byte[]? UltimoDiploma { get; private set; }
     public bool UltimaValidacaoSucesso { get; private set; }
 
+    // ============================================================
+    // EVENTOS DO MODEL
+    // ============================================================
+    //
+    // Os eventos permitem que o Model comunique resultados à View
+    // sem depender diretamente dela. Esta comunicação é essencial
+    // para manter a separação entre lógica de negócio e apresentação.
+
+    public event EventHandler<ResultadoEventArgs>? Resultado;
+
+    public event EventHandler<InscricaoAlunoEventArgs>? InscricaoCriada;
+    public event EventHandler<ClassificacaoEventArgs>? ClassificacaoCriada;
+
+    public event EventHandler<AlunoEventArgs>? AlunoConsultado;
+    public event EventHandler<InscricaoAlunoConsultadaEventArgs>? InscricaoConsultada;
+    public event EventHandler<ClassificacaoConsultadaEventArgs>? ClassificacaoConsultada;
+
     public event EventHandler<InstituicaoEventArgs>? InstituicaoGuardada;
+    public event EventHandler<InstituicaoEventArgs>? InstituicaoAlterada;
+
     public event EventHandler<CursoEventArgs>? CursoCriado;
+    public event EventHandler<CursoEventArgs>? CursoAlterado;
+
     public event EventHandler<EdicaoEventArgs>? EdicaoCriada;
+    public event EventHandler<EdicaoEventArgs>? EdicaoAlterada;
     public event EventHandler<EdicaoEventArgs>? EstadoEdicaoAlterado;
+
     public event EventHandler<InstituicaoConsultadaEventArgs>? InstituicaoConsultada;
     public event EventHandler<CursoConsultadoEventArgs>? CursoConsultado;
     public event EventHandler<EdicaoConsultadaEventArgs>? EdicaoConsultada;
 
-    /// Regista um novo aluno no sistema
+    public event EventHandler<ValidacaoEventArgs>? OnValidacao;
+    public event EventHandler<DiplomaEmitidoEventArgs>? OnDiplomaEmitido;
+
+    /// <summary>
+    /// Cria uma nova instância do Model.
+    /// 
+    /// A geração do diploma é recebida por interface, permitindo trocar
+    /// a implementação concreta sem alterar o Model.
+    /// </summary>
+    public Model(IGeradorDiploma gerador)
+    {
+        _gerador = gerador ?? throw new ArgumentNullException(nameof(gerador));
+    }
+
+    // ============================================================
+    // ALUNOS
+    // ============================================================
+
+    /// <summary>
+    /// Regista um novo aluno no sistema, garantindo que o ID é válido
+    /// e que não existe outro aluno com o mesmo identificador.
+    /// </summary>
     public void RegistarAluno(int id, string nome)
     {
         if (string.IsNullOrWhiteSpace(nome))
@@ -567,13 +688,20 @@ public class Model : IModelEventos
         Resultado?.Invoke(this, new ResultadoEventArgs(true, UltimaMensagem));
     }
 
-    /// Verifica se existe aluno com o id dado
+    /// <summary>
+    /// Verifica se existe um aluno com o identificador indicado.
+    /// </summary>
     public bool ExisteAluno(int id)
         => alunos.Any(a => a.Id == id);
 
-    // ================= INSCRICAO =================
+    // ============================================================
+    // INSCRIÇÕES
+    // ============================================================
 
-    /// Inscreve um aluno numa edicao
+    /// <summary>
+    /// Inscreve um aluno numa edição, garantindo que o aluno existe
+    /// e que não tem já uma inscrição ativa nessa edição.
+    /// </summary>
     public void InscreverAluno(int alunoId, string edicao)
     {
         var aluno = alunos.FirstOrDefault(a => a.Id == alunoId)
@@ -594,7 +722,6 @@ public class Model : IModelEventos
 
         aluno.Inscricoes.Add(inscricao);
 
-        // Atualizar estado interno — Curry & Grace
         UltimaInscricaoConsultada = inscricao;
         UltimaOperacaoSucesso = true;
         UltimaMensagem = $"Inscricao na edicao '{edicao}' realizada com sucesso.";
@@ -603,7 +730,9 @@ public class Model : IModelEventos
         InscricaoCriada?.Invoke(this, new InscricaoAlunoEventArgs(inscricao));
     }
 
-    /// Conclui a inscricao de um aluno numa edicao
+    /// <summary>
+    /// Conclui a inscrição de um aluno numa edição.
+    /// </summary>
     public void ConcluirInscricao(int alunoId, string edicao)
     {
         var aluno = alunos.FirstOrDefault(a => a.Id == alunoId)
@@ -617,16 +746,22 @@ public class Model : IModelEventos
 
         inscricao.Ativa = false;
 
-        // Atualizar estado interno — Curry & Grace
         UltimaOperacaoSucesso = true;
         UltimaMensagem = $"Inscricao na edicao '{edicao}' concluida com sucesso.";
 
         Resultado?.Invoke(this, new ResultadoEventArgs(true, UltimaMensagem));
     }
 
-    // ================= CLASSIFICACAO =================
+    // ============================================================
+    // CLASSIFICAÇÕES
+    // ============================================================
 
-    /// Lanca a classificacao final de um aluno numa edicao
+    /// <summary>
+    /// Lança a classificação final de um aluno numa edição.
+    /// 
+    /// A classificação só pode ser lançada se a inscrição existir,
+    /// estiver concluída e ainda não tiver classificação associada.
+    /// </summary>
     public void LancarClassificacao(int alunoId, string edicao, Nota nota)
     {
         var aluno = alunos.FirstOrDefault(a => a.Id == alunoId)
@@ -649,7 +784,6 @@ public class Model : IModelEventos
 
         inscricao.ClassificacaoFinal = classificacao;
 
-        // Atualizar estado interno — Curry & Grace
         UltimaClassificacaoConsultada = classificacao;
         UltimaOperacaoSucesso = true;
         UltimaMensagem = $"Classificacao lancada: {nota.Valor} | Aprovado: {classificacao.Aprovado}";
@@ -658,17 +792,22 @@ public class Model : IModelEventos
         ClassificacaoCriada?.Invoke(this, new ClassificacaoEventArgs(classificacao));
     }
 
-    // ================= CONSULTAS =================
+    // ============================================================
+    // CONSULTAS DE ALUNOS, INSCRIÇÕES E CLASSIFICAÇÕES
+    // ============================================================
 
-    /// Consulta um aluno pelo id e notifica a View
+    /// <summary>
+    /// Consulta um aluno pelo ID e notifica a View.
+    /// </summary>
     public void ConsultarAluno(int id)
     {
-        // Guardar estado interno — Curry & Grace
         UltimoAlunoConsultado = alunos.FirstOrDefault(a => a.Id == id);
         AlunoConsultado?.Invoke(this, new AlunoEventArgs(UltimoAlunoConsultado));
     }
 
-    /// Consulta uma inscricao e notifica a View
+    /// <summary>
+    /// Consulta uma inscrição e notifica a View.
+    /// </summary>
     public void ConsultarInscricao(int id, string edicao)
     {
         var aluno = alunos.FirstOrDefault(a => a.Id == id);
@@ -676,7 +815,9 @@ public class Model : IModelEventos
         InscricaoConsultada?.Invoke(this, new InscricaoAlunoConsultadaEventArgs(UltimaInscricaoConsultada));
     }
 
-    /// Consulta uma classificacao e notifica a View
+    /// <summary>
+    /// Consulta uma classificação e notifica a View.
+    /// </summary>
     public void ConsultarClassificacao(int id, string edicao)
     {
         var aluno = alunos.FirstOrDefault(a => a.Id == id);
@@ -685,398 +826,322 @@ public class Model : IModelEventos
         ClassificacaoConsultada?.Invoke(this, new ClassificacaoConsultadaEventArgs(UltimaClassificacaoConsultada));
     }
 
-    // GESTÃO DE INSTITUIÇÕES 
-    /// Guarda uma nova instituição no sistema
-    /// e notifica a View através de eventos
+    // ============================================================
+    // GESTÃO DE INSTITUIÇÕES
+    // ============================================================
+
+    /// <summary>
+    /// Guarda uma nova instituição no sistema e notifica a View.
+    /// </summary>
     public void GuardarInstituicao(int idInstituicao, string nomeInstituicao, string cidade, string pais)
     {
-        try
+        if (idInstituicao <= 0)
+            throw new ArgumentException("ID da instituição inválido.");
+
+        if (string.IsNullOrWhiteSpace(nomeInstituicao))
+            throw new ArgumentException("Nome da instituição inválido.");
+
+        if (string.IsNullOrWhiteSpace(cidade))
+            throw new ArgumentException("Cidade inválida.");
+
+        if (string.IsNullOrWhiteSpace(pais))
+            throw new ArgumentException("País inválido.");
+
+        if (instituicoes.Any(i => i.IdInstituicao == idInstituicao))
+            throw new InstituicaoJaExisteException($"Já existe uma instituição com o ID {idInstituicao}.");
+
+        var instituicao = new Instituicao
         {
-            if (idInstituicao <= 0)
-                throw new ArgumentException("ID da instituição inválido.");
+            IdInstituicao = idInstituicao,
+            NomeInstituicao = nomeInstituicao,
+            Cidade = cidade,
+            Pais = pais
+        };
 
-            if (string.IsNullOrWhiteSpace(nomeInstituicao))
-                throw new ArgumentException("Nome da instituição inválido.");
+        instituicoes.Add(instituicao);
 
-            if (string.IsNullOrWhiteSpace(cidade))
-                throw new ArgumentException("Cidade inválida.");
+        UltimaInstituicaoGuardada = instituicao;
+        UltimaOperacaoSucesso = true;
+        UltimaMensagem = $"Instituição '{nomeInstituicao}' guardada com sucesso.";
 
-            if (string.IsNullOrWhiteSpace(pais))
-                throw new ArgumentException("País inválido.");
-
-            if (instituicoes.Any(i => i.IdInstituicao == idInstituicao))
-                throw new InstituicaoJaExisteException($"Já existe uma instituição com o ID {idInstituicao}.");
-
-            var instituicao = new Instituicao
-            {
-                IdInstituicao = idInstituicao,
-                NomeInstituicao = nomeInstituicao,
-                Cidade = cidade,
-                Pais = pais
-            };
-
-            instituicoes.Add(instituicao);
-            UltimaInstituicaoGuardada = instituicao;
-            UltimaOperacaoSucesso = true;
-            UltimaMensagem = $"Instituição '{nomeInstituicao}' guardada com sucesso.";
-
-            Resultado?.Invoke(this, new ResultadoEventArgs(true, UltimaMensagem));
-            InstituicaoGuardada?.Invoke(this, new InstituicaoEventArgs(instituicao));
-        }
-        catch (InstituicaoJaExisteException e)
-        {
-            UltimaOperacaoSucesso = false;
-            UltimaMensagem = e.Message;
-            Resultado?.Invoke(this, new ResultadoEventArgs(false, UltimaMensagem));
-        }
-        catch (ArgumentException e)
-        {
-            UltimaOperacaoSucesso = false;
-            UltimaMensagem = e.Message;
-            Resultado?.Invoke(this, new ResultadoEventArgs(false, UltimaMensagem));
-        }
-        catch (Exception e)
-        {
-            UltimaOperacaoSucesso = false;
-            UltimaMensagem = $"Erro inesperado: {e.Message}";
-            Resultado?.Invoke(this, new ResultadoEventArgs(false, UltimaMensagem));
-        }
+        Resultado?.Invoke(this, new ResultadoEventArgs(true, UltimaMensagem));
+        InstituicaoGuardada?.Invoke(this, new InstituicaoEventArgs(instituicao));
     }
 
+    /// <summary>
+    /// Altera os dados de uma instituição existente.
+    /// </summary>
     public void AlterarInstituicao(int idInstituicao, string nomeInstituicao, string cidade, string pais)
     {
-        try
-        {
-            var instituicao = instituicoes.FirstOrDefault(i => i.IdInstituicao == idInstituicao)
-                ?? throw new InstituicaoNaoEncontradaException("A instituição indicada não existe.");
+        var instituicao = instituicoes.FirstOrDefault(i => i.IdInstituicao == idInstituicao)
+            ?? throw new InstituicaoNaoEncontradaException("A instituição indicada não existe.");
 
-            if (string.IsNullOrWhiteSpace(nomeInstituicao))
-                throw new ArgumentException("Nome da instituição inválido.");
+        if (string.IsNullOrWhiteSpace(nomeInstituicao))
+            throw new ArgumentException("Nome da instituição inválido.");
 
-            if (string.IsNullOrWhiteSpace(cidade))
-                throw new ArgumentException("Cidade inválida.");
+        if (string.IsNullOrWhiteSpace(cidade))
+            throw new ArgumentException("Cidade inválida.");
 
-            if (string.IsNullOrWhiteSpace(pais))
-                throw new ArgumentException("País inválido.");
+        if (string.IsNullOrWhiteSpace(pais))
+            throw new ArgumentException("País inválido.");
 
-            instituicao.NomeInstituicao = nomeInstituicao;
-            instituicao.Cidade = cidade;
-            instituicao.Pais = pais;
+        instituicao.NomeInstituicao = nomeInstituicao;
+        instituicao.Cidade = cidade;
+        instituicao.Pais = pais;
 
-            UltimaInstituicaoGuardada = instituicao;
-            UltimaOperacaoSucesso = true;
-            UltimaMensagem = $"Instituição '{nomeInstituicao}' alterada com sucesso.";
+        UltimaInstituicaoAlterada = instituicao;
+        UltimaOperacaoSucesso = true;
+        UltimaMensagem = $"Instituição '{nomeInstituicao}' alterada com sucesso.";
 
-            Resultado?.Invoke(this, new ResultadoEventArgs(true, UltimaMensagem));
-            InstituicaoGuardada?.Invoke(this, new InstituicaoEventArgs(instituicao));
-        }
-        catch (Exception e)
-        {
-            UltimaOperacaoSucesso = false;
-            UltimaMensagem = e.Message;
-            Resultado?.Invoke(this, new ResultadoEventArgs(false, UltimaMensagem));
-        }
+        Resultado?.Invoke(this, new ResultadoEventArgs(true, UltimaMensagem));
+        InstituicaoAlterada?.Invoke(this, new InstituicaoEventArgs(instituicao));
     }
 
+    /// <summary>
+    /// Apaga uma instituição, desde que não existam cursos associados.
+    /// </summary>
     public void ApagarInstituicao(int idInstituicao)
-    
     {
-        try
-        {
-            var instituicao = instituicoes.FirstOrDefault(i => i.IdInstituicao == idInstituicao)
-                ?? throw new InstituicaoNaoEncontradaException("A instituição indicada não existe.");
+        var instituicao = instituicoes.FirstOrDefault(i => i.IdInstituicao == idInstituicao)
+            ?? throw new InstituicaoNaoEncontradaException("A instituição indicada não existe.");
 
-            if (cursos.Any(c => c.Instituicao.IdInstituicao == idInstituicao))
-                throw new InvalidOperationException("Não é possível apagar a instituição porque existem cursos associados.");
+        if (cursos.Any(c => c.Instituicao.IdInstituicao == idInstituicao))
+            throw new InvalidOperationException("Não é possível apagar a instituição porque existem cursos associados.");
 
-            instituicoes.Remove(instituicao);
+        instituicoes.Remove(instituicao);
 
-            UltimaOperacaoSucesso = true;
-            UltimaMensagem = "Instituição apagada com sucesso.";
-            Resultado?.Invoke(this, new ResultadoEventArgs(true, UltimaMensagem));
-        }
-        catch (Exception e)
-        {
-            UltimaOperacaoSucesso = false;
-            UltimaMensagem = e.Message;
-            Resultado?.Invoke(this, new ResultadoEventArgs(false, UltimaMensagem));
-        }
+        UltimaOperacaoSucesso = true;
+        UltimaMensagem = "Instituição apagada com sucesso.";
+
+        Resultado?.Invoke(this, new ResultadoEventArgs(true, UltimaMensagem));
     }
 
+    /// <summary>
+    /// Consulta uma instituição pelo ID e notifica a View.
+    /// </summary>
+    public void ConsultarInstituicao(int idInstituicao)
+    {
+        UltimaInstituicaoConsultada =
+            instituicoes.FirstOrDefault(i => i.IdInstituicao == idInstituicao);
+
+        InstituicaoConsultada?.Invoke(
+            this,
+            new InstituicaoConsultadaEventArgs(UltimaInstituicaoConsultada));
+    }
+
+    // ============================================================
     // GESTÃO DE CURSOS
-    /// Cria um novo curso associado a uma instituição
-    /// e comunica o resultado da operação
+    // ============================================================
+
+    /// <summary>
+    /// Cria um novo curso associado a uma instituição existente.
+    /// </summary>
     public void CriarCurso(int idCurso, int idInstituicao, string nomeCurso, string grauAcademico, string descricao, string estrutura)
     {
-        try
+        if (idCurso <= 0)
+            throw new ArgumentException("ID do curso inválido.");
+
+        if (string.IsNullOrWhiteSpace(nomeCurso))
+            throw new ArgumentException("Nome do curso inválido.");
+
+        if (string.IsNullOrWhiteSpace(grauAcademico))
+            throw new ArgumentException("Grau académico inválido.");
+
+        if (cursos.Any(c => c.IdCurso == idCurso))
+            throw new CursoJaExisteException($"Já existe um curso com o ID {idCurso}.");
+
+        var instituicao = instituicoes.FirstOrDefault(i => i.IdInstituicao == idInstituicao)
+            ?? throw new InstituicaoNaoEncontradaException("A instituição indicada não existe.");
+
+        var curso = new Curso
         {
-            if (idCurso <= 0)
-                throw new ArgumentException("ID do curso inválido.");
+            IdCurso = idCurso,
+            Instituicao = instituicao,
+            NomeCurso = nomeCurso,
+            GrauAcademico = grauAcademico,
+            Descricao = descricao,
+            Estrutura = estrutura
+        };
 
-            if (string.IsNullOrWhiteSpace(nomeCurso))
-                throw new ArgumentException("Nome do curso inválido.");
+        cursos.Add(curso);
 
-            if (string.IsNullOrWhiteSpace(grauAcademico))
-                throw new ArgumentException("Grau académico inválido.");
+        UltimoCursoCriado = curso;
+        UltimaOperacaoSucesso = true;
+        UltimaMensagem = $"Curso '{nomeCurso}' criado com sucesso.";
 
-            if (cursos.Any(c => c.IdCurso == idCurso))
-                throw new CursoJaExisteException($"Já existe um curso com o ID {idCurso}.");
-
-            var instituicao = instituicoes.FirstOrDefault(i => i.IdInstituicao == idInstituicao)
-                ?? throw new InstituicaoNaoEncontradaException("A instituição indicada não existe.");
-
-            var curso = new Curso
-            {
-                IdCurso = idCurso,
-                Instituicao = instituicao,
-                NomeCurso = nomeCurso,
-                GrauAcademico = grauAcademico,
-                Descricao = descricao,
-                Estrutura = estrutura
-            };
-
-            cursos.Add(curso);
-            UltimoCursoCriado = curso;
-            UltimaOperacaoSucesso = true;
-            UltimaMensagem = $"Curso '{nomeCurso}' criado com sucesso.";
-
-            Resultado?.Invoke(this, new ResultadoEventArgs(true, UltimaMensagem));
-            CursoCriado?.Invoke(this, new CursoEventArgs(curso));
-        }
-        catch (CursoJaExisteException e)
-        {
-            UltimaOperacaoSucesso = false;
-            UltimaMensagem = e.Message;
-            Resultado?.Invoke(this, new ResultadoEventArgs(false, UltimaMensagem));
-        }
-        catch (InstituicaoNaoEncontradaException e)
-        {
-            UltimaOperacaoSucesso = false;
-            UltimaMensagem = e.Message;
-            Resultado?.Invoke(this, new ResultadoEventArgs(false, UltimaMensagem));
-        }
-        catch (ArgumentException e)
-        {
-            UltimaOperacaoSucesso = false;
-            UltimaMensagem = e.Message;
-            Resultado?.Invoke(this, new ResultadoEventArgs(false, UltimaMensagem));
-        }
-        catch (Exception e)
-        {
-            UltimaOperacaoSucesso = false;
-            UltimaMensagem = $"Erro inesperado: {e.Message}";
-            Resultado?.Invoke(this, new ResultadoEventArgs(false, UltimaMensagem));
-        }
+        Resultado?.Invoke(this, new ResultadoEventArgs(true, UltimaMensagem));
+        CursoCriado?.Invoke(this, new CursoEventArgs(curso));
     }
 
+    /// <summary>
+    /// Altera os dados de um curso existente.
+    /// </summary>
     public void AlterarCurso(int idCurso, string nomeCurso,
     string grauAcademico, string descricao, string estrutura)
     {
-        try
-        {
-            var curso = cursos.FirstOrDefault(c => c.IdCurso == idCurso)
-                ?? throw new CursoNaoEncontradoException("O curso indicado não existe.");
+        var curso = cursos.FirstOrDefault(c => c.IdCurso == idCurso)
+            ?? throw new CursoNaoEncontradoException("O curso indicado não existe.");
 
-            if (string.IsNullOrWhiteSpace(nomeCurso))
-                throw new ArgumentException("Nome do curso inválido.");
+        if (string.IsNullOrWhiteSpace(nomeCurso))
+            throw new ArgumentException("Nome do curso inválido.");
 
-            if (string.IsNullOrWhiteSpace(grauAcademico))
-                throw new ArgumentException("Grau académico inválido.");
+        if (string.IsNullOrWhiteSpace(grauAcademico))
+            throw new ArgumentException("Grau académico inválido.");
 
-            curso.NomeCurso = nomeCurso;
-            curso.GrauAcademico = grauAcademico;
-            curso.Descricao = descricao;
-            curso.Estrutura = estrutura;
+        curso.NomeCurso = nomeCurso;
+        curso.GrauAcademico = grauAcademico;
+        curso.Descricao = descricao;
+        curso.Estrutura = estrutura;
 
-            UltimoCursoCriado = curso;
-            UltimaOperacaoSucesso = true;
-            UltimaMensagem = $"Curso '{nomeCurso}' alterado com sucesso.";
+        UltimoCursoAlterado = curso;
+        UltimaOperacaoSucesso = true;
+        UltimaMensagem = $"Curso '{nomeCurso}' alterado com sucesso.";
 
-            Resultado?.Invoke(this, new ResultadoEventArgs(true, UltimaMensagem));
-            CursoCriado?.Invoke(this, new CursoEventArgs(curso));
-        }
-        catch (Exception e)
-        {
-            UltimaOperacaoSucesso = false;
-            UltimaMensagem = e.Message;
-            Resultado?.Invoke(this, new ResultadoEventArgs(false, UltimaMensagem));
-        }
+        Resultado?.Invoke(this, new ResultadoEventArgs(true, UltimaMensagem));
+        CursoAlterado?.Invoke(this, new CursoEventArgs(curso));
     }
 
+    /// <summary>
+    /// Apaga um curso, desde que não existam edições associadas.
+    /// </summary>
     public void ApagarCurso(int idCurso)
     {
-        try
-        {
-            var curso = cursos.FirstOrDefault(c => c.IdCurso == idCurso)
-                ?? throw new CursoNaoEncontradoException("O curso indicado não existe.");
+        var curso = cursos.FirstOrDefault(c => c.IdCurso == idCurso)
+            ?? throw new CursoNaoEncontradoException("O curso indicado não existe.");
 
-            if (edicoes.Any(e => e.Curso.IdCurso == idCurso))
-                throw new InvalidOperationException("Não é possível apagar o curso porque existem edições associadas.");
+        if (edicoes.Any(e => e.Curso.IdCurso == idCurso))
+            throw new InvalidOperationException("Não é possível apagar o curso porque existem edições associadas.");
 
-            cursos.Remove(curso);
+        cursos.Remove(curso);
 
-            UltimaOperacaoSucesso = true;
-            UltimaMensagem = "Curso apagado com sucesso.";
-            Resultado?.Invoke(this, new ResultadoEventArgs(true, UltimaMensagem));
-        }
-        catch (Exception e)
-        {
-            UltimaOperacaoSucesso = false;
-            UltimaMensagem = e.Message;
-            Resultado?.Invoke(this, new ResultadoEventArgs(false, UltimaMensagem));
-        }
+        UltimaOperacaoSucesso = true;
+        UltimaMensagem = "Curso apagado com sucesso.";
+
+        Resultado?.Invoke(this, new ResultadoEventArgs(true, UltimaMensagem));
     }
 
+    /// <summary>
+    /// Consulta um curso pelo ID e notifica a View.
+    /// </summary>
+    public void ConsultarCurso(int idCurso)
+    {
+        UltimoCursoConsultado =
+            cursos.FirstOrDefault(c => c.IdCurso == idCurso);
+
+        CursoConsultado?.Invoke(
+            this,
+            new CursoConsultadoEventArgs(UltimoCursoConsultado));
+    }
+
+    // ============================================================
     // GESTÃO DE EDIÇÕES
-    /// Cria uma nova edição de curso
-    /// e notifica os componentes interessados
+    // ============================================================
+
+    /// <summary>
+    /// Cria uma nova edição de curso.
+    /// </summary>
     public void CriarEdicao(int idEdicao, int idCurso, string anoLetivo, DateTime dataInicio, DateTime dataFim, string modalidade)
     {
-        try
+        if (idEdicao <= 0)
+            throw new ArgumentException("ID da edição inválido.");
+
+        if (string.IsNullOrWhiteSpace(anoLetivo))
+            throw new ArgumentException("Ano letivo inválido.");
+
+        if (string.IsNullOrWhiteSpace(modalidade))
+            throw new ArgumentException("Modalidade inválida.");
+
+        if (dataFim <= dataInicio)
+            throw new DataEdicaoInvalidaException("A data de fim deve ser posterior à data de início.");
+
+        if (edicoes.Any(e => e.IdEdicao == idEdicao))
+            throw new EdicaoJaExisteException($"Já existe uma edição com o ID {idEdicao}.");
+
+        var curso = cursos.FirstOrDefault(c => c.IdCurso == idCurso)
+            ?? throw new CursoNaoEncontradoException("O curso indicado não existe.");
+
+        var edicao = new Edicao
         {
-            if (idEdicao <= 0)
-                throw new ArgumentException("ID da edição inválido.");
+            IdEdicao = idEdicao,
+            Curso = curso,
+            AnoLetivo = anoLetivo,
+            DataInicio = dataInicio,
+            DataFim = dataFim,
+            Modalidade = modalidade
+        };
 
-            if (string.IsNullOrWhiteSpace(anoLetivo))
-                throw new ArgumentException("Ano letivo inválido.");
+        edicoes.Add(edicao);
 
-            if (string.IsNullOrWhiteSpace(modalidade))
-                throw new ArgumentException("Modalidade inválida.");
+        UltimaEdicaoCriada = edicao;
+        UltimaOperacaoSucesso = true;
+        UltimaMensagem = $"Edição '{idEdicao}' criada com sucesso.";
 
-            if (dataFim <= dataInicio)
-                throw new DataEdicaoInvalidaException("A data de fim deve ser posterior à data de início.");
-
-            if (edicoes.Any(e => e.IdEdicao == idEdicao))
-                throw new EdicaoJaExisteException($"Já existe uma edição com o ID {idEdicao}.");
-
-            var curso = cursos.FirstOrDefault(c => c.IdCurso == idCurso)
-                ?? throw new CursoNaoEncontradoException("O curso indicado não existe.");
-
-            var edicao = new Edicao
-            {
-                IdEdicao = idEdicao,
-                Curso = curso,
-                AnoLetivo = anoLetivo,
-                DataInicio = dataInicio,
-                DataFim = dataFim,
-                Modalidade = modalidade
-            };
-
-            edicoes.Add(edicao);
-
-            UltimaEdicaoCriada = edicao;
-            UltimaOperacaoSucesso = true;
-            UltimaMensagem = $"Edição '{idEdicao}' criada com sucesso.";
-
-            Resultado?.Invoke(this, new ResultadoEventArgs(true, UltimaMensagem));
-            EdicaoCriada?.Invoke(this, new EdicaoEventArgs(edicao));
-        }
-        catch (EdicaoJaExisteException e)
-        {
-            UltimaOperacaoSucesso = false;
-            UltimaMensagem = e.Message;
-            Resultado?.Invoke(this, new ResultadoEventArgs(false, UltimaMensagem));
-        }
-        catch (CursoNaoEncontradoException e)
-        {
-            UltimaOperacaoSucesso = false;
-            UltimaMensagem = e.Message;
-            Resultado?.Invoke(this, new ResultadoEventArgs(false, UltimaMensagem));
-        }
-        catch (DataEdicaoInvalidaException e)
-        {
-            UltimaOperacaoSucesso = false;
-            UltimaMensagem = e.Message;
-            Resultado?.Invoke(this, new ResultadoEventArgs(false, UltimaMensagem));
-        }
-        catch (ArgumentException e)
-        {
-            UltimaOperacaoSucesso = false;
-            UltimaMensagem = e.Message;
-            Resultado?.Invoke(this, new ResultadoEventArgs(false, UltimaMensagem));
-        }
-        catch (Exception e)
-        {
-            UltimaOperacaoSucesso = false;
-            UltimaMensagem = $"Erro inesperado: {e.Message}";
-            Resultado?.Invoke(this, new ResultadoEventArgs(false, UltimaMensagem));
-        }
+        Resultado?.Invoke(this, new ResultadoEventArgs(true, UltimaMensagem));
+        EdicaoCriada?.Invoke(this, new EdicaoEventArgs(edicao));
     }
-    /// Altera o estado de uma edição existente
-    /// mantendo baixo acoplamento entre componentes
+
+    /// <summary>
+    /// Altera os dados de uma edição existente.
+    /// </summary>
+    public void AlterarEdicao(
+    int idEdicao,
+    string anoLetivo,
+    DateTime dataInicio,
+    DateTime dataFim,
+    string modalidade)
+    {
+        var edicao = edicoes.FirstOrDefault(e => e.IdEdicao == idEdicao)
+            ?? throw new EdicaoNaoEncontradaException("A edição indicada não existe.");
+
+        if (string.IsNullOrWhiteSpace(anoLetivo))
+            throw new ArgumentException("Ano letivo inválido.");
+
+        if (string.IsNullOrWhiteSpace(modalidade))
+            throw new ArgumentException("Modalidade inválida.");
+
+        if (dataFim <= dataInicio)
+            throw new DataEdicaoInvalidaException("A data de fim deve ser posterior à data de início.");
+
+        edicao.AnoLetivo = anoLetivo;
+        edicao.DataInicio = dataInicio;
+        edicao.DataFim = dataFim;
+        edicao.Modalidade = modalidade;
+
+        UltimaEdicaoAlterada = edicao;
+        UltimaOperacaoSucesso = true;
+        UltimaMensagem = $"Edição '{idEdicao}' alterada com sucesso.";
+
+        Resultado?.Invoke(this, new ResultadoEventArgs(true, UltimaMensagem));
+        EdicaoAlterada?.Invoke(this, new EdicaoEventArgs(edicao));
+    }
+
+    /// <summary>
+    /// Altera o estado de uma edição existente.
+    /// </summary>
     public void AlterarEstadoEdicao(int idEdicao, EstadoEdicao novoEstado)
     {
-        try
-        {
-            var edicao = edicoes.FirstOrDefault(e => e.IdEdicao == idEdicao)
-                ?? throw new EdicaoNaoEncontradaException("A edição indicada não existe.");
+        var edicao = edicoes.FirstOrDefault(e => e.IdEdicao == idEdicao)
+            ?? throw new EdicaoNaoEncontradaException("A edição indicada não existe.");
 
-            edicao.AlterarEstado(novoEstado);
-            UltimaEdicaoAlterada = edicao;
-            UltimaOperacaoSucesso = true;
-            UltimaMensagem = $"Estado da edição '{idEdicao}' alterado para '{novoEstado}'.";
+        edicao.AlterarEstado(novoEstado);
 
-            Resultado?.Invoke(this, new ResultadoEventArgs(true, UltimaMensagem));
-            EstadoEdicaoAlterado?.Invoke(this, new EdicaoEventArgs(edicao));
-        }
-        catch (EdicaoNaoEncontradaException e)
-        {
-            UltimaOperacaoSucesso = false;
-            UltimaMensagem = e.Message;
-            Resultado?.Invoke(this, new ResultadoEventArgs(false, UltimaMensagem));
-        }
-        catch (Exception e)
-        {
-            UltimaOperacaoSucesso = false;
-            UltimaMensagem = $"Erro inesperado: {e.Message}";
-            Resultado?.Invoke(this, new ResultadoEventArgs(false, UltimaMensagem));
-        }
+        UltimaEdicaoAlterada = edicao;
+        UltimaOperacaoSucesso = true;
+        UltimaMensagem = $"Estado da edição '{idEdicao}' alterado para '{novoEstado}'.";
+
+        Resultado?.Invoke(this, new ResultadoEventArgs(true, UltimaMensagem));
+        EstadoEdicaoAlterado?.Invoke(this, new EdicaoEventArgs(edicao));
     }
 
-    public void AlterarEdicao(int idEdicao, string anoLetivo,
-    DateTime dataInicio, DateTime dataFim, string modalidade)
-    {
-        try
-        {
-            var edicao = edicoes.FirstOrDefault(e => e.IdEdicao == idEdicao)
-                ?? throw new EdicaoNaoEncontradaException("A edição indicada não existe.");
-
-
-            if (string.IsNullOrWhiteSpace(anoLetivo))
-                throw new ArgumentException("Ano letivo inválido.");
-
-            if (string.IsNullOrWhiteSpace(modalidade))
-                throw new ArgumentException("Modalidade inválida.");
-
-            if (dataFim <= dataInicio)
-                throw new DataEdicaoInvalidaException("A data de fim deve ser posterior à data de início.");
-
-            edicao.AnoLetivo = anoLetivo;
-            edicao.DataInicio = dataInicio;
-            edicao.DataFim = dataFim;
-            edicao.Modalidade = modalidade;
-
-            UltimaEdicaoAlterada = edicao;
-            UltimaOperacaoSucesso = true;
-            UltimaMensagem = $"Edição '{idEdicao}' alterada com sucesso.";
-
-            Resultado?.Invoke(this, new ResultadoEventArgs(true, UltimaMensagem));
-            EdicaoCriada?.Invoke(this, new EdicaoEventArgs(edicao));
-        }
-        catch (Exception e)
-        {
-            UltimaOperacaoSucesso = false;
-            UltimaMensagem = e.Message;
-            Resultado?.Invoke(this, new ResultadoEventArgs(false, UltimaMensagem));
-        }
-    }
-
+    /// <summary>
+    /// Apaga uma edição, desde que não existam inscrições associadas.
+    /// </summary>
     public void ApagarEdicao(int idEdicao)
     {
         var edicao = edicoes.FirstOrDefault(e => e.IdEdicao == idEdicao)
             ?? throw new EdicaoNaoEncontradaException("A edição indicada não existe.");
 
-        if (alunos.Any(a => a.Inscricoes.Any(i => i.Edicao == idEdicao.ToString())))
+        if (ExisteInscricaoAssociadaAEdicao(edicao))
             throw new InvalidOperationException("Não é possível apagar a edição porque existem inscrições associadas.");
 
         edicoes.Remove(edicao);
@@ -1086,95 +1151,154 @@ public class Model : IModelEventos
 
         Resultado?.Invoke(this, new ResultadoEventArgs(true, UltimaMensagem));
     }
-
-    public void ConsultarInstituicao(int idInstituicao)
+    /// <summary>
+    /// Consulta uma edição pelo ID e notifica a View.
+    /// </summary>
+    public void ConsultarEdicao(int idEdicao)
     {
-        UltimaInstituicaoConsultada =
-            instituicoes.FirstOrDefault(i => i.IdInstituicao == idInstituicao);
+        UltimaEdicaoConsultada =
+            edicoes.FirstOrDefault(e => e.IdEdicao == idEdicao);
 
-        InstituicaoConsultada?.Invoke(
+        EdicaoConsultada?.Invoke(
             this,
-            new InstituicaoConsultadaEventArgs(UltimaInstituicaoConsultada));
-}
-
-public void ConsultarCurso(int idCurso)
-{
-    UltimoCursoConsultado =
-        cursos.FirstOrDefault(c => c.IdCurso == idCurso);
-
-    CursoConsultado?.Invoke(
-        this,
-        new CursoConsultadoEventArgs(UltimoCursoConsultado));
-}
-
-public void ConsultarEdicao(int idEdicao)
-{
-    UltimaEdicaoConsultada =
-        edicoes.FirstOrDefault(e => e.IdEdicao == idEdicao);
-
-    EdicaoConsultada?.Invoke(
-        this,
-        new EdicaoConsultadaEventArgs(UltimaEdicaoConsultada));
-}
-public Model(IGeradorDiploma gerador)
-{
-    _gerador = gerador;
-}
-/// MÉTODO DE ELEGIBILIDADE (implementa RG07)
-/// Valida se o aluno pode receber diploma
-private void ValidarElegibilidade(Inscricao inscricao)
-{
-    if (inscricao == null)
-        throw new InscricaoInvalidaException();
-
-    if (inscricao.ClassificacaoFinal == null)
-        throw new ClassificacaoInvalidaException();
-
-    if (inscricao.ClassificacaoFinal < 10)
-        throw new SemAproveitamentoException();
-    if (inscricao.Estado != "Concluida")
-    throw new InscricaoNaoConcluidaException();
+            new EdicaoConsultadaEventArgs(UltimaEdicaoConsultada));
     }
 
-    /// Método principal do Model
-    /// Executa o fluxo completo:
-    /// 1. Validação
-    /// 2. Verificação de elegibilidade
-    /// 3. Geração do diploma
-    /// 4. Notificação da View
-    public void EmitirDiploma(string nomeAluno, string curso)
-{
-    // Validação básica
-    if (string.IsNullOrWhiteSpace(nomeAluno))
-    throw new ArgumentException("Nome do aluno inválido.");
+    // ============================================================
+    // EMISSÃO DE DIPLOMAS
+    // ============================================================
 
-if (string.IsNullOrWhiteSpace(curso))
-    throw new ArgumentException("Curso invalido.");
+    /// <summary>
+    /// Valida se uma inscrição real reúne as condições necessárias
+    /// para emissão de diploma.
+    /// </summary>
+    private void ValidarElegibilidade(InscricaoAluno inscricao)
+    {
+        if (inscricao == null)
+            throw new InscricaoInvalidaException();
 
-// Simulação de dados (no futuro virá do sistema real)
-Inscricao inscricao = new Inscricao
-{
-    NomeAluno = nomeAluno,
-    Curso = curso,
-    ClassificacaoFinal = 14,
-    Estado = "Concluida"
-};
-// Regras de negócio (RG07)
-ValidarElegibilidade(inscricao);
-UltimaValidacaoSucesso = true;
+        if (inscricao.Ativa)
+            throw new InscricaoNaoConcluidaException();
 
-// Notifica sucesso de validação
-OnValidacao?.Invoke(this,
-    new ValidacaoEventArgs(true, "Validação concluída com sucesso."));
+        if (inscricao.ClassificacaoFinal == null)
+            throw new ClassificacaoInvalidaException();
 
-// Geração do diploma (delegada ao serviço)
-byte[] pdf = _gerador.Gerar(nomeAluno, curso);
+        if (!inscricao.ClassificacaoFinal.Aprovado)
+            throw new SemAproveitamentoException();
+    }
 
-// Guardar estado interno
-UltimoDiploma = pdf;
+    /// <summary>
+    /// Executa o processo de emissão de diploma.
+    /// 
+    /// O método recebe o ID do aluno e o ID da edição, procura os dados reais
+    /// no Model, valida a elegibilidade da inscrição, delega a geração do
+    /// diploma no serviço IGeradorDiploma e notifica a View através de eventos.
+    /// </summary>
+    public void EmitirDiploma(int alunoId, int idEdicao)
+    {
+        if (alunoId <= 0)
+            throw new ArgumentException("ID do aluno inválido.");
 
-// Notificar a View com o resultado
-OnDiplomaEmitido?.Invoke(this,
-           new DiplomaEmitidoEventArgs(pdf));
+        if (idEdicao <= 0)
+            throw new ArgumentException("ID da edição inválido.");
+
+        var aluno = alunos.FirstOrDefault(a => a.Id == alunoId)
+            ?? throw new AlunoNaoEncontradoException($"Aluno com ID {alunoId} não encontrado.");
+
+        var edicao = edicoes.FirstOrDefault(e => e.IdEdicao == idEdicao)
+            ?? throw new EdicaoNaoEncontradaException($"Edição com ID {idEdicao} não encontrada.");
+
+        var inscricao = aluno.Inscricoes
+            .FirstOrDefault(i => InscricaoPertenceAEdicao(i, edicao))
+            ?? throw new InscricaoAlunoNaoEncontradaException(
+                $"O aluno com ID {alunoId} não tem inscrição na edição {idEdicao}.");
+
+        ValidarElegibilidade(inscricao);
+
+        UltimaValidacaoSucesso = true;
+
+        OnValidacao?.Invoke(
+            this,
+            new ValidacaoEventArgs(true, "Validação concluída com sucesso."));
+
+        string nomeAluno = aluno.Nome;
+        string nomeCurso = edicao.Curso.NomeCurso;
+
+        byte[] pdf = _gerador.Gerar(nomeAluno, nomeCurso);
+
+        if (pdf == null || pdf.Length == 0)
+            throw new InvalidOperationException("O diploma não foi gerado corretamente.");
+
+        UltimoDiploma = pdf;
+
+        UltimaOperacaoSucesso = true;
+        UltimaMensagem = "Diploma emitido com sucesso.";
+
+        Resultado?.Invoke(
+            this,
+            new ResultadoEventArgs(true, UltimaMensagem));
+
+        OnDiplomaEmitido?.Invoke(
+            this,
+            new DiplomaEmitidoEventArgs(pdf));
+    }
+
+    /// <summary>
+    /// Verifica se uma inscrição pertence ao curso indicado.
+    /// 
+    /// A inscrição guarda a edição como texto. Por isso, este método tenta
+    /// relacionar essa edição com uma edição real registada no Model e,
+    /// a partir dela, obter o curso associado.
+    /// </summary>
+    private bool InscricaoPertenceAoCurso(InscricaoAluno inscricao, string nomeCurso)
+    {
+        if (inscricao == null)
+            return false;
+
+        var edicao = edicoes.FirstOrDefault(e =>
+            TextoIgual(e.IdEdicao.ToString(), inscricao.Edicao) ||
+            TextoIgual(e.AnoLetivo, inscricao.Edicao));
+
+        if (edicao == null)
+            return false;
+
+        return TextoIgual(edicao.Curso.NomeCurso, nomeCurso);
+    }
+
+    private bool ExisteInscricaoAssociadaAEdicao(Edicao edicao)
+    {
+        return alunos.Any(a =>
+            a.Inscricoes.Any(i =>
+                TextoIgual(i.Edicao, edicao.IdEdicao.ToString()) ||
+                TextoIgual(i.Edicao, edicao.AnoLetivo)));
+    }
+
+    /// <summary>
+    /// Verifica se uma inscrição pertence à edição indicada.
+    /// 
+    /// A inscrição guarda a edição como texto. Por isso, a comparação aceita
+    /// tanto o ID da edição como o ano letivo registado na edição.
+    /// </summary>
+    private bool InscricaoPertenceAEdicao(InscricaoAluno inscricao, Edicao edicao)
+    {
+        if (inscricao == null || edicao == null)
+        {
+            return false;
+        }
+
+        return TextoIgual(inscricao.Edicao, edicao.IdEdicao.ToString()) ||
+               TextoIgual(inscricao.Edicao, edicao.AnoLetivo);
+    }
+
+    /// <summary>
+    /// Compara dois textos ignorando espaços laterais e diferenças entre
+    /// maiúsculas e minúsculas.
+    /// </summary>
+    private static bool TextoIgual(string texto1, string texto2)
+    {
+        return string.Equals(
+            texto1?.Trim(),
+            texto2?.Trim(),
+            StringComparison.OrdinalIgnoreCase);
     }
 }

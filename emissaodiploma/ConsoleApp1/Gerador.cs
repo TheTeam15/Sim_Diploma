@@ -3,21 +3,45 @@ using PdfSharp.Drawing;
 using System;
 using System.IO;
 
-/// Interface que define o contrato de geração de diplomas.
+/// <summary>
+/// Define o contrato para geração de diplomas.
 /// 
-/// Permite:
-/// - Trocar a implementação
-/// - Reduzir acoplamento com o Model
+/// Esta interface permite que o Model dependa de uma abstração,
+/// e não de uma implementação concreta de geração de PDF.
+/// </summary>
 public interface IGeradorDiploma
 {
+    /// <summary>
+    /// Gera um diploma para o aluno e curso indicados.
+    /// </summary>
+    /// <param name="nomeAluno">Nome do aluno.</param>
+    /// <param name="curso">Nome do curso.</param>
+    /// <returns>Conteúdo do diploma em formato binário.</returns>
     byte[] Gerar(string nomeAluno, string curso);
 }
 
+/// <summary>
 /// Implementação concreta do gerador de diplomas.
 /// 
-/// Utiliza a API PDFsharp para gerar um diploma com layout estruturado
+/// Utiliza a biblioteca PDFsharp para gerar um ficheiro PDF simples,
+/// com informação essencial sobre o aluno, curso, datas e assinatura.
+/// </summary>
 public class Gerador : IGeradorDiploma
 {
+    private const string TituloDocumento = "Diploma";
+    private const string AutorDocumento = "SimDiplomaMVC";
+    private const string NomeInstituicao = "Universidade Exemplo";
+
+    /// <summary>
+    /// Gera o diploma em PDF.
+    /// 
+    /// Este método apenas trata da criação física do documento.
+    /// As regras de elegibilidade do aluno devem ser validadas previamente
+    /// no Model.
+    /// </summary>
+    /// <param name="nomeAluno">Nome do aluno.</param>
+    /// <param name="curso">Nome do curso concluído.</param>
+    /// <returns>Array de bytes com o conteúdo do PDF gerado.</returns>
     public byte[] Gerar(string nomeAluno, string curso)
     {
         if(string.IsNullOrWhiteSpace(nomeAluno))
@@ -32,8 +56,8 @@ public class Gerador : IGeradorDiploma
         // CRIAÇÃO DO DOCUMENTO
         PdfDocument documento = new PdfDocument();
 
-        documento.Info.Title = "Diploma";
-        documento.Info.Author = "SimDiplomaMVC";
+        documento.Info.Title = TituloDocumento;
+        documento.Info.Author = AutorDocumento;
         documento.Info.Subject = $"Diploma de {nomeAluno}";
 
         PdfPage pagina = documento.AddPage();
@@ -55,9 +79,8 @@ public class Gerador : IGeradorDiploma
 
         
         // TOPO - INSTITUIÇÃO
-        string nomeInstituicao = "Universidade Exemplo";
 
-        gfx.DrawString(nomeInstituicao, fonteSubtitulo, XBrushes.Black,
+        gfx.DrawString(NomeInstituicao, fonteSubtitulo, XBrushes.Black,
             new XRect(0, 60, larguraPagina, alturaPagina),
             XStringFormats.TopCenter);
 
@@ -85,18 +108,17 @@ public class Gerador : IGeradorDiploma
             new XRect(0, 260, larguraPagina, alturaPagina),
             XStringFormats.TopCenter);
 
-        
-        // DATAS
-        string dataConclusao = DateTime.Now.ToString("dd/MM/yyyy");
-        string dataEmissao = DateTime.Now.ToString("dd/MM/yyyy");
 
-        gfx.DrawString($"Data de conclusão: {dataConclusao}", fonteNormal, XBrushes.Black,
+        // DATAS
+        string dataAtual = DateTime.Now.ToString("dd/MM/yyyy");
+
+        gfx.DrawString($"Data de conclusão: {dataAtual}", fonteNormal, XBrushes.Black,
             new XPoint(100, 350));
 
-        gfx.DrawString($"Data de emissão: {dataEmissao}", fonteNormal, XBrushes.Black,
+        gfx.DrawString($"Data de emissão: {dataAtual}", fonteNormal, XBrushes.Black,
             new XPoint(100, 380));
 
-        
+
         // ASSINATURA (simulada)
         gfx.DrawString("_________________________", fonteNormal, XBrushes.Black,
             new XPoint(larguraPagina - 250, 450));
