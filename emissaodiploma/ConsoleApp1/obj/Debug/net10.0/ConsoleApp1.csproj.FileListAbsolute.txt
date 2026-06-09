@@ -28,3 +28,33 @@ C:\Users\joseb\source\repos\TheTeam15\Sim_Diploma\emissaodiploma\ConsoleApp1\obj
 C:\Users\joseb\source\repos\TheTeam15\Sim_Diploma\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\ConsoleApp1.pdb
 C:\Users\joseb\source\repos\TheTeam15\Sim_Diploma\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\ConsoleApp1.genruntimeconfig.cache
 C:\Users\joseb\source\repos\TheTeam15\Sim_Diploma\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\ref\ConsoleApp1.dll
+C:\Universidade Aberta\Ano 2\21179 - Laboratório de Desenvolvimento de Software\Repo\emissaodiploma\ConsoleApp1\bin\Debug\net10.0\ConsoleApp1.exe
+C:\Universidade Aberta\Ano 2\21179 - Laboratório de Desenvolvimento de Software\Repo\emissaodiploma\ConsoleApp1\bin\Debug\net10.0\ConsoleApp1.deps.json
+C:\Universidade Aberta\Ano 2\21179 - Laboratório de Desenvolvimento de Software\Repo\emissaodiploma\ConsoleApp1\bin\Debug\net10.0\ConsoleApp1.runtimeconfig.json
+C:\Universidade Aberta\Ano 2\21179 - Laboratório de Desenvolvimento de Software\Repo\emissaodiploma\ConsoleApp1\bin\Debug\net10.0\ConsoleApp1.dll
+C:\Universidade Aberta\Ano 2\21179 - Laboratório de Desenvolvimento de Software\Repo\emissaodiploma\ConsoleApp1\bin\Debug\net10.0\ConsoleApp1.pdb
+C:\Universidade Aberta\Ano 2\21179 - Laboratório de Desenvolvimento de Software\Repo\emissaodiploma\ConsoleApp1\bin\Debug\net10.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Universidade Aberta\Ano 2\21179 - Laboratório de Desenvolvimento de Software\Repo\emissaodiploma\ConsoleApp1\bin\Debug\net10.0\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Universidade Aberta\Ano 2\21179 - Laboratório de Desenvolvimento de Software\Repo\emissaodiploma\ConsoleApp1\bin\Debug\net10.0\PdfSharp.BarCodes.dll
+C:\Universidade Aberta\Ano 2\21179 - Laboratório de Desenvolvimento de Software\Repo\emissaodiploma\ConsoleApp1\bin\Debug\net10.0\PdfSharp.Charting.dll
+C:\Universidade Aberta\Ano 2\21179 - Laboratório de Desenvolvimento de Software\Repo\emissaodiploma\ConsoleApp1\bin\Debug\net10.0\PdfSharp.Cryptography.dll
+C:\Universidade Aberta\Ano 2\21179 - Laboratório de Desenvolvimento de Software\Repo\emissaodiploma\ConsoleApp1\bin\Debug\net10.0\PdfSharp.Quality.dll
+C:\Universidade Aberta\Ano 2\21179 - Laboratório de Desenvolvimento de Software\Repo\emissaodiploma\ConsoleApp1\bin\Debug\net10.0\PdfSharp.Shared.dll
+C:\Universidade Aberta\Ano 2\21179 - Laboratório de Desenvolvimento de Software\Repo\emissaodiploma\ConsoleApp1\bin\Debug\net10.0\PdfSharp.Snippets.dll
+C:\Universidade Aberta\Ano 2\21179 - Laboratório de Desenvolvimento de Software\Repo\emissaodiploma\ConsoleApp1\bin\Debug\net10.0\PdfSharp.System.dll
+C:\Universidade Aberta\Ano 2\21179 - Laboratório de Desenvolvimento de Software\Repo\emissaodiploma\ConsoleApp1\bin\Debug\net10.0\PdfSharp.WPFonts.dll
+C:\Universidade Aberta\Ano 2\21179 - Laboratório de Desenvolvimento de Software\Repo\emissaodiploma\ConsoleApp1\bin\Debug\net10.0\PdfSharp.dll
+C:\Universidade Aberta\Ano 2\21179 - Laboratório de Desenvolvimento de Software\Repo\emissaodiploma\ConsoleApp1\bin\Debug\net10.0\System.Security.Cryptography.Pkcs.dll
+C:\Universidade Aberta\Ano 2\21179 - Laboratório de Desenvolvimento de Software\Repo\emissaodiploma\ConsoleApp1\bin\Debug\net10.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+C:\Universidade Aberta\Ano 2\21179 - Laboratório de Desenvolvimento de Software\Repo\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\ConsoleApp1.csproj.AssemblyReference.cache
+C:\Universidade Aberta\Ano 2\21179 - Laboratório de Desenvolvimento de Software\Repo\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\ConsoleApp1.GeneratedMSBuildEditorConfig.editorconfig
+C:\Universidade Aberta\Ano 2\21179 - Laboratório de Desenvolvimento de Software\Repo\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\ConsoleApp1.AssemblyInfoInputs.cache
+C:\Universidade Aberta\Ano 2\21179 - Laboratório de Desenvolvimento de Software\Repo\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\ConsoleApp1.AssemblyInfo.cs
+C:\Universidade Aberta\Ano 2\21179 - Laboratório de Desenvolvimento de Software\Repo\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\ConsoleApp1.csproj.CoreCompileInputs.cache
+C:\Universidade Aberta\Ano 2\21179 - Laboratório de Desenvolvimento de Software\Repo\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\ConsoleApp1.sourcelink.json
+C:\Universidade Aberta\Ano 2\21179 - Laboratório de Desenvolvimento de Software\Repo\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\ConsoleA.CB28C8CC.Up2Date
+C:\Universidade Aberta\Ano 2\21179 - Laboratório de Desenvolvimento de Software\Repo\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\ConsoleApp1.dll
+C:\Universidade Aberta\Ano 2\21179 - Laboratório de Desenvolvimento de Software\Repo\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\refint\ConsoleApp1.dll
+C:\Universidade Aberta\Ano 2\21179 - Laboratório de Desenvolvimento de Software\Repo\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\ConsoleApp1.pdb
+C:\Universidade Aberta\Ano 2\21179 - Laboratório de Desenvolvimento de Software\Repo\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\ConsoleApp1.genruntimeconfig.cache
+C:\Universidade Aberta\Ano 2\21179 - Laboratório de Desenvolvimento de Software\Repo\emissaodiploma\ConsoleApp1\obj\Debug\net10.0\ref\ConsoleApp1.dll

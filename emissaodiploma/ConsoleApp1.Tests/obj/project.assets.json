@@ -1441,34 +1441,24 @@
     ]
   },
   "packageFolders": {
-<<<<<<< HEAD
-    "C:\\Users\\joseb\\.nuget\\packages\\": {}
-=======
-    "C:\\Users\\marco.carlota\\.nuget\\packages\\": {}
->>>>>>> origin/feature/gestao-cursos-melhoriasmarco
+    "C:\\Users\\carlo\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-<<<<<<< HEAD
-      "projectUniqueName": "C:\\Users\\joseb\\source\\repos\\TheTeam15\\Sim_Diploma\\emissaodiploma\\ConsoleApp1.Tests\\ConsoleApp1.Tests.csproj",
+      "projectUniqueName": "C:\\Universidade Aberta\\Ano 2\\21179 - Laboratório de Desenvolvimento de Software\\Repo\\emissaodiploma\\ConsoleApp1.Tests\\ConsoleApp1.Tests.csproj",
       "projectName": "ConsoleApp1.Tests",
-      "projectPath": "C:\\Users\\joseb\\source\\repos\\TheTeam15\\Sim_Diploma\\emissaodiploma\\ConsoleApp1.Tests\\ConsoleApp1.Tests.csproj",
-      "packagesPath": "C:\\Users\\joseb\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\joseb\\source\\repos\\TheTeam15\\Sim_Diploma\\emissaodiploma\\ConsoleApp1.Tests\\obj\\",
+      "projectPath": "C:\\Universidade Aberta\\Ano 2\\21179 - Laboratório de Desenvolvimento de Software\\Repo\\emissaodiploma\\ConsoleApp1.Tests\\ConsoleApp1.Tests.csproj",
+      "packagesPath": "C:\\Users\\carlo\\.nuget\\packages\\",
+      "outputPath": "C:\\Universidade Aberta\\Ano 2\\21179 - Laboratório de Desenvolvimento de Software\\Repo\\emissaodiploma\\ConsoleApp1.Tests\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\joseb\\AppData\\Roaming\\NuGet\\NuGet.Config",
-=======
-      "projectUniqueName": "C:\\Users\\marco.carlota\\source\\repos\\SIM_Diploma\\emissaodiploma\\ConsoleApp1.Tests\\ConsoleApp1.Tests.csproj",
-      "projectName": "ConsoleApp1.Tests",
-      "projectPath": "C:\\Users\\marco.carlota\\source\\repos\\SIM_Diploma\\emissaodiploma\\ConsoleApp1.Tests\\ConsoleApp1.Tests.csproj",
-      "packagesPath": "C:\\Users\\marco.carlota\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\marco.carlota\\source\\repos\\SIM_Diploma\\emissaodiploma\\ConsoleApp1.Tests\\obj\\",
-      "projectStyle": "PackageReference",
-      "configFilePaths": [
-        "C:\\Users\\marco.carlota\\AppData\\Roaming\\NuGet\\NuGet.Config",
->>>>>>> origin/feature/gestao-cursos-melhoriasmarco
+        "C:\\Users\\carlo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -1476,22 +1466,16 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net10.0": {
-<<<<<<< HEAD
-          "targetAlias": "net10.0",
-          "projectReferences": {
-            "C:\\Users\\joseb\\source\\repos\\TheTeam15\\Sim_Diploma\\emissaodiploma\\ConsoleApp1\\ConsoleApp1.csproj": {
-              "projectPath": "C:\\Users\\joseb\\source\\repos\\TheTeam15\\Sim_Diploma\\emissaodiploma\\ConsoleApp1\\ConsoleApp1.csproj"
-=======
           "framework": "net10.0",
           "targetAlias": "net10.0",
           "projectReferences": {
-            "C:\\Users\\marco.carlota\\source\\repos\\SIM_Diploma\\emissaodiploma\\ConsoleApp1\\ConsoleApp1.csproj": {
-              "projectPath": "C:\\Users\\marco.carlota\\source\\repos\\SIM_Diploma\\emissaodiploma\\ConsoleApp1\\ConsoleApp1.csproj"
->>>>>>> origin/feature/gestao-cursos-melhoriasmarco
+            "C:\\Universidade Aberta\\Ano 2\\21179 - Laboratório de Desenvolvimento de Software\\Repo\\emissaodiploma\\ConsoleApp1\\ConsoleApp1.csproj": {
+              "projectPath": "C:\\Universidade Aberta\\Ano 2\\21179 - Laboratório de Desenvolvimento de Software\\Repo\\emissaodiploma\\ConsoleApp1\\ConsoleApp1.csproj"
             }
           }
         }
@@ -1510,10 +1494,7 @@
     },
     "frameworks": {
       "net10.0": {
-<<<<<<< HEAD
-=======
         "framework": "net10.0",
->>>>>>> origin/feature/gestao-cursos-melhoriasmarco
         "targetAlias": "net10.0",
         "dependencies": {
           "Microsoft.NET.Test.Sdk": {
@@ -1553,7 +1534,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.204/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.203/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.CSharp": "(,4.7.32767]",
           "Microsoft.VisualBasic": "(,10.4.32767]",
@@ -1830,5 +1811,13 @@
         }
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problema ao ler o arquivo de cache C:\\Universidade Aberta\\Ano 2\\21179 - Laboratório de Desenvolvimento de Software\\Repo\\emissaodiploma\\ConsoleApp1.Tests\\obj\\project.nuget.cache: '<' is an invalid start of a property name. Expected a '\"'. Path: $ | LineNumber: 2 | BytePositionInLine: 0."
+    }
+  ]
 }

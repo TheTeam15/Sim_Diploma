@@ -1,5 +1,7 @@
 using Xunit;
 using Moq;
+using System;
+using ConsoleApp1;
 
 namespace ConsoleApp1.Tests
 {
@@ -12,12 +14,12 @@ namespace ConsoleApp1.Tests
             var mockGerador = new Mock<IGeradorDiploma>();
             var model = new Model(mockGerador.Object);
 
-            // Act - O Model bloqueia nomes vazios (string.IsNullOrWhiteSpace)
-            model.RegistarAluno(1, "");
+            // Act & Assert
+            // O xUnit captura a exceção em vez de deixar o teste falhar
+            var excecao = Assert.Throws<ArgumentException>(() => model.RegistarAluno(1, ""));
 
-            // Assert
-            Assert.False(model.UltimaOperacaoSucesso);
-            Assert.Contains("Nome invalido", model.UltimaMensagem);
+            // Verificamos se a mensagem da exceção contém a informação correta
+            Assert.Contains("invalido", excecao.Message);
         }
     }
 }

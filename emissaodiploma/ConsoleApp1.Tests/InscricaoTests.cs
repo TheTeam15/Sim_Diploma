@@ -1,5 +1,7 @@
 ﻿using Xunit;
 using Moq;
+using System;
+using ConsoleApp1;
 
 namespace ConsoleApp1.Tests
 {
@@ -17,12 +19,9 @@ namespace ConsoleApp1.Tests
             model.InscreverAluno(1, "C#_2026");
             model.ConcluirInscricao(1, "C#_2026");
 
-            // Act - O Model valida se a nota é < 0 ou > 20
-            model.LancarClassificacao(1, "C#_2026", notaInvalida);
-
-            // Assert
-            Assert.False(model.UltimaOperacaoSucesso); // O Model guarda o erro aqui
-            Assert.Contains("invalida", model.UltimaMensagem); // A mensagem diz "Nota '{nota}' invalida."
+            // Act & Assert
+            // Instanciamos o objeto Nota e garantimos que uma exceção é lançada
+            Assert.ThrowsAny<Exception>(() => model.LancarClassificacao(1, "C#_2026", new Nota(notaInvalida)));
         }
     }
 }

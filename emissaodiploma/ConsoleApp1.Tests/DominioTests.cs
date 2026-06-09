@@ -20,13 +20,8 @@ namespace ConsoleApp1.Tests
             model.InscreverAluno(id, edicao);
             model.ConcluirInscricao(id, edicao);
 
-            // Act
-            model.LancarClassificacao(id, edicao, 25);
-
-            // Assert
-            Assert.False(model.UltimaOperacaoSucesso);
-
-            Assert.Contains("invalida", model.UltimaMensagem);
+            // Act & Assert
+            Assert.ThrowsAny<Exception>(() => model.LancarClassificacao(id, edicao, new Nota(25)));
         }
 
         [Fact]
