@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using ConsoleApp1;
+using PdfSharp.Fonts;
 
 namespace ConsoleApp1.Tests
 {
@@ -12,6 +13,7 @@ namespace ConsoleApp1.Tests
         {
             // 1. ARRANGE - Prepara a aplicação inteira
             // Usamos o Gerador real em vez do Mock para criar mesmo o PDF
+            GlobalFontSettings.UseWindowsFontsUnderWindows = true;
             IGeradorDiploma gerador = new Gerador();
             Model model = new Model(gerador);
             View view = new View();
@@ -35,7 +37,7 @@ namespace ConsoleApp1.Tests
             string edicao = "2025/2026";
 
             // 2. ACT - Executa as operações através do Controller simulando o utilizador
-            controller.GuardarInstituicao(1, "Universidade Aberta", "Lisboa", "Portugal");
+            controller.GuardarInstituicao(1, nomeInstituicao, "Lisboa", "Portugal");
             controller.CriarCurso(1, 1, nomeCurso, "Licenciatura", "Engenharia de Software", "Semestral");
             controller.CriarEdicao(1, 1, edicao, DateTime.Now, DateTime.Now.AddMonths(6), "E-learning");
 
@@ -45,7 +47,7 @@ namespace ConsoleApp1.Tests
             controller.Classificar(1001, edicao, 18.5);
 
             // O grande momento: pedir o diploma
-            controller.EmitirDiploma(nomeAluno, nomeCurso);
+            controller.EmitirDiploma(1001, 1001);
 
             // 3. ASSERT - Verifica se tudo correu bem
             // Verifica se a View reagiu ao evento e criou o ficheiro físico
