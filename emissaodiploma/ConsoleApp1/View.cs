@@ -18,7 +18,6 @@ using System.Text;
 public class View
 {
     private const string FormatoData = "yyyy-MM-dd";
-    private const string NomeFicheiroDiploma = "diploma.pdf";
     
     // ============================================================
     // EVENTOS ENVIADOS PARA O CONTROLLER
@@ -1122,7 +1121,9 @@ public class View
 
         try
         {
-            string caminho = Path.Combine(Environment.CurrentDirectory, NomeFicheiroDiploma);
+            string nomeFicheiro = $"diploma_{DateTime.Now:yyyyMMdd_HHmmss}.pdf";
+            string caminho = Path.Combine(Environment.CurrentDirectory, nomeFicheiro);
+
             File.WriteAllBytes(caminho, e.PdfBytes);
 
             EscreverTitulo("DIPLOMA EMITIDO");

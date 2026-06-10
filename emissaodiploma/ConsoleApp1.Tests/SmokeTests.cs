@@ -24,10 +24,10 @@ namespace ConsoleApp1.Tests
             // Liga o Controller
             Controller controller = new Controller(model, view);
 
-            // Apaga o PDF se já existir de um teste anterior
-            if (File.Exists("diploma.pdf"))
+            // Apaga PDFs gerados por testes anteriores
+            foreach (string ficheiro in Directory.GetFiles(Environment.CurrentDirectory, "diploma_*.pdf"))
             {
-                File.Delete("diploma.pdf");
+                File.Delete(ficheiro);
             }
 
             // --- DADOS DE TESTE ---
@@ -57,17 +57,17 @@ namespace ConsoleApp1.Tests
 
             // 3. ASSERT - Verifica se tudo correu bem
             // Verifica se a View reagiu ao evento e criou o ficheiro físico
-            bool ficheiroGerado = File.Exists("diploma.pdf");
+            string[] ficheirosGerados = Directory.GetFiles(
+                Environment.CurrentDirectory,
+                "diploma_*.pdf"
+            );
 
             Assert.True(model.UltimaValidacaoSucesso, "A validação de elegibilidade falhou no Model.");
-            Assert.True(ficheiroGerado, "O ficheiro diploma.pdf não foi gerado no disco.");
+            Assert.True(ficheirosGerados.Length > 0, "Nenhum ficheiro de diploma foi gerado no disco.");
 
-            // Verifica se o ficheiro tem conteúdo (não está vazio)
-            if (ficheiroGerado)
-            {
-                FileInfo infoFicheiro = new FileInfo("diploma.pdf");
-                Assert.True(infoFicheiro.Length > 0, "O ficheiro PDF foi criado, mas está vazio.");
-            }
+            // Verifica se o ficheiro tem conteúdo
+            FileInfo infoFicheiro = new FileInfo(ficheirosGerados[0]);
+            Assert.True(infoFicheiro.Length > 0, "O ficheiro PDF foi criado, mas está vazio.");
         }
     }
 }
