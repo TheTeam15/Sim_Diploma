@@ -8,17 +8,18 @@ namespace ConsoleApp1.Tests
     public class EdicaoTests
     {
         [Fact]
-        public void InscreverAluno_EdicaoVazia_DeveFalhar()
+        public void InscreverAluno_EdicaoInexistente_DeveFalhar()
         {
             // Arrange
             var mockGerador = new Mock<IGeradorDiploma>();
             var model = new Model(mockGerador.Object);
+
             model.RegistarAluno(1, "Ana");
 
             // Act & Assert
-            var excecao = Assert.Throws<ArgumentException>(() => model.InscreverAluno(1, ""));
+            var excecao = Assert.Throws<EdicaoNaoEncontradaException>(() => model.InscreverAluno(1, 999));
 
-            Assert.Contains("invalida", excecao.Message.ToLower());
+            Assert.Contains("existe", excecao.Message.ToLower());
         }
     }
 }

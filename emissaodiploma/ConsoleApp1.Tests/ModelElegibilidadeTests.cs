@@ -11,7 +11,7 @@ public class ModelElegibilidadeTests
         var mockGerador = new Mock<IGeradorDiploma>();
 
         mockGerador
-            .Setup(g => g.Gerar("Joao", "C#"))
+            .Setup(g => g.Gerar("Joao", "C#", "Universidade Aberta"))
             .Returns(new byte[] { 0x25, 0x50, 0x44, 0x46 });
 
         var model = new Model(mockGerador.Object);
@@ -21,14 +21,14 @@ public class ModelElegibilidadeTests
         model.CriarEdicao(1, 1, "2025/2026", DateTime.Now, DateTime.Now.AddMonths(6), "E-learning");
 
         model.RegistarAluno(1, "Joao");
-        model.InscreverAluno(1, "2025/2026");
-        model.ConcluirInscricao(1, "2025/2026");
-        model.LancarClassificacao(1, "2025/2026", new Nota(15));
+        model.InscreverAluno(1, 1);
+        model.ConcluirInscricao(1, 1);
+        model.LancarClassificacao(1, 1, new Nota(15));
 
         // Act
         model.EmitirDiploma(1, 1);
 
         // Assert
-        mockGerador.Verify(g => g.Gerar("Joao", "C#"), Times.Once);
+        mockGerador.Verify(g => g.Gerar("Joao", "C#", "Universidade Aberta"), Times.Once);
     }
 }

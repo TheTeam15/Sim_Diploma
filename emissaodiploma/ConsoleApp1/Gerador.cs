@@ -16,8 +16,9 @@ public interface IGeradorDiploma
     /// </summary>
     /// <param name="nomeAluno">Nome do aluno.</param>
     /// <param name="curso">Nome do curso.</param>
+    /// <param name="instituicao">Nome da instituição.</param>
     /// <returns>Conteúdo do diploma em formato binário.</returns>
-    byte[] Gerar(string nomeAluno, string curso);
+    byte[] Gerar(string nomeAluno, string curso, string instituicao);
 }
 
 /// <summary>
@@ -30,7 +31,6 @@ public class Gerador : IGeradorDiploma
 {
     private const string TituloDocumento = "Diploma";
     private const string AutorDocumento = "SimDiplomaMVC";
-    private const string NomeInstituicao = "Universidade Exemplo";
 
     /// <summary>
     /// Gera o diploma em PDF.
@@ -41,8 +41,9 @@ public class Gerador : IGeradorDiploma
     /// </summary>
     /// <param name="nomeAluno">Nome do aluno.</param>
     /// <param name="curso">Nome do curso concluído.</param>
+    /// <param name="instituicao">Nome da instituição.</param>
     /// <returns>Array de bytes com o conteúdo do PDF gerado.</returns>
-    public byte[] Gerar(string nomeAluno, string curso)
+    public byte[] Gerar(string nomeAluno, string curso, string instituicao)
     {
         if(string.IsNullOrWhiteSpace(nomeAluno))
             throw new ArgumentException("Nome do aluno inválido.");
@@ -50,8 +51,12 @@ public class Gerador : IGeradorDiploma
         if (string.IsNullOrWhiteSpace(curso))
             throw new ArgumentException("Curso inválido.");
 
+        if (string.IsNullOrWhiteSpace(instituicao))
+            throw new ArgumentException("Instituição inválida.");
+
         nomeAluno = nomeAluno.Trim();
         curso = curso.Trim();
+        instituicao = instituicao.Trim();
 
         // CRIAÇÃO DO DOCUMENTO
         PdfDocument documento = new PdfDocument();
@@ -80,7 +85,7 @@ public class Gerador : IGeradorDiploma
         
         // TOPO - INSTITUIÇÃO
 
-        gfx.DrawString(NomeInstituicao, fonteSubtitulo, XBrushes.Black,
+        gfx.DrawString(instituicao, fonteSubtitulo, XBrushes.Black,
             new XRect(0, 60, larguraPagina, alturaPagina),
             XStringFormats.TopCenter);
 

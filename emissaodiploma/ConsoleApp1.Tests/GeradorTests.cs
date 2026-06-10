@@ -47,9 +47,10 @@ namespace ConsoleApp1.Tests
             var gerador = new Gerador();
             string nomeAluno = "Maria";
             string curso = "Engenharia";
+            string instituicao = "Universidade XYZ";
 
             // Act
-            byte[] resultado = gerador.Gerar(nomeAluno, curso);
+            byte[] resultado = gerador.Gerar(nomeAluno, curso, instituicao);
 
             // Assert
             Assert.NotNull(resultado);
