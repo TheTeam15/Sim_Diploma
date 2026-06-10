@@ -116,28 +116,28 @@ public class Controller
         });
     }
 
-    public void CriarInscricao(int alunoId, string edicao)
+    public void CriarInscricao(int alunoId, int edicaoId)
     {
         ExecutarOperacao(() =>
         {
-            _model.InscreverAluno(alunoId, edicao);
+            _model.InscreverAluno(alunoId, edicaoId);
         });
     }
 
-    public void ConcluirInscricao(int alunoId, string edicao)
+    public void ConcluirInscricao(int alunoId, int edicaoId)
     {
         ExecutarOperacao(() =>
         {
-            _model.ConcluirInscricao(alunoId, edicao);
+            _model.ConcluirInscricao(alunoId, edicaoId);
         });
     }
 
-    public void Classificar(int alunoId, string edicao, double valorNota)
+    public void Classificar(int alunoId, int edicaoId, double valorNota)
     {
         ExecutarOperacao(() =>
         {
             Nota nota = new Nota(valorNota);
-            _model.LancarClassificacao(alunoId, edicao, nota);
+            _model.LancarClassificacao(alunoId, edicaoId, nota);
         });
     }
 
@@ -149,19 +149,19 @@ public class Controller
         });
     }
 
-    public void ConsultarInscricao(int alunoId, string edicao)
+    public void ConsultarInscricao(int alunoId, int edicaoId)
     {
         ExecutarOperacao(() =>
         {
-            _model.ConsultarInscricao(alunoId, edicao);
+            _model.ConsultarInscricao(alunoId, edicaoId);
         });
     }
 
-    public void ConsultarClassificacao(int alunoId, string edicao)
+    public void ConsultarClassificacao(int alunoId, int edicaoId)
     {
         ExecutarOperacao(() =>
         {
-            _model.ConsultarClassificacao(alunoId, edicao);
+            _model.ConsultarClassificacao(alunoId, edicaoId);
         });
     }
 
