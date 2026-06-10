@@ -24,13 +24,13 @@ public class View
     // EVENTOS ENVIADOS PARA O CONTROLLER
     // ============================================================
     public event Action<int, string>?         OnCriarAluno;
-    public event Action<int, string>?         OnCriarInscricao;
-    public event Action<int, string>?         OnConcluirInscricao;
-    public event Action<int, string, double>? OnClassificar;
+    public event Action<int, int>?         OnCriarInscricao;
+    public event Action<int, int>?         OnConcluirInscricao;
+    public event Action<int, int, double>? OnClassificar;
 
     public event Action<int>?                 OnConsultarAluno;
-    public event Action<int, string>?         OnConsultarInscricao;
-    public event Action<int, string>?         OnConsultarClassificacao;
+    public event Action<int, int>?         OnConsultarInscricao;
+    public event Action<int, int>?         OnConsultarClassificacao;
 
     public event Action<int, string, string, string>?   OnGuardarInstituicao;
     public event Action<int, string, string, string>?   OnAlterarInstituicao;
@@ -320,12 +320,12 @@ public class View
             return;
         }
 
-        if (!LerTextoObrigatorio("Edição", out string edicao))
+        if (!LerInteiro("ID da edição", out int edicaoId))
         {
             return;
         }
 
-        OnCriarInscricao?.Invoke(alunoId, edicao);
+        OnCriarInscricao?.Invoke(alunoId, edicaoId);
     }
 
     private void ConcluirInscricao()
@@ -335,12 +335,12 @@ public class View
             return;
         }
 
-        if (!LerTextoObrigatorio("Edição", out string edicao))
+        if (!LerInteiro("ID da edição", out int edicaoId))
         {
             return;
         }
 
-        OnConcluirInscricao?.Invoke(alunoId, edicao);
+        OnConcluirInscricao?.Invoke(alunoId, edicaoId);
     }
 
     private void Classificar()
@@ -350,7 +350,7 @@ public class View
             return;
         }
 
-        if (!LerTextoObrigatorio("Edição", out string edicao))
+        if (!LerInteiro("ID da edição", out int edicaoId))
         {
             return;
         }
@@ -360,7 +360,7 @@ public class View
             return;
         }
 
-        OnClassificar?.Invoke(alunoId, edicao, valorNota);
+        OnClassificar?.Invoke(alunoId, edicaoId, valorNota);
     }
 
     private void ConsultarAluno()
@@ -380,12 +380,12 @@ public class View
             return;
         }
 
-        if (!LerTextoObrigatorio("Edição", out string edicao))
+        if (!LerInteiro("ID da edição", out int edicaoId))
         {
             return;
         }
 
-        OnConsultarInscricao?.Invoke(alunoId, edicao);
+        OnConsultarInscricao?.Invoke(alunoId, edicaoId);
     }
 
     private void ConsultarClassificacao()
@@ -395,12 +395,12 @@ public class View
             return;
         }
 
-        if (!LerTextoObrigatorio("Edição", out string edicao))
+        if (!LerInteiro("ID da edição", out int edicaoId))
         {
             return;
         }
 
-        OnConsultarClassificacao?.Invoke(alunoId, edicao);
+        OnConsultarClassificacao?.Invoke(alunoId, edicaoId);
     }
 
     // ============================================================
@@ -922,7 +922,7 @@ public class View
 
         EscreverTitulo("INSCRIÇÃO CRIADA");
         Console.WriteLine($"Aluno:             {inscricao.AlunoId}");
-        Console.WriteLine($"Edição:            {inscricao.Edicao}");
+        Console.WriteLine($"Edição:            {inscricao.EdicaoId}");
         Console.WriteLine($"Ativa:             {inscricao.Ativa}");
         Console.WriteLine($"Tem classificação: {inscricao.TemClassificacao}");
     }
@@ -963,7 +963,7 @@ public class View
 
         EscreverTitulo("INSCRIÇÃO");
         Console.WriteLine($"Aluno:             {inscricao.AlunoId}");
-        Console.WriteLine($"Edição:            {inscricao.Edicao}");
+        Console.WriteLine($"Edição:            {inscricao.EdicaoId}");
         Console.WriteLine($"Ativa:             {inscricao.Ativa}");
         Console.WriteLine($"Tem classificação: {inscricao.TemClassificacao}");
     }

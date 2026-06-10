@@ -25,7 +25,7 @@ public interface IAluno
 public interface IInscricaoAluno
 {
     int AlunoId { get; }
-    string Edicao { get; }
+    int EdicaoId { get; }
     bool Ativa { get; }
     bool TemClassificacao { get; }
 }
@@ -336,14 +336,14 @@ public class Aluno : IAluno
     /// <summary>
     /// Verifica se o aluno já tem uma inscrição ativa numa determinada edição.
     /// </summary>
-    public bool TemInscricaoAtiva(string edicao)
-        => Inscricoes.Any(i => i.Edicao == edicao && i.Ativa);
+    public bool TemInscricaoAtiva(int edicaoId)
+    => Inscricoes.Any(i => i.EdicaoId == edicaoId && i.Ativa);
 
     /// <summary>
     /// Obtém a inscrição do aluno numa determinada edição.
     /// </summary>
-    public InscricaoAluno? ObterInscricao(string edicao)
-        => Inscricoes.FirstOrDefault(i => i.Edicao == edicao);
+    public InscricaoAluno? ObterInscricao(int edicaoId)
+    => Inscricoes.FirstOrDefault(i => i.EdicaoId == edicaoId);
 }
 
 /// <summary>
@@ -352,7 +352,7 @@ public class Aluno : IAluno
 public class InscricaoAluno : IInscricaoAluno
 {
     public int AlunoId { get; set; }
-    public string Edicao { get; set; } = string.Empty;
+    public int EdicaoId { get; set; }
 
     // Regra: fica false quando a inscricao e concluida
     public bool Ativa { get; set; } = true;
@@ -702,44 +702,44 @@ public class Model : IModelEventos
     /// Inscreve um aluno numa edição, garantindo que o aluno existe
     /// e que não tem já uma inscrição ativa nessa edição.
     /// </summary>
-    public void InscreverAluno(int alunoId, string edicao)
+    public void InscreverAluno(int alunoId, int edicaoId)
     {
-        var aluno = alunos.FirstOrDefault(a => a.Id == alunoId)
-            ?? throw new AlunoNaoEncontradoException($"Aluno com ID {alunoId} nao existe.");
+    var aluno = alunos.FirstOrDefault(a => a.Id == alunoId)
+        ?? throw new AlunoNaoEncontradoException($"Aluno com ID {alunoId} não existe.");
 
-        if (string.IsNullOrWhiteSpace(edicao))
-            throw new ArgumentException("Edicao invalida.");
+    var edicao = edicoes.FirstOrDefault(e => e.IdEdicao == edicaoId)
+        ?? throw new EdicaoNaoEncontradaException($"Edição com ID {edicaoId} não existe.");
 
-        if (aluno.TemInscricaoAtiva(edicao))
-            throw new InscricaoAlunoDuplicadaException($"Ja existe uma inscricao ativa na edicao '{edicao}'.");
+    if (aluno.TemInscricaoAtiva(edicaoId))
+        throw new InscricaoAlunoDuplicadaException($"Já existe uma inscrição ativa na edição '{edicaoId}'.");
 
-        var inscricao = new InscricaoAluno
-        {
-            AlunoId = alunoId,
-            Edicao = edicao,
-            Ativa = true
-        };
+    var inscricao = new InscricaoAluno
+    {
+        AlunoId = alunoId,
+        EdicaoId = edicaoId,
+        Ativa = true
+    };
 
-        aluno.Inscricoes.Add(inscricao);
+    aluno.Inscricoes.Add(inscricao);
 
-        UltimaInscricaoConsultada = inscricao;
-        UltimaOperacaoSucesso = true;
-        UltimaMensagem = $"Inscricao na edicao '{edicao}' realizada com sucesso.";
+    UltimaInscricaoConsultada = inscricao;
+    UltimaOperacaoSucesso = true;
+    UltimaMensagem = $"Inscrição na edição '{edicao.AnoLetivo}' realizada com sucesso.";
 
-        Resultado?.Invoke(this, new ResultadoEventArgs(true, UltimaMensagem));
-        InscricaoCriada?.Invoke(this, new InscricaoAlunoEventArgs(inscricao));
+    Resultado?.Invoke(this, new ResultadoEventArgs(true, UltimaMensagem));
+    InscricaoCriada?.Invoke(this, new InscricaoAlunoEventArgs(inscricao));
     }
 
     /// <summary>
     /// Conclui a inscrição de um aluno numa edição.
     /// </summary>
-    public void ConcluirInscricao(int alunoId, string edicao)
+    public void ConcluirInscricao(int alunoId, int edicaoId)
     {
         var aluno = alunos.FirstOrDefault(a => a.Id == alunoId)
             ?? throw new AlunoNaoEncontradoException($"Aluno com ID {alunoId} nao existe.");
 
-        var inscricao = aluno.ObterInscricao(edicao)
-            ?? throw new InscricaoAlunoNaoEncontradaException($"Inscricao na edicao '{edicao}' nao encontrada.");
+        var inscricao = aluno.ObterInscricao(edicaoId)
+            ?? throw new InscricaoAlunoNaoEncontradaException($"Inscricao na edicao '{edicaoId}' nao encontrada.");
 
         if (!inscricao.Ativa)
             throw new InscricaoAlunoJaConcluidaException("A inscricao ja se encontra concluida.");
@@ -747,7 +747,7 @@ public class Model : IModelEventos
         inscricao.Ativa = false;
 
         UltimaOperacaoSucesso = true;
-        UltimaMensagem = $"Inscricao na edicao '{edicao}' concluida com sucesso.";
+        UltimaMensagem = $"Inscricao na edicao '{edicaoId}' concluida com sucesso.";
 
         Resultado?.Invoke(this, new ResultadoEventArgs(true, UltimaMensagem));
     }
@@ -762,13 +762,13 @@ public class Model : IModelEventos
     /// A classificação só pode ser lançada se a inscrição existir,
     /// estiver concluída e ainda não tiver classificação associada.
     /// </summary>
-    public void LancarClassificacao(int alunoId, string edicao, Nota nota)
+    public void LancarClassificacao(int alunoId, int edicaoId, Nota nota)
     {
         var aluno = alunos.FirstOrDefault(a => a.Id == alunoId)
             ?? throw new AlunoNaoEncontradoException($"Aluno com ID {alunoId} nao existe.");
 
-        var inscricao = aluno.ObterInscricao(edicao)
-            ?? throw new InscricaoAlunoNaoEncontradaException($"Inscricao na edicao '{edicao}' nao encontrada.");
+        var inscricao = aluno.ObterInscricao(edicaoId)
+            ?? throw new InscricaoAlunoNaoEncontradaException($"Inscricao na edicao '{edicaoId}' nao encontrada.");
 
         if (inscricao.Ativa)
             throw new InscricaoAlunoAindaAtivaException("A inscricao deve estar concluida antes de lancar classificacao.");
@@ -808,20 +808,20 @@ public class Model : IModelEventos
     /// <summary>
     /// Consulta uma inscrição e notifica a View.
     /// </summary>
-    public void ConsultarInscricao(int id, string edicao)
+    public void ConsultarInscricao(int id, int edicaoId)
     {
         var aluno = alunos.FirstOrDefault(a => a.Id == id);
-        UltimaInscricaoConsultada = aluno?.ObterInscricao(edicao);
+        UltimaInscricaoConsultada = aluno?.ObterInscricao(edicaoId);
         InscricaoConsultada?.Invoke(this, new InscricaoAlunoConsultadaEventArgs(UltimaInscricaoConsultada));
     }
 
     /// <summary>
     /// Consulta uma classificação e notifica a View.
     /// </summary>
-    public void ConsultarClassificacao(int id, string edicao)
+    public void ConsultarClassificacao(int id, int edicaoId)
     {
         var aluno = alunos.FirstOrDefault(a => a.Id == id);
-        var insc = aluno?.ObterInscricao(edicao);
+        var insc = aluno?.ObterInscricao(edicaoId);
         UltimaClassificacaoConsultada = insc?.ClassificacaoFinal;
         ClassificacaoConsultada?.Invoke(this, new ClassificacaoConsultadaEventArgs(UltimaClassificacaoConsultada));
     }
@@ -1141,8 +1141,8 @@ public class Model : IModelEventos
         var edicao = edicoes.FirstOrDefault(e => e.IdEdicao == idEdicao)
             ?? throw new EdicaoNaoEncontradaException("A edição indicada não existe.");
 
-        if (ExisteInscricaoAssociadaAEdicao(edicao))
-            throw new InvalidOperationException("Não é possível apagar a edição porque existem inscrições associadas.");
+        if (alunos.Any(a => a.Inscricoes.Any(i => i.EdicaoId == idEdicao)))
+        throw new InvalidOperationException("Não é possível apagar a edição porque existem inscrições associadas.");
 
         edicoes.Remove(edicao);
 
@@ -1209,7 +1209,7 @@ public class Model : IModelEventos
             ?? throw new EdicaoNaoEncontradaException($"Edição com ID {idEdicao} não encontrada.");
 
         var inscricao = aluno.Inscricoes
-            .FirstOrDefault(i => InscricaoPertenceAEdicao(i, edicao))
+            .FirstOrDefault(i => i.EdicaoId == idEdicao)
             ?? throw new InscricaoAlunoNaoEncontradaException(
                 $"O aluno com ID {alunoId} não tem inscrição na edição {idEdicao}.");
 
@@ -1223,8 +1223,9 @@ public class Model : IModelEventos
 
         string nomeAluno = aluno.Nome;
         string nomeCurso = edicao.Curso.NomeCurso;
+        string nomeInstituicao = edicao.Curso.Instituicao.NomeInstituicao;
 
-        byte[] pdf = _gerador.Gerar(nomeAluno, nomeCurso);
+        byte[] pdf = _gerador.Gerar(nomeAluno, nomeCurso, nomeInstituicao);
 
         if (pdf == null || pdf.Length == 0)
             throw new InvalidOperationException("O diploma não foi gerado corretamente.");
@@ -1250,7 +1251,7 @@ public class Model : IModelEventos
     /// relacionar essa edição com uma edição real registada no Model e,
     /// a partir dela, obter o curso associado.
     /// </summary>
-    private bool InscricaoPertenceAoCurso(InscricaoAluno inscricao, string nomeCurso)
+   /*  private bool InscricaoPertenceAoCurso(InscricaoAluno inscricao, string nomeCurso)
     {
         if (inscricao == null)
             return false;
@@ -1272,14 +1273,14 @@ public class Model : IModelEventos
                 TextoIgual(i.Edicao, edicao.IdEdicao.ToString()) ||
                 TextoIgual(i.Edicao, edicao.AnoLetivo)));
     }
-
+ */
     /// <summary>
     /// Verifica se uma inscrição pertence à edição indicada.
     /// 
     /// A inscrição guarda a edição como texto. Por isso, a comparação aceita
     /// tanto o ID da edição como o ano letivo registado na edição.
     /// </summary>
-    private bool InscricaoPertenceAEdicao(InscricaoAluno inscricao, Edicao edicao)
+   /*  private bool InscricaoPertenceAEdicao(InscricaoAluno inscricao, Edicao edicao)
     {
         if (inscricao == null || edicao == null)
         {
@@ -1288,17 +1289,17 @@ public class Model : IModelEventos
 
         return TextoIgual(inscricao.Edicao, edicao.IdEdicao.ToString()) ||
                TextoIgual(inscricao.Edicao, edicao.AnoLetivo);
-    }
+    } */
 
     /// <summary>
     /// Compara dois textos ignorando espaços laterais e diferenças entre
     /// maiúsculas e minúsculas.
     /// </summary>
-    private static bool TextoIgual(string texto1, string texto2)
+    /* private static bool TextoIgual(string texto1, string texto2)
     {
         return string.Equals(
             texto1?.Trim(),
             texto2?.Trim(),
             StringComparison.OrdinalIgnoreCase);
-    }
+    } */
 }
