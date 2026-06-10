@@ -31,23 +31,27 @@ namespace ConsoleApp1.Tests
             }
 
             // --- DADOS DE TESTE ---
+            // Declaras as variáveis de ID no início
+            int idCurso = 1;
+            int numeroAluno = 1001;
+
             string nomeInstituicao = "Universidade Aberta";
             string nomeAluno = "Obi-Wan Kenobi";
             string nomeCurso = "Engenharia Informática";
             string edicao = "2025/2026";
 
-            // 2. ACT - Executa as operações através do Controller simulando o utilizador
+            // 2. ACT - Usas as variáveis em vez dos números "soltos"
             controller.GuardarInstituicao(1, nomeInstituicao, "Lisboa", "Portugal");
-            controller.CriarCurso(1, 1, nomeCurso, "Licenciatura", "Engenharia de Software", "Semestral");
-            controller.CriarEdicao(1, 1, edicao, DateTime.Now, DateTime.Now.AddMonths(6), "E-learning");
+            controller.CriarCurso(1, idCurso, nomeCurso, "Licenciatura", "Engenharia de Software", "Semestral");
+            controller.CriarEdicao(1, idCurso, edicao, DateTime.Now, DateTime.Now.AddMonths(6), "E-learning");
 
-            controller.CriarAluno(1001, nomeAluno);
-            controller.CriarInscricao(1001, edicao);
-            controller.ConcluirInscricao(1001, edicao);
-            controller.Classificar(1001, edicao, 18.5);
+            controller.CriarAluno(numeroAluno, nomeAluno);
+            controller.CriarInscricao(numeroAluno, edicao);
+            controller.ConcluirInscricao(numeroAluno, edicao);
+            controller.Classificar(numeroAluno, edicao, 18.5);
 
-            // O grande momento: pedir o diploma
-            controller.EmitirDiploma(1001, 1001);
+            // Pedir o diploma com as variáveis
+            controller.EmitirDiploma(numeroAluno, idCurso);
 
             // 3. ASSERT - Verifica se tudo correu bem
             // Verifica se a View reagiu ao evento e criou o ficheiro físico
